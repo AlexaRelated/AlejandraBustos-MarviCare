@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8"/>
+    <title>MarviCare</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'blog_home' %}"><strong>MarviCare</strong></a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'dermatologia' %}">DERMATOLOGÍA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'cosmetica' %}">COSMÉTICA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'maquillaje' %}">MAQUILLAJE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'estetica' %}">ESTÉTICA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'perfumeria' %}">PERFUMERÍA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'perfumeria' %}">FORMACIONES
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-success position-relative">
+        <div class="pl-4 pr-0 h-100 tofront">
+            <div class="row justify-content-between">
+                <div class="col-md-6 pt-6 pb-6 align-self-center">
+                    <h1 class="secondfont mb-3 font-weight-bold">MarviCare is an HTML Bienvenidos a MarviCare</h1>
+                    <img src="{% static 'statics/img/logo.png' %}" alt="logo"/>
+                    <p class="mb-3">
+                        INFORMACIÓN SOBRE DERMATOLOGÍA, COSMÉTICA, MAQUILLAJE Y ESTÉTICA. PARA TODOS.
+                    </p>
+                </div>
+                <div class="col-md-6 d-none d-md-block pr-0" style="background-size:cover;background-image:url({% static 'statics/img/logo.jpg' %});"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- --------------------------------------
+MAIN
+--------------------------------------->
+<div class="container pt-4 pb-4">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-0 mb-4 box-shadow h-xl-300">
+                <div style="background-image: url({% static 'assets/img/demo/1.jpg' %}); height: 150px; background-size: cover; background-repeat: no-repeat;"></div>
+                <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+                    <h2 class="h4 font-weight-bold">
+                    <a class="text-dark" href="./article.html">Brain Stimulation Relieves Depression Symptoms</a>
+                    </h2>
+                    <p class="card-text">
+                        Researchers have found an effective target in the brain for electrical stimulation to improve mood in people suffering from depression.
+                    </p>
+                    <div>
+                        <small class="d-block"><a class="text-muted" href="./author.html">Favid Rick</a></small>
+                        <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="flex-md-row mb-4 box-shadow h-xl-300">
+                <div class="mb-3 d-flex align-items-center">
+                    <img height="80" src="{% static 'assets/img/demo/blog4.jpg' %}">
+                    <div class="pl-3">
+                        <h2 class="mb-2 h6 font-weight-bold">
+                        <a class="text-dark" href="./article.html">Nasa's IceSat space laser makes height maps of Earth</a>
+                        </h2>
+                        <div class="card-text text-muted small">
+                             Jake Bittle in LOVE/HATE
+                        </div>
+                        <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <img height="80" src="{% static 'assets/img/demo/blog5.jpg' %}">
+                    <div class="pl-3">
+                        <h2 class="mb-2 h6 font-weight-bold">
+                        <a class="text-dark" href="./article.html">Underwater museum brings hope to Lake Titicaca</a>
+                        </h2>
+                        <div class="card-text text-muted small">
+                             Jake Bittle in LOVE/HATE
+                        </div>
+                        <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <img height="80" src="{% static 'assets/img/demo/blog6.jpg' %}">
+                    <div class="pl-3">
+                        <h2 class="mb-2 h6 font-weight-bold">
+                        <a class="text-dark" href="./article.html">Sun-skimming probe starts calling home</a>
+                        </h2>
+                        <div class="card-text text-muted small">
+                             Jake Bittle in LOVE/HATE
+                        </div>
+                        <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-md-8">
+            <h5 class="font-weight-bold spanborder"><span>All Stories</span></h5>
+            <div class="mb-3 d-flex justify-content-between">
+                <div class="pr-3">
+                    <h2 class="mb-1 h4 font-weight-bold">
+                    <a class="text-dark" href="./article.html">Nearly 200 Great Barrier Reef coral species also live in the deep sea</a>
+                    </h2>
+                    <p>
+                        There are more coral species lurking in the deep ocean that previously thought.
+                    </p>
+                    <div class="card-text text-muted small">
+                         Jake Bittle in SCIENCE
+                    </div>
+                    <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                </div>
+                <img height="120" src="{% static 'assets/img/demo/blog8.jpg' %}">
+            </div>
+            <div class="mb-3 d-flex justify-content-between">
+                <div class="pr-3">
+                    <h2 class="mb-1 h4 font-weight-bold">
+                    <a class="text-dark" href="./article.html">East Antarctica's glaciers are stirring</a>
+                    </h2>
+                    <p>
+                        Nasa says it has detected the first signs of significant melting in a swathe of glaciers in East Antarctica.
+                    </p>
+                    <div class="card-text text-muted small">
+                         Jake Bittle in SCIENCE
+                    </div>
+                    <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                </div>
+                <img height="120" src="{% static 'assets/img/demo/1.jpg' %}">
+            </div>
+            <div class="mb-3 d-flex justify-content-between">
+                <div class="pr-3">
+                    <h2 class="mb-1 h4 font-weight-bold">
+                    <a class="text-dark" href="./article.html">50 years ago, armadillos hinted that DNA wasn’t destiny</a>
+                    </h2>
+                    <p>
+                        Nasa says it has detected the first signs of significant melting in a swathe of glaciers in East Antarctica.
+                    </p>
+                    <div class="card-text text-muted small">
+                         Jake Bittle in SCIENCE
+                    </div>
+                    <small class="text-muted">Dec 12 &middot; 5 min read</small>
+                </div>
+                <img height="120" src="{% static 'assets/img/demo/5.jpg' %}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-4 pb-4">
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-lg-6">
+            <div class="card border-0 mb-4 box-shadow h-xl-300">
+                <div style="background-image: url('https://via.placeholder.com/600x300'); height: 150px; background-size: cover; background-repeat: no-repeat;"></div>
+                <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+                    <h2 class="h4 font-weight-bold">
+                        <a href="{% url 'post_detail' pk=post.pk %}">Ver Detalle</a>
+                    </h2>
+                    <p class="card-text">
+                        {{ post.content|truncatewords:30 }}
+                    </p>
+                    <div>
+                        <small class="text-muted">{{ post.created_at|date:"M d" }} · 5 min read</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
