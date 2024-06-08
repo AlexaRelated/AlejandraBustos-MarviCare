@@ -22,15 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2)f0cq*w-+s)vum15b9_0wdq@@xu0#q#5jl524qj%541h-r=7r'
+SECRET_KEY = 'django-insecure-%mr0+6-7m&)eo5p-=n83bs3g260hsf60p81@h!qt64j_i00)b7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+sys.path.append(os.path.join(BASE_DIR, 'myenv', 'blog'))
 
 # Application definition
+
+BLOG_NAME = 'Parafarmacia'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'MyBlog',
+    'cuentas',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -51,12 +57,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'proyecto.urls'
+ROOT_URLCONF = 'MyBlog.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'proyecto.wsgi.application'
+WSGI_APPLICATION = 'MyBlog.wsgi.application'
 
 
 # Database
@@ -81,7 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -101,6 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'blog_home'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -117,6 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -130,6 +140,11 @@ STATICFILES_FINDERS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, 'static/')
+#    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
