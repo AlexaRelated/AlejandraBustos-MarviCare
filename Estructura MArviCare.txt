@@ -13,6 +13,10 @@ MarviCare
 	|--template
 		|--inicio
               		|--index.html
+     |--statics
+		|--assets
+		|--css
+		|--js
      |--__pycache__
      |--migrations
      |--__init__.py
