@@ -1,39 +1,26 @@
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from blog.models import Post 
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
-from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from .models import Post  # Solo importa Post
 
 def index(request):
-    return render(request, 'inicio/index.html')
-
-
-@login_required
-def blog_home(request):
-    posts = Post.objects.all()
-    blog_name = settings.BLOG_NAME
-    return render(request, 'blog/blog_home.html', {'posts': posts, 'blog_name': blog_name})
-
-@login_required
-def article(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/article.html', {'post': post})
+    posts = Post.objects.all().order_by('-id')
+    return render(request, 'inicio/index.html', {'posts': posts})
 
 def login_view_cuentas(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('blog_home')
-        else:
-            error_message = "Credenciales incorrectas. Por favor, inténtalo de nuevo."
-            return render(request, 'cuentas/login.html', {'error_message': error_message})
-    return render(request, 'cuentas/login.html')
+            return redirect('index')
+    return render(request, 'inicio/login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 def signup_view_cuentas(request):
     if request.method == 'POST':
@@ -41,18 +28,10 @@ def signup_view_cuentas(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('blog_home')
+            return redirect('index')
     else:
         form = UserCreationForm()
-    return render(request, 'cuentas/signup.html', {'form': form})
-
-def article_detail(request, article_id):
-    article = get_object_or_404(Post, id=article_id)
-    return render(request, 'blog/article_detail.html', {'article': article})
-
-def logout_view(request):
-    logout(request)
-    return redirect('login')  # Redirige a la página de inicio de sesión después del logout
+    return render(request, 'inicio/signup.html', {'form': form})

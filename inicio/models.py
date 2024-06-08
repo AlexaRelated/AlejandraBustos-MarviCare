@@ -1,36 +1,21 @@
 from django.db import models
-from django.urls import reverse
+from django.contrib.auth.models import User
+from django.db import models
 
-class MyModelName(models.Model):
-    my_field_name = models.CharField(max_length=20, help_text="Enter field documentation")
-
-    class Meta:
-        ordering = ["-my_field_name"]
-
-    def get_absolute_url(self):
-        return reverse('model-detail-view', args=[str(self.id)])
+class Author(models.Model):
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='inicio_author')
+    bio = models.TextField()
 
     def __str__(self):
-        return self.my_field_name
-
-from django.db import models
-from django.contrib.auth.models import User
+        return self.user.username
 
 class Post(models.Model):
-    CATEGORY_CHOICES = [
-        ('dermatologia', 'Dermatología'),
-        ('cosmetica', 'Cosmética'),
-        ('maquillaje', 'Maquillaje'),
-        ('estetica', 'Estética'),
-    ]
-
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cuentas_posts')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/')
+    category = models.CharField(max_length=100, blank=True)  # Añade este campo si es necesario
 
     def __str__(self):
         return self.title
