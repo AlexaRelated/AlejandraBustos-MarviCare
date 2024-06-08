@@ -33,7 +33,7 @@ sys.path.append(os.path.join(BASE_DIR, 'myenv', 'blog'))
 
 # Application definition
 
-BLOG_NAME = 'Parafarmacia'
+BLOG_NAME = 'MarviCare'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MyBlog',
+    'proyecto',
     'cuentas',
     'blog',
 ]
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'MyBlog.urls'
+ROOT_URLCONF = 'proyecto.urls'
 
 TEMPLATES = [
     {
@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'MyBlog.wsgi.application'
+WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 
 # Database
@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'blog_home'
+LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Internationalization

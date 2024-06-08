@@ -5,7 +5,7 @@ from inicio import views as inicio_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio_views.blog_home, name='blog_home'),  # Página de inicio protegida
+    path('', inicio_views.index, name='index'),  # Página de inicio protegida
     path('login/', inicio_views.login_view_cuentas, name='login'),
     path('logout/', inicio_views.logout_view, name='logout'),
     path('signup/', inicio_views.signup_view_cuentas, name='signup'),
