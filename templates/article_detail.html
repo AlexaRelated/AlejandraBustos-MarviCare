@@ -1,0 +1,11 @@
+{% extends 'plantilla_base.html' %}
+
+{% block title %}Detalle del Artículo{% endblock %}
+
+{% block content %}
+<article>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+    <p><small>Publicado por {{ article.author }} el {{ article.published_date }}</small></p>
+</article>
+{% endblock %}
