@@ -10,6 +10,9 @@ MarviCare
      |--urls.py
      |--views.py
   |--inicio
+	|--template
+		|--inicio
+              		|--index.html
      |--__pycache__
      |--migrations
      |--__init__.py
