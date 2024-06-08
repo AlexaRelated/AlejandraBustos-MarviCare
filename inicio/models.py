@@ -1,8 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.db import models
+from django.urls import reverse
 
-# blog/models.py
+class MyModelName(models.Model):
+    my_field_name = models.CharField(max_length=20, help_text="Enter field documentation")
+
+    class Meta:
+        ordering = ["-my_field_name"]
+
+    def get_absolute_url(self):
+        return reverse('model-detail-view', args=[str(self.id)])
+
+    def __str__(self):
+        return self.my_field_name
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -17,7 +26,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_blog_posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cuentas_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
@@ -25,24 +34,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Publicacion(models.Model):
-    titulo = models.CharField(max_length=200)
-    contenido = models.TextField()
-    fecha_publicacion = models.DateTimeField('fecha de publicacion')
-
-    def __str__(self):
-        return self.titulo
-
-class Article(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_articles')
-    
-    def __str__(self):
-        return self.title
-
