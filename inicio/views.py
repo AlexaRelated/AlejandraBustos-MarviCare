@@ -1,10 +1,14 @@
-# cuentas/views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from blog.models import Post 
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'inicio/index.html')
 
 
 @login_required
