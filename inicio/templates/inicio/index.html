@@ -31,12 +31,19 @@
                         <li class="nav-item"><a class="nav-link" href="#about">Cosmética</a></li>
                         <li class="nav-item"><a class="nav-link" href="#projects">Maquillaje</a></li>
                         <li class="nav-item"><a class="nav-link" href="#projects">Dermocosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#projects">Pperfumería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#projects">Perfumería</a></li>
                         <li class="nav-item"><a class="nav-link" href="#signup">Contacto</a></li>
+                        <li class="nav-item">
+                            <form id="blogSearchForm" class="d-flex">
+                                <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+       
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
@@ -81,7 +88,7 @@
                 </div>
                 <!-- Project One Row-->
                 <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{% static 'assets/img/solar1.jpg' %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html">¡Bienvenido verano! Claves para cuidarnos del sol</a></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html">¡Bienvenido verano! Claves para cuidarnos del sol</a></div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -96,13 +103,14 @@
                 </div>
                 <!-- Project Two Row-->
                 <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="..." /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="{% static "assets/img/perfu1.jpg" %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/06/la-osmotheque-el-archivo-mundial-del.html">«Archivo mundial del perfume»</a></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Mountains</h4>
-                                    <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well!</p>
+                                    <h4 class="text-white">Perfumes</h4>
+                                    <p class="mb-0 text-white-50">El perfume es tantas cosas… Hemos preguntado a los expertos, nuestros Académicos del Perfume, qué significa para ellos y en sus definiciones podemos ver que el perfume es arte, es evocación, es inspiración, es ciencia, es poesía, es sensorialidad… </p>
+                                    <a href="https://marvicare.blogspot.com/search/label/perfume">Te animamos a descubrir todo lo que representa el perfume.</a>
                                 </div>
                             </div>
                         </div>
@@ -207,5 +215,14 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script>
+            document.getElementById('blogSearchForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                var query = document.getElementById('searchQuery').value;
+                var blogUrl = 'https://marvicare.blogspot.com/search?q=' + encodeURIComponent(query);
+                window.location.href = blogUrl;
+            });
+        </script>
+        
     </body>
 </html>
