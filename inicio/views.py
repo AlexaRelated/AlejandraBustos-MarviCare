@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post
 from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 
 
 def index(request):
@@ -40,5 +41,8 @@ def signup_view_cuentas(request):
 
 
 def post_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+    try:
+        post = get_object_or_404(Post, slug=slug)
+    except Http404:
+        return render(request, '404.html', {'error_message': 'Post no encontrado'})
     return render(request, 'article.html', {'post': post})

@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('inicio/', include('inicio.urls')),
     path('', inicio_views.index, name='index'),  # Página de inicio
     path('login/', inicio_views.login_view_cuentas, name='login'),  
     path('logout/', inicio_views.logout_view, name='logout'),
