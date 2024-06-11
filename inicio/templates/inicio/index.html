@@ -86,22 +86,28 @@
                         </div>
                     </div>
                 </div>
-                <!-- Project One Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html">¡Bienvenido verano! Claves para cuidarnos del sol</a></div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Dermocosmética</h4>
-                                    <p class="mb-0 text-white-50">Los dermocosméticos fueron productos creados científicamente para el cuidado de la piel, el cabello y las uñas, por lo que están clínicamente aprobados y avalados por dermatólogos, esto garantiza que su aplicación no es dañina para la salud.</p>
-                                    <a href="https://marvicare.blogspot.com/search/label/cuidado%20de%20la%20piel">¡Aprendamos más sobre ellos!</a>
-                                </div>
-                            </div>
+                <!-- Projects Section -->
+<section class="projects-section bg-light" id="projects">
+    <div class="container px-4 px-lg-5">
+        <!-- Project One Row -->
+        <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+            <div class="col-lg-6"><img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html" target="_blank">¡Bienvenido verano! Claves para cuidarnos del sol</a></div>
+            <div class="col-lg-6">
+                <div class="bg-black text-center h-100 project">
+                    <div class="d-flex h-100">
+                        <div class="project-text w-100 my-auto text-center text-lg-left">
+                            <h4 class="text-white">Dermocosmética</h4>
+                            <p class="mb-0 text-white-50">Los dermocosméticos fueron productos creados científicamente para el cuidado de la piel, el cabello y las uñas, por lo que están clínicamente aprobados y avalados por dermatólogos, esto garantiza que su aplicación no es dañina para la salud.</p>
+                            <a href="{% url 'post_detail' slug='slug-del-post' %}" target="_blank">¡Aprendamos más sobre ellos!</a>
                         </div>
                     </div>
                 </div>
-                <!-- Project Two Row-->
+            </div>
+        </div>
+        <!-- Other projects -->
+    </div>
+</section>
+
                 <div class="row gx-0 justify-content-center">
                     <div class="col-lg-6"><img class="img-fluid" src="{% static "assets/img/perfu1.jpg" %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/06/la-osmotheque-el-archivo-mundial-del.html">«Archivo mundial del perfume»</a></div>
                     <div class="col-lg-6 order-lg-first">

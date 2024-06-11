@@ -2,7 +2,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post  # Solo importa Post
+from .models import Post
+from django.shortcuts import render, get_object_or_404
+
 
 def index(request):
     posts = Post.objects.all().order_by('-id')
@@ -35,3 +37,8 @@ def signup_view_cuentas(request):
     else:
         form = UserCreationForm()
     return render(request, 'inicio/signup.html', {'form': form})
+
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    return render(request, 'article.html', {'post': post})
