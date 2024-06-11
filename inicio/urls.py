@@ -11,4 +11,5 @@ urlpatterns = [
     path('signup/', inicio_views.signup_view_cuentas, name='signup'),
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),
     path('post/<slug:slug>/', post_detail, name='post_detail'),
+    path('maquillaje/', views.maquillaje_posts, name='maquillaje_posts'),
 ]

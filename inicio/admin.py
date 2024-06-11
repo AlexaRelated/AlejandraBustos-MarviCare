@@ -1,11 +1,10 @@
 from django.contrib import admin
 from .models import Post
 from inicio.models import Post
-
-for post in Post.objects.all():
-    print(post.slug)
+from .models import Post
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author')
+    list_display = ('title', 'author', 'published_date')
     search_fields = ('title', 'content')
     list_filter = ('category', 'author')
     fieldsets = (
@@ -14,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
         }),
     )
 
-admin.site.register(Post, PostAdmin)
+
 
 
 

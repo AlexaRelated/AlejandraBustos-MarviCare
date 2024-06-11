@@ -8,7 +8,7 @@ from django.http import Http404
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-id')
+    posts = Post.objects.all()
     return render(request, 'inicio/index.html', {'posts': posts})
 
 def login_view_cuentas(request):
@@ -46,3 +46,8 @@ def post_detail(request, slug):
     except Http404:
         return render(request, '404.html', {'error_message': 'Post no encontrado'})
     return render(request, 'article.html', {'post': post})
+
+
+def maquillaje_posts(request):
+    posts = Post.objects.filter(category='maquillaje')
+    return render(request, 'maquillaje.html', {'posts': posts})
