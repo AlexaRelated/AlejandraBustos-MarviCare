@@ -50,6 +50,12 @@ def post_detail(request, slug):
         return render(request, '404.html', {'error_message': 'Post no encontrado'})
     return render(request, 'article.html', {'post': post})
 
+
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'inicio/post.html', {'posts': posts})
+
+
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
     return render(request, 'maquillaje.html', {'posts': posts})
