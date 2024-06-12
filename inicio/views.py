@@ -53,8 +53,7 @@ def post_detail(request, slug):
 
 def post_list(request):
     posts = Post.objects.all()
-    return render(request, 'inicio/post.html', {'posts': posts})
-
+    return render(request, 'post.html', {'posts': posts})
 
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')

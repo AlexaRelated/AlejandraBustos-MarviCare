@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'proyecto',
     'inicio',
     'blog',
+    'django.contrib.humanize',    #filtros de plantilla para hacer que los datos sean más legibles
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
