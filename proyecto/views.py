@@ -29,4 +29,6 @@ def registro_view(request):
             return redirect('login')  # Redirigir al login después del registro
     else:
         form = UserCreationForm()
-    return render(request, 'inicio/registro.html', {'form': form})
+    return render(request, 'inicio/registro.html', {'form': form})  # Renderiza la plantilla desde el directorio inicio
+
+
