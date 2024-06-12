@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +54,7 @@
                     <p class="mb-3">{{ posts.0.content|truncatewords:30 }}</p>
                     <div class="d-flex align-items-center">
                         <img class="rounded-circle" src="{% static 'assets/img/demo/avatar2.jpg' %}" width="70">
-                        <small class="ml-2">{{ posts.0.author }} <span class="text-muted d-block">{{ posts.0.created_at|naturaltime }} &middot; 5 min. read</span></small>
+                        <small class="ml-2">{{ post.author }} <span class="text-muted d-block">{{ post.created_at|naturaltime }} &middot; 5 min. read</span></small>
                     </div>
                 </div>
                 <div class="col-md-6 pr-0">
