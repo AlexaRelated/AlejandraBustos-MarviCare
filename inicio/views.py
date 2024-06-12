@@ -50,11 +50,35 @@ def post_detail(request, slug):
         return render(request, '404.html', {'error_message': 'Post no encontrado'})
     return render(request, 'article.html', {'post': post})
 
-
 def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'post.html', {'posts': posts})
+    posts = [...]  
+    active_tab = 'maquillaje', 'dermocosmetica', 'cosmetica', 'perfumeria', 'formaciones', 'contacto'  # Establecer la pestaña activa según la sección seleccionada
+    return render(request, 'post.html', {'posts': posts, 'active_tab': active_tab})
 
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
     return render(request, 'maquillaje.html', {'posts': posts})
+
+def category_cosmetica(request):
+    posts = Post.objects.filter(category='cosmetica')
+    return render(request, 'category_cosmetica.html', {'posts': posts})
+
+def category_maquillaje(request):
+    posts = Post.objects.filter(category='maquillaje')
+    return render(request, 'category_maquillaje.html', {'posts': posts})
+
+def category_dermocosmetica(request):
+    posts = Post.objects.filter(category='dermocosmetica')
+    return render(request, 'category_dermocosmetica.html', {'posts': posts})
+
+def category_perfumeria(request):
+    posts = Post.objects.filter(category='perfumeria')
+    return render(request, 'category_perfumeria.html', {'posts': posts})
+
+def category_formaciones(request):
+    posts = Post.objects.filter(category='formaciones')
+    return render(request, 'category_formaciones.html', {'posts': posts})
+
+def category_contacto(request):
+    posts = Post.objects.filter(category='contacto')
+    return render(request, 'category_contacto.html', {'posts': posts})

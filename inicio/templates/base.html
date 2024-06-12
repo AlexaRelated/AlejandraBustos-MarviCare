@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Sitio</title>
+    <!-- Tus estilos CSS, enlaces a Bootstrap, etc. -->
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li class="{% if active_tab == 'inicio' %}active{% endif %}"><a href="/">Inicio</a></li>
+            <li class="{% if active_tab == 'cosmetica' %}active{% endif %}"><a href="/cosmetica/">Cosmética</a></li>
+            <li class="{% if active_tab == 'maquillaje' %}active{% endif %}"><a href="/maquillaje/">Maquillaje</a></li>
+            <li class="{% if active_tab == 'dermocosmetica' %}active{% endif %}"><a href="/dermocosmetica/">Dermocosmética</a></li>
+            <li class="{% if active_tab == 'perfumeria' %}active{% endif %}"><a href="/perfumeria/">Perfumería</a></li>
+            <li class="{% if active_tab == 'formaciones' %}active{% endif %}"><a href="/formaciones/">Formaciones</a></li>
+            <li class="{% if active_tab == 'contacto' %}active{% endif %}"><a href="/contacto/">Contacto</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,16 +1,16 @@
-{% load static %}
-{% load humanize %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Posts</title>
-</head>
-<body>
-    <h1>Posts</h1>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Posts</h1>
+<ul>
     {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
+        <li>
+            {% if post.slug %}
+                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+            {% else %}
+                {{ post.title }} (Slug no definido)
+            {% endif %}
+        </li>
     {% endfor %}
-</body>
-</html>
+</ul>
+{% endblock %}

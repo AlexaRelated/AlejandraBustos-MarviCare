@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/favicon.ico' %}">
 <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Mundana Template by WowThemesNet</title>
+<title>MarviCare</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,700" rel="stylesheet">
@@ -20,20 +20,19 @@
 <!-- Navbar -->
 <nav class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}"><strong>Mundana</strong></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><strong>MarviCare</strong></a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbarColor02" style="">
             <ul class="navbar-nav mr-auto d-flex align-items-center">
-                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Intro</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'category_culture' %}">Culture</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'category_tech' %}">Tech</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'category_politics' %}">Politics</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'category_health' %}">Health</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'category_collections' %}">Collections</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'template_docs' %}">Template <span class="badge badge-secondary">docs</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_cosmetica' %}">Cosmética</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_maquillaje' %}">Maquillaje</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_dermocosmetica' %}">Dermocosmética</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_perfumeria' %}">Perfumería</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_formaciones' %}">Formaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_contacto' %}">Contacto</a></li>
             </ul>
             <ul class="navbar-nav ml-auto d-flex align-items-center">
                 <li class="nav-item highlight"><a class="nav-link" href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/">Get this Theme</a></li>
@@ -42,8 +41,15 @@
     </div>
 </nav>
 <!-- End Navbar -->
-
-<!-- Header -->
+{% block content %}
+<h1>Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
+ <!-- Header -->
 <div class="container">
     <div class="jumbotron jumbotron-fluid mb-3 pl-0 pt-0 pb-0 bg-white position-relative">
         <div class="h-100 tofront">
@@ -119,10 +125,10 @@
     <footer class="bg-white border-top p-3 text-muted small">
         <div class="row align-items-center justify-content-between">
             <div>
-                <span class="navbar-brand mr-2"><strong>Mundana</strong></span> Copyright &copy;
+                <span class="navbar-brand mr-2"><strong>MarviCare</strong></span> Copyright &copy;
                 <script>document.write(new Date().getFullYear())</script>. All rights reserved.
             </div>
-            <div>Made with <a target="_blank" class="text-secondary font-weight-bold" href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/">Mundana Theme</a> by WowThemes.net.</div>
+            <div>Made with Alexa<a target="_blank" class="text-secondary font-weight-bold" href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/">MarviCare Theme</a> by AlexaRelated</div>
         </div>
     </footer>
 </div>
