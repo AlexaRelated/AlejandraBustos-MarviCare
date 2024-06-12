@@ -4,12 +4,15 @@ from blog import views as blog_views
 from inicio import views as inicio_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inicio/', include('inicio.urls')),
     path('', inicio_views.index, name='index'),  # Página de inicio
-    path('login/', inicio_views.login_view_cuentas, name='login'),  
+    path('login/', views.login_view, name='login'),  # URL para iniciar sesión
+    path('registro/', views.registro_view, name='registro'),  # URL para registro  
     path('logout/', inicio_views.logout_view, name='logout'),
     path('signup/', inicio_views.signup_view_cuentas, name='signup'),
     path('post/<int:pk>/', blog_views.article, name='post_detail'),  
