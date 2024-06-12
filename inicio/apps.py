@@ -4,5 +4,5 @@ class InicioConfig(AppConfig):
     name = 'inicio'
 
     def ready(self):
-        # No realizar consultas a la base de datos aquí
+        # No realizar consultas a la base de datos
         pass
