@@ -1,0 +1,16 @@
+<!-- create_or_update_post.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tu encabezado -->
+</head>
+<body>
+    <h2>{{ form.instance.title|default:"Crear Post" }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

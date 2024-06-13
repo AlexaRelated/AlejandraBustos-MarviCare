@@ -21,6 +21,7 @@ urlpatterns = [
     path('crear_publicacion/', blog_views.crear_publicacion, name='crear_publicacion'),
     path('blog/', include('blog.urls')),  
     path('inicio/', include('inicio.urls')), 
+    
 ]
 
 if settings.DEBUG:

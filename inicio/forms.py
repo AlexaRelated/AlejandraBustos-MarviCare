@@ -29,3 +29,4 @@ class SignUpForm(UserCreationForm):
             profile = Profile.objects.create(user=user, city=self.cleaned_data['city'])
             profile.save()
         return user
+

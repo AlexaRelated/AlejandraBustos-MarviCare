@@ -6,6 +6,11 @@ from django.http import Http404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.utils.text import slugify
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import PostForm
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def index(request):
@@ -52,10 +57,62 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+    else:
+        posts = Post.objects.none()
+    return render(request, 'search_results.html', {'posts': posts, 'query': query})
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        author = request.user  # Asigna el usuario autenticado como autor
+        post = Post.objects.create(title=title, content=content, author=author)
+        return redirect('post_detail', slug=post.slug)
+    return render(request, 'create_post.html')
+
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save()
+            return redirect('post_detail', slug=post.slug)  # Redirecciona al detalle del post actualizado
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'edit_post.html', {'form': form})
+
+def create_or_update_post(request, post_id=None):
+    # Si se proporciona un post_id, estamos editando un post existente
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
+    else:
+        post = None
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save()
+            return HttpResponseRedirect('/post/detail/{post.id}')  # Redirige al detalle del post creado
+    else:
+        form = PostForm(instance=post)
+    
+    return render(request, 'inicio/create_or_update_post.html', 'create_post.html', {'form': form})
+
 posts_without_slug = Post.objects.filter(slug='')
 for post in posts_without_slug:
     post.slug = slugify(post.title)
     post.save()
+    
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    return render(request, 'post_detail.html', {'post': post})
 
 def post_detail(request, slug):
     try:
@@ -66,8 +123,7 @@ def post_detail(request, slug):
 
 def post_list(request):
     posts = Post.objects.all()
-    active_tab = 'inicio'
-    return render(request, 'inicio/post.html', {'posts': posts, 'active_tab': active_tab})
+    return render(request, 'post_list.html', {'posts': posts})
 
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
