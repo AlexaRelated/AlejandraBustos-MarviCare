@@ -10,7 +10,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('blog_home')  # O la página que quieras después del login
+            return redirect('blog_home')  
         else:
             error_message = "Credenciales incorrectas. Por favor, inténtalo de nuevo."
             return render(request, 'inicio/login.html', {'error_message': error_message})
