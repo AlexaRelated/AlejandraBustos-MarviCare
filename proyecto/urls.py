@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('inicio/', include('inicio.urls')),
     path('', inicio_views.index, name='index'),  # Página de inicio
+    path('', include('inicio.urls')),
     path('login/', views.login_view, name='login'),  # URL para iniciar sesión
     path('registro/', views.registro_view, name='registro'),  # URL para registro  
     path('logout/', inicio_views.logout_view, name='logout'),

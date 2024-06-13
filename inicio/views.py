@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from .models import Post
 from .forms import SignUpForm
 from django.http import Http404
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+from django.utils.text import slugify
+
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.exclude(slug__exact='')
+
     return render(request, 'inicio/index.html', {'posts': posts})
 
 def signup_view_cuentas(request):
@@ -27,21 +31,31 @@ def signup_view_cuentas(request):
 
 def login_view_cuentas(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful')
+                return redirect('index')  # Redirigir a la página de inicio después del inicio de sesión
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Invalid form data')
     else:
-        form = UserCreationForm()
-    return render(request, 'inicio/signup.html', {'form': form})
+        form = AuthenticationForm()
+    return render(request, 'inicio/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+posts_without_slug = Post.objects.filter(slug='')
+for post in posts_without_slug:
+    post.slug = slugify(post.title)
+    post.save()
 
 def post_detail(request, slug):
     try:
@@ -51,9 +65,9 @@ def post_detail(request, slug):
     return render(request, 'article.html', {'post': post})
 
 def post_list(request):
-    posts = [...]  
-    active_tab = 'maquillaje', 'dermocosmetica', 'cosmetica', 'perfumeria', 'formaciones', 'contacto'  # Establecer la pestaña activa según la sección seleccionada
-    return render(request, 'post.html', {'posts': posts, 'active_tab': active_tab})
+    posts = Post.objects.all()
+    active_tab = 'inicio'
+    return render(request, 'inicio/post.html', {'posts': posts, 'active_tab': active_tab})
 
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
@@ -82,3 +96,5 @@ def category_formaciones(request):
 def category_contacto(request):
     posts = Post.objects.filter(category='contacto')
     return render(request, 'category_contacto.html', {'posts': posts})
+
+

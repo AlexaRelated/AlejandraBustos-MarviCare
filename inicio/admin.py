@@ -16,6 +16,8 @@ class PostAdmin(admin.ModelAdmin):
     )
 
 
-
+for post in Post.objects.all():
+    if not post.slug:
+        print(f"El post {post.title} no tiene slug.")
 
 
