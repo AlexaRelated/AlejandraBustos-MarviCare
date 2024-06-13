@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .models import Post, Category
-from .forms import SignUpForm
-from django.http import Http404
+from .forms import SignUpForm, PostForm
+from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.utils.text import slugify
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostForm
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from blog.models import BlogPost
+
 
 
 def index(request):
@@ -57,18 +56,19 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+
 def search_posts(request):
     query = request.GET.get('q')
     if query:
-        # Buscar en las publicaciones existentes
-        posts_existing = Post.objects.filter(
+        # Filtrar tanto los posts de inicio como los del blog
+        inicio_posts = Post.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         )
-        # Buscar en las publicaciones que se están creando o editando
-        posts_creating = PostForm.Meta.model.objects.filter(
+        blog_posts = BlogPost.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         )
-        posts = list(posts_existing) + list(posts_creating)  # Combinar los resultados
+        # Unir los resultados en una única lista
+        posts = list(inicio_posts) + list(blog_posts)
     else:
         posts = []
     return render(request, 'search_results.html', {'posts': posts, 'query': query})
@@ -99,7 +99,9 @@ def edit_post(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'edit_post.html', {'form': form})
 
+@login_required
 def create_or_update_post(request, post_id=None):
+    # Si se proporciona un post_id, estamos editando un post existente
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
     else:
@@ -108,15 +110,12 @@ def create_or_update_post(request, post_id=None):
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            form.save_m2m()  # Guardar las relaciones ManyToMany
-            return redirect('post_detail', slug=post.slug)
+            post = form.save()
+            return HttpResponseRedirect(f'/post/detail/{post.id}')  # Redirige al detalle del post creado
     else:
         form = PostForm(instance=post)
     
-    return render(request, 'inicio/create_or_update_post.html', {'form': form}) 
+    return render(request, 'inicio/create_or_update_post.html', {'form': form})
 
 posts_without_slug = Post.objects.filter(slug='')
 for post in posts_without_slug:

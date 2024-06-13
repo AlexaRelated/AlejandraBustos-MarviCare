@@ -1,14 +1,10 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, BlogPost
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'category', 'created_at')
-    search_fields = ('title', 'content')
-    list_filter = ('category', 'author')
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'content', 'author', 'category', 'image')
-        }),
-    )
+    list_display = ('title', 'author', 'created_at')
+    list_filter = ('author__username',)
 
-admin.site.register(Post, PostAdmin)
+# Registra los modelos restantes
+admin.site.register(Post)  # Registrar Post sin especificar el admin
+admin.site.register(BlogPost)
