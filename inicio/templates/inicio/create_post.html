@@ -1,17 +1,17 @@
+<!-- create_post.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <h1>Crear un Nuevo Post</h1>
 <form method="post" action="{% url 'create_post' %}">
     {% csrf_token %}
-    <div class="mb-3">
-        <label for="title" class="form-label">Título</label>
-        <input type="text" class="form-control" id="title" name="title" required>
-    </div>
-    <div class="mb-3">
-        <label for="content" class="form-label">Contenido</label>
-        <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
-    </div>
+    {{ form.as_p }}
+    <label for="categories">Categorías:</label>
+    <select name="categories" id="categories">
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
     <button type="submit" class="btn btn-primary">Crear Post</button>
 </form>
 {% endblock %}

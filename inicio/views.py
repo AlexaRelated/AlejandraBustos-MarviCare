@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .models import Post
+from .models import Post, Category
 from .forms import SignUpForm
 from django.http import Http404
 from django.contrib.auth.forms import AuthenticationForm
@@ -70,12 +70,17 @@ def search_posts(request):
 @login_required
 def create_post(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        author = request.user  # Asigna el usuario autenticado como autor
-        post = Post.objects.create(title=title, content=content, author=author)
-        return redirect('post_detail', slug=post.slug)
-    return render(request, 'create_post.html')
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()  
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = PostForm()
+    categories = Category.objects.all()  # Obtener todas las categorías para pasar al formulario
+    return render(request, 'create_post.html', {'form': form, 'categories': categories})
 
 def edit_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
@@ -89,7 +94,6 @@ def edit_post(request, post_id):
     return render(request, 'edit_post.html', {'form': form})
 
 def create_or_update_post(request, post_id=None):
-    # Si se proporciona un post_id, estamos editando un post existente
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
     else:
@@ -98,12 +102,15 @@ def create_or_update_post(request, post_id=None):
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save()
-            return HttpResponseRedirect('/post/detail/{post.id}')  # Redirige al detalle del post creado
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()  # Guardar las relaciones ManyToMany
+            return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
     
-    return render(request, 'inicio/create_or_update_post.html', 'create_post.html', {'form': form})
+    return render(request, 'inicio/create_or_update_post.html', {'form': form}) 
 
 posts_without_slug = Post.objects.filter(slug='')
 for post in posts_without_slug:
@@ -117,9 +124,9 @@ def post_detail(request, slug):
 def post_detail(request, slug):
     try:
         post = get_object_or_404(Post, slug=slug)
+        return render(request, 'post_detail.html', {'post': post})
     except Http404:
         return render(request, '404.html', {'error_message': 'Post no encontrado'})
-    return render(request, 'article.html', {'post': post})
 
 def post_list(request):
     posts = Post.objects.all()

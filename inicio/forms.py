@@ -8,9 +8,11 @@ from .models import Profile
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'author',  'category', 'image']
-
-
+        fields = ['title', 'content', 'categories']
+        widgets = {
+            'categories': forms.CheckboxSelectMultiple()
+        }
+        
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
