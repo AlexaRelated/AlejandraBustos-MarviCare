@@ -60,11 +60,17 @@ def logout_view(request):
 def search_posts(request):
     query = request.GET.get('q')
     if query:
-        posts = Post.objects.filter(
+        # Buscar en las publicaciones existentes
+        posts_existing = Post.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         )
+        # Buscar en las publicaciones que se están creando o editando
+        posts_creating = PostForm.Meta.model.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+        posts = list(posts_existing) + list(posts_creating)  # Combinar los resultados
     else:
-        posts = Post.objects.none()
+        posts = []
     return render(request, 'search_results.html', {'posts': posts, 'query': query})
 
 @login_required

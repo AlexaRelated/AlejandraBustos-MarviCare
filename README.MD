@@ -7,10 +7,13 @@ me pareció una buena idea crear un blog para aquellos trabajadores del sector q
 y estar actualizados con la más reciente información y tener tips para emjorar la venta.
 
 
+# El proceso
+Empecé por crear el proyecto en Git, estableciendo las opciones de configuracion. Una vez terminado de preparar el area de trabajo, procedí a instalar DJango, creando anteriormente el entorno virtual.
+Una vez terminadas las instalaciones, inicié el proyecto creando las App.
+He utilizado codigo brindado en repositorios publicados en la web.
 
 
 # Tabla de contenido
-
 >Inicio
 >Menu
 >Buscador
@@ -20,12 +23,12 @@ y estar actualizados con la más reciente información y tener tips para emjorar
 Se accede al blog con usuario y contraseña, al estar dedicado al trabajador del sector. 
 
 # Menu
+En el menu encontramos 5 categorías, de las cuales 4 estan destinadas a los posts con información para las formaciones, y los datos de contacto por si el usuario presenta algún problema de uso o si quiere resolver dudas.
 
+# Buscador
+En el bsucador 
 
-
-# El proceso
-
-Empecé por crear el proyecto en Git
+# Posts
 
 
 # Autor
