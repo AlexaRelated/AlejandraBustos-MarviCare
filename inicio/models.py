@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from django.db.models import Q
 from django.shortcuts import render
 
+from blog.models import BlogPost
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
 

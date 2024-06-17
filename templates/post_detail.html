@@ -1,18 +1,41 @@
-<h1>{{ post.title }}</h1>
-<p>{{ post.content }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-content">{{ post.content }}</p>
 
-<h2>Comments</h2>
-{% for comment in comments %}
-    <div>
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text }}</p>
-        <p>{{ comment.created_at }}</p>
+        <div class="comments-section">
+            <h2>Comments</h2>
+            <div>
+                {% for comment in comments %}
+                    <div class="card comment-card">
+                        <div class="card-body">
+                            <h5 class="card-title comment-author">{{ comment.author }}</h5>
+                            <p class="card-text comment-text">{{ comment.text }}</p>
+                            <p class="card-text comment-date"><small class="text-muted">{{ comment.created_date }}</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="comment-form mt-4">
+            <h2>Add a Comment</h2>
+            <form method="post" class="form-inline">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </div>
     </div>
-{% endfor %}
-
-<h2>Add a comment</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Comment</button>
-</form>
+</body>
+</html>

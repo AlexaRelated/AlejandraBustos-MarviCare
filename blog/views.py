@@ -1,11 +1,12 @@
+# blog/views.py
 from django.shortcuts import render, get_object_or_404
-from .models import Post, BlogPost, Author, Article, Category, Comment
-from .forms import CommentForm
+from .models import Post, Author, Article, Category, BlogPost, Comment
+from .forms import CommentForm  # Importar desde forms.py
 from django.db.models import Q
 from inicio.models import Post as InicioPost
 
 def blog_home(request):
-    posts = Post.objects.all().order_by('-id')  # Cargar todos los posts y ordenarlos por el ID en orden descendente
+    posts = Post.objects.all().order_by('-id')
     return render(request, 'index.html', {'posts': posts})
 
 def article(request, pk):
@@ -30,7 +31,6 @@ def category_view(request, category):
     return render(request, 'category.html', {'category': category_obj, 'posts': posts})
 
 def crear_publicacion(request):
-    # Lógica para crear una nueva publicación
     return render(request, 'crear_publicacion.html')
 
 def search_posts(request):

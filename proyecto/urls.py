@@ -18,6 +18,7 @@ urlpatterns = [
     path('category/<str:category>/', blog_views.category_view, name='category'),
     path('crear_publicacion/', blog_views.crear_publicacion, name='crear_publicacion'),
     path('blog/', include('blog.urls')),  # Incluye las URLs de blog al final para evitar conflictos
+    path('', blog_views.blog_home, name='blog_home'),
 ]
 
 if settings.DEBUG:
