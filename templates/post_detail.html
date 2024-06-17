@@ -1,11 +1,18 @@
-{% extends 'plantilla_base.html' %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
 
-{% block title %}Detalle del Post{% endblock %}
+<h2>Comments</h2>
+{% for comment in comments %}
+    <div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text }}</p>
+        <p>{{ comment.created_at }}</p>
+    </div>
+{% endfor %}
 
-{% block content %}
-<article>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
-    <p><small>Publicado por {{ post.author }} el {{ post.published_date }}</small></p>
-</article>
-{% endblock %}
+<h2>Add a comment</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Comment</button>
+</form>

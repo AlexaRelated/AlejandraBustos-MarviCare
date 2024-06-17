@@ -137,6 +137,11 @@ def post_list(request):
     posts = Post.objects.all()
     return render(request, 'post_list.html', {'posts': posts})
 
+def category_view(request, category_name):
+    category = Category.objects.get(name__iexact=category_name)
+    posts = Post.objects.filter(categories=category)
+    return render(request, 'blog/category.html', {'posts': posts})
+
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
     return render(request, 'maquillaje.html', {'posts': posts})

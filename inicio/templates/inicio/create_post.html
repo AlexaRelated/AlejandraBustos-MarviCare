@@ -7,7 +7,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <label for="categories">Categorías:</label>
-    <select name="categories" id="categories">
+    <select name="categories" id="categories" multiple>
         {% for category in categories %}
         <option value="{{ category.id }}">{{ category.name }}</option>
         {% endfor %}

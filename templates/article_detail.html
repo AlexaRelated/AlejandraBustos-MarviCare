@@ -1,11 +1,29 @@
-{% extends 'plantilla_base.html' %}
-
-{% block title %}Detalle del Artículo{% endblock %}
+<!-- templates/article_detail.html -->
+{% extends "base.html" %}
 
 {% block content %}
-<article>
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.content }}</p>
-    <p><small>Publicado por {{ article.author }} el {{ article.published_date }}</small></p>
-</article>
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<p>Author: {{ post.author }}</p>
+<p>Posted on: {{ post.created_at }}</p>
+
+<h2>Comments</h2>
+<div>
+    {% for comment in comments %}
+        <div>
+            <p><strong>{{ comment.author }}</strong> said:</p>
+            <p>{{ comment.content }}</p>
+            <p><small>{{ comment.created_at }}</small></p>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</div>
+
+<h2>Add a Comment</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+</form>
 {% endblock %}

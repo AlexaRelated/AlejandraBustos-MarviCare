@@ -1,10 +1,14 @@
 from django.contrib import admin
-from .models import Post, BlogPost
+from .models import Post, BlogPost, Category
 
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'created_at')
-    list_filter = ('author__username',)
+    list_display = ('title', 'content')
 
-# Registra los modelos restantes
-admin.site.register(Post)  # Registrar Post sin especificar el admin
-admin.site.register(BlogPost)
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content')
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
