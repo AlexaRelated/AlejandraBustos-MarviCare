@@ -14,7 +14,7 @@
         <p class="post-content">{{ post.content }}</p>
 
         <div class="comments-section">
-            <h2>Comments</h2>
+            <h2>Comentarios</h2>
             <div>
                 {% for comment in comments %}
                     <div class="card comment-card">
@@ -29,11 +29,11 @@
         </div>
 
         <div class="comment-form mt-4">
-            <h2>Add a Comment</h2>
+            <h2>Agregar comentario</h2>
             <form method="post" class="form-inline">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                <button type="submit" class="btn btn-primary mt-2">Publicar</button>
             </form>
         </div>
     </div>
