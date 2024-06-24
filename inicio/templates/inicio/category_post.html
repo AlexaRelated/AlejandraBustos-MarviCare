@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category.name }} Posts</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/styles.css' %}">
+</head>
+<body>
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+                <div class="container px-4 px-lg-5">
+                    <a class="navbar-brand" href="#page-top">MarviCare</a>
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        Menu
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="#cosmetica">Cosmética</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#maquillaje">Maquillaje</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#dermocosmetica">Dermocosmética</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#perfumeria">Perfumería</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                            <li class="nav-item">
+                                <form id="blogSearchForm" class="d-flex">
+                                    <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% include 'partials/menu.html' %}
+
+            <section class="projects-section bg-light" id="{{ category.slug }}">
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                        <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/hm1.jpg' %}" alt="..." /></div>
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="featured-text text-center text-lg-left">
+                                <h4>{{ category.name }}</h4>
+                                <p class="text-black-50 mb-0">Entradas relacionadas con {{ category.name }}:</p>
+                                <ul>
+                                    {% for post in posts %}
+                                        <li><a href="#">{{ post.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </body>
+        </html>

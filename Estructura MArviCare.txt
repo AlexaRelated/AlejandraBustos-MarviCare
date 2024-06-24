@@ -1,24 +1,47 @@
 MarviCare
   |--blog
      |--__pycache__
+     |--management
      |--migrations
+     |--templates
+		|--add_post.html
+		|--category.html
+		|--post_detail.html
      |--__init__.py
      |--admin.py
      |--apps.py
+     |--forms.py
      |--models.py
      |--tests.py
      |--urls.py
      |--views.py
   |--inicio
-	|--template
+     |--migrations
+     |--template
+		|--category
+              		|--category_cosmetica.html
+              		|--category_dermocosmetica.html
+              		|--category_formaciones.html
+              		|--category_maquillaje.html
+              		|--category_perfumeria.html
 		|--inicio
+              		|--category_post.html
+              		|--create_or_update_post.html
+              		|--create_post.html
               		|--index.html
+              		|--login.html
+              		|--post_detail.html
+              		|--post_list.html
+              		|--post.html
+              		|--registro.html
+              		|--search_result.html
+
+		|--base.html
      |--statics
 		|--assets
 		|--css
 		|--js
      |--__pycache__
-     |--migrations
      |--__init__.py
      |--admin.py
      |--apps.py
@@ -37,17 +60,21 @@ MarviCare
      |--urls.py
      |--views.py
      |--wsgi.py
+  |--staticfiles
+     |--admin
+     |--assets
   |--templates
-         |--inicio
-              |--login.html
-              |--signup.html
+     |--inicio
+             |--login.html
+     |--404.html
      |--article_detail.html
      |--article.html.html
      |--author.html
      |--category.html
      |--index.html
-     |--post_detail.html
+     |--maquillaje.html
      |--plantilla_base.html
+     |--post.html
   |--venv
   |--.gitignore
   |--db.sqlite3

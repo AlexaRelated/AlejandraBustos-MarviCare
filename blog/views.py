@@ -1,9 +1,11 @@
-# blog/views.py
+
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils import timezone
 from .models import Post, Author, Article, Category, BlogPost, Comment
-from .forms import CommentForm  # Importar desde forms.py
-from django.db.models import Q
 from inicio.models import Post as InicioPost
+from .forms import PostForm
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def blog_home(request):
     posts = Post.objects.all().order_by('-id')
@@ -47,19 +49,28 @@ def search_posts(request):
         posts = []
     return render(request, 'search_results.html', {'posts': posts, 'query': query})
 
-def post_detail(request, pk):
-    post = get_object_or_404(BlogPost, pk=pk)
-    comments = post.comments.all()
-
+@login_required
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
+        comment_text = request.POST.get('comment')
+        if comment_text:
+            comment = Comment(post=post, author=request.user, text=comment_text, created_at=timezone.now())
             comment.save()
-            # Después de guardar el comentario, podrías redirigir a la misma página o a otra página
-            return redirect('post_detail', pk=pk)  # Reemplaza 'post_detail' con el nombre de tu vista de detalle de post
-    else:
-        form = CommentForm()
+            return redirect('post_detail', slug=post.slug)
+    
+    comments = post.comments.all()
+    
+    return render(request, 'post_detail.html', {'post': post, 'comments': comments})
 
-    return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
+@login_required
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)  # Incluir request.FILES para manejar archivos
+        if form.is_valid():
+            form.save()
+            return redirect('blog_home')  # Redirigir a donde desees después de agregar la publicación
+    else:
+        form = PostForm()
+    return render(request, 'add_post.html', {'form': form})

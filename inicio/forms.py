@@ -1,18 +1,17 @@
 
-from .models import Post
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Post
+from .models import Comment
+
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'categories']
-        widgets = {
-            'categories': forms.CheckboxSelectMultiple()
-        }
-        
+        fields = ['title', 'content', 'slug', 'category']
+ 
+
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
@@ -32,3 +31,10 @@ class SignUpForm(UserCreationForm):
             profile.save()
         return user
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Write your comment here...'}),
+        }

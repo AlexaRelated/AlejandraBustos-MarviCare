@@ -1,12 +1,15 @@
-{% extends "base.html" %}
 
-{% block content %}
-    <h1>Lista de Posts</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post List</title>
+</head>
+<body>
+    <h1>Post List</h1>
     <ul>
         {% for post in posts %}
-            <li>
-                <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-            </li>
+            <li>{{ post.title }}</li>
         {% endfor %}
     </ul>
-{% endblock %}
+</body>
+</html>
