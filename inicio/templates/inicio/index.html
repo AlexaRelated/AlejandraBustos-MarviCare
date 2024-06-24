@@ -38,6 +38,7 @@
                         <li class="nav-item"><a class="nav-link" href="#maquillaje">Maquillaje</a></li>
                         <li class="nav-item"><a class="nav-link" href="#dermocosmetica">Dermocosmética</a></li>
                         <li class="nav-item"><a class="nav-link" href="#perfumeria">Perfumería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Bienestar</a></li>
                         <li class="nav-item"><a class="nav-link" href="#perfumeria">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                         <li class="nav-item">
@@ -95,7 +96,7 @@
                     <div class="col-lg-8">
                         <h2 class="text-white mb-4">MarviCare</h2>
                         <p class="text-white-50">
-                            Disfruta de un extenso número de módulos y contenidos interactivos. ¿A qué estás esperando? 
+                            Disfruta de un extenso número de módulos y contenidos interactivos. ¿Qué estás esperando? 
                             <a href="{% url 'post_list' %}" target="_blank">¡Comienza tu aprendizaje!</a>
                         </p>
                     </div>
@@ -144,6 +145,23 @@
                         </div>
                     </div>
                 </div>
+
+        <!-- Bienestar-->
+        <section class="projects-section bg-light" id="bienestar">
+            <div class="container px-4 px-lg-5">
+                <!-- Featured Project Row-->
+                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/bienestar.jpg' %}" alt="..." /></div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="featured-text text-center text-lg-left">
+                            <h4>Bienestar</h4>
+                            <p class="text-black-50 mb-0">La belleza empieza desde dentro. Una piel sana es una piel que refleja un equilibrio interior de salud tanto física, como mental. ¿Quieres saber cómo puedes potenciar la belleza de tu piel desde tu interior? </p>
+                            <a href="{% url 'category_posts' category_slug='bienestar' %}" target="_blank">¡Sigue leyendo!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Other projects -->
     </div>
 </section>

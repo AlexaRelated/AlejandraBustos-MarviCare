@@ -11,6 +11,11 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'slug', 'category']
  
+ 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)

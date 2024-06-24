@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from blog.models import BlogPost, Comment
 from .forms import CommentForm
-
+from .forms import ProfileForm
 
 
 def index(request):
@@ -56,6 +56,24 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+@login_required
+def my_view(request):
+    return render(request, 'my_template.html', {'user': request.user})
+
+@login_required
+def profile_view(request):
+    return render(request, 'inicio/profile.html', {'user': request.user})
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=request.user)
+    return render(request, 'inicio/update_profile.html', {'form': form})
 
 def search_posts(request):
     query = request.GET.get('q')
