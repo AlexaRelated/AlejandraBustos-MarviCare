@@ -174,8 +174,8 @@ def category_view(request, category_name):
 
 def category_posts(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    posts = Post.objects.filter(categories=category)
-    return render(request, 'inicio/category_posts.html', {'category': category, 'posts': posts})
+    posts = Post.objects.filter(category=category)
+    return render(request, 'category_posts.html', {'category': category, 'posts': posts})
 
 def maquillaje_posts(request):
     posts = Post.objects.filter(category='maquillaje')
@@ -251,8 +251,8 @@ def contacto_view(request):
             return redirect('comment_success')
     else:
         form = CommentForm()
-    comments = Comment.objects.all().order_by('-created_date') 
-    return render(request, 'contacto.html', {'form': form, 'comments': comments})
+    comments = Comment.objects.all().order_by('-created_date')
+    return render(request, 'inicio/contacto.html', {'form': form, 'comments': comments})
 
 def comment_success_view(request):
     return render(request, 'comment_success.html')

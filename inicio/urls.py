@@ -1,4 +1,3 @@
-
 from django.urls import path
 from . import views
 from django.views.generic import TemplateView
@@ -19,14 +18,7 @@ urlpatterns = [
     path('zoom/', zoom_view, name='zoom'),
     path('generate-signature/', generate_signature, name='generate_signature'),
     path('post/<int:post_id>/edit/', views.create_or_update_post, name='edit_post'),
-    path('maquillaje/', views.maquillaje_posts, name='maquillaje_posts'),
     path('category/<slug:category_slug>/', views.category_posts, name='category_posts'),
-    path('category_cosmetica/', views.category_cosmetica, name='category_cosmetica'),
-    path('category_maquillaje/', views.category_maquillaje, name='category_maquillaje'),
-    path('category_dermocosmetica/', views.category_dermocosmetica, name='category_dermocosmetica'),
-    path('category_perfumeria/', views.category_perfumeria, name='category_perfumeria'),
-    path('category_formaciones/', views.category_formaciones, name='category_formaciones'),
-    path('category_contacto/', views.category_contacto, name='category_contacto'),
     path('cosmetica/', views.cosmetica_view, name='cosmetica'),
     path('maquillaje/', views.maquillaje_view, name='maquillaje'),
     path('dermocosmetica/', views.dermocosmetica_view, name='dermocosmetica'),
@@ -34,5 +26,4 @@ urlpatterns = [
     path('formaciones/', views.formaciones_view, name='formaciones'),
     path('bienestar/', views.bienestar_view, name='bienestar'),
     path('contacto/', views.contacto_view, name='contacto'),
-
 ]

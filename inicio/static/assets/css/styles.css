@@ -11358,3 +11358,10 @@ body {
   object-fit: cover; /* Cubre el área asignada sin distorsionar la imagen */
 }
 
+.masthead .text-center {
+  margin-top: 100000px; 
+}
+
+.masthead .mb-5 {
+  margin-bottom: 50px; 
+}

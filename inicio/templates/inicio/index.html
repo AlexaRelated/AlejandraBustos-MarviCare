@@ -35,8 +35,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#{% url 'maquillaje' %}">Maquillaje</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
@@ -59,31 +59,6 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
-
-        {% block create_post_form %}
-        <section class="create-post-section bg-light">
-            <div class="container px-4 px-lg-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <h2 class="text-center mb-4">Crear un nuevo post</h2>
-                        <form method="post" action="{% url 'create_post' %}" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <!-- Campos del formulario para crear un post -->
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Título</label>
-                                <input type="text" class="form-control" id="title" name="title" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="content" class="form-label">Contenido</label>
-                                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Crear Post</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    {% endblock %}
                     </div>
                 </div>
             </div>
@@ -94,14 +69,14 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h2 class="text-white mb-4">MarviCare</h2>
                         <p class="text-white-50">
-                            Disfruta de un extenso número de módulos y contenidos interactivos. ¿Qué estás esperando? 
+                            <img class="img-fluid" src="{% static "assets/img/fondoM.jpg" %}" alt="..." />Disfruta de un extenso número de módulos y contenidos interactivos. ¿Qué estás esperando? 
                             <a href="{% url 'post_list' %}" target="_blank">¡Comienza tu aprendizaje!</a>
+                            
                         </p>
                     </div>
                 </div>
-                <img class="img-fluid" src="{% static "assets/img/fondoM.jpg" %}" alt="..." />
+
             </div>
 
         <!-- Maquillaje-->
