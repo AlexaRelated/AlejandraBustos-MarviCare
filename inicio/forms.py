@@ -11,7 +11,6 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'slug', 'category']
  
- 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -39,7 +38,4 @@ class SignUpForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('text',)
-        widgets = {
-            'text': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Write your comment here...'}),
-        }
+        fields = ['name', 'email', 'message']

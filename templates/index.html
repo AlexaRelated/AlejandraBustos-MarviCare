@@ -27,9 +27,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#signup">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#{% url 'maquillaje' %}">Maquillaje</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                 </ul>
             </div>
         </div>

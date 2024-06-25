@@ -19,7 +19,7 @@ import hashlib
 
 
 def index(request):
-    posts = Post.objects.all()  # Obteniendo todos los posts
+    posts = [Post.objects.all()]  # Obteniendo todos los posts
     return render(request, 'inicio/index.html', {'posts': posts})
 
 def signup_view_cuentas(request):
@@ -244,4 +244,15 @@ def bienestar_view(request):
     return render(request, 'inicio/bienestar.html')
 
 def contacto_view(request):
-    return render(request, 'inicio/contacto.html')
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('comment_success')
+    else:
+        form = CommentForm()
+    comments = Comment.objects.all().order_by('-created_date') 
+    return render(request, 'contacto.html', {'form': form, 'comments': comments})
+
+def comment_success_view(request):
+    return render(request, 'comment_success.html')

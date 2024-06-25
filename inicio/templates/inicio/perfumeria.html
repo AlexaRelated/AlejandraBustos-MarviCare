@@ -34,13 +34,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#cosmetica">Cosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#maquillaje">Maquillaje</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#dermocosmetica">Dermocosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Perfumería</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Bienestar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Formaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#{% url 'maquillaje' %}">Maquillaje</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
                             <form id="blogSearchForm" class="d-flex">
                                 <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
@@ -57,8 +57,8 @@
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
+                        <h1 class="mx-auto my-0 text-uppercase">Perfumería</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">El perfume es tantas cosas… Hemos preguntado a los expertos, nuestros Académicos del Perfume, qué significa para ellos y en sus definiciones podemos ver que el perfume es arte, es evocación, es inspiración, es ciencia, es poesía, es sensorialidad… </h2>
 
         
                     </div>

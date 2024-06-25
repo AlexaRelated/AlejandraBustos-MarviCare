@@ -34,13 +34,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#cosmetica">Cosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#maquillaje">Maquillaje</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#dermocosmetica">Dermocosmética</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Perfumería</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Bienestar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#perfumeria">Formaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#{% url 'maquillaje' %}">Maquillaje</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
                             <form id="blogSearchForm" class="d-flex">
                                 <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
@@ -57,10 +57,33 @@
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
+                        <h1 class="mx-auto my-0 text-uppercase">Contacto</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Si tienes dudas o sujerencias. Ayudanos a mejorar</h2>
 
-        
+        <!-- Formulario de Comentarios y Sugerencias -->
+    <section class="comments-section" id="comments">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+                    <h2 class="text-white mb-5">Deja tus comentarios y sugerencias</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                    <h2 class="text-white mt-5">Comentarios Recientes</h2>
+                    <ul class="list-group">
+                        {% for comment in comments %}
+                        <li class="list-group-item">
+                            <strong>{{ comment.name }}</strong> ({{ comment.created_at }}):<br>
+                            {{ comment.message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
                     </div>
                 </div>
             </div>

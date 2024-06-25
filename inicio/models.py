@@ -24,13 +24,13 @@ class Post(models.Model):
         return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='inicio_comments')  # Cambiado related_name
-    text = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.text
+        return f"{self.name} - {self.message[:50]}"
 
 
 class Profile(models.Model):

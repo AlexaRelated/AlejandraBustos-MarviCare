@@ -15,11 +15,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#cosmetica">Cosmética</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#maquillaje">Maquillaje</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#dermocosmetica">Dermocosmética</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#perfumeria">Perfumería</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#{% url 'maquillaje' %}">Maquillaje</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                             <li class="nav-item">
                                 <form id="blogSearchForm" class="d-flex">
                                     <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
