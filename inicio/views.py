@@ -227,3 +227,21 @@ def generate_signature(request):
 
 def cosmetica_view(request):
     return render(request, 'inicio/cosmetica.html')
+
+def maquillaje_view(request):
+    return render(request, 'inicio/maquillaje.html')
+
+def dermocosmetica_view(request):
+    return render(request, 'inicio/dermocosmetica.html')
+
+def perfumeria_view(request):
+    return render(request, 'inicio/perfumeria.html')
+
+def formaciones_view(request):
+    return render(request, 'inicio/formaciones.html')
+
+def bienestar_view(request):
+    return render(request, 'inicio/bienestar.html')
+
+def contacto_view(request):
+    return render(request, 'inicio/contacto.html')

@@ -28,4 +28,10 @@ urlpatterns = [
     path('category_formaciones/', views.category_formaciones, name='category_formaciones'),
     path('category_contacto/', views.category_contacto, name='category_contacto'),
     path('cosmetica/', views.cosmetica_view, name='cosmetica'),
+    path('maquillaje/', views.maquillaje_view, name='maquillaje'),
+    path('dermocosmetica/', views.dermocosmetica_view, name='dermocosmetica'),
+    path('perfumeria/', views.perfumeria_view, name='perfumeria'),
+    path('formaciones/', views.formaciones_view, name='formaciones'),
+    path('bienestar/', views.bienestar_view, name='bienestar'),
+    path('contacto/', views.contacto_view, name='contacto'),
 ]
