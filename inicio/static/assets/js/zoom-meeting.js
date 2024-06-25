@@ -25,15 +25,3 @@ function startMeeting(signature, apiKey, meetingNumber, userName, userEmail, pas
         }
     });
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Llamada a la función startMeeting con los valores adecuados
-    const signature = 'YOUR_GENERATED_SIGNATURE';
-    const apiKey = 'YOUR_API_KEY';
-    const meetingNumber = 'YOUR_MEETING_NUMBER';
-    const userName = 'YOUR_USER_NAME';
-    const userEmail = 'YOUR_USER_EMAIL'; 
-    const passWord = 'YOUR_MEETING_PASSWORD';
-
-    startMeeting(signature, apiKey, meetingNumber, userName, userEmail, passWord);
-});

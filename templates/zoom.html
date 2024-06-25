@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Reunión de Zoom</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://source.zoom.us/2.0.1/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/2.0.1/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/2.0.1/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/2.0.1/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/2.0.1/lib/vendor/jquery.min.js"></script>
+    <script src="https://source.zoom.us/zoom-meeting-2.0.1.min.js"></script>
+    <script src="{% static 'js/zoom-meeting.js' %}"></script>
+</head>
+<body>
+    <h1>Iniciar Reunión de Zoom</h1>
+    <button id="startMeetingBtn">Iniciar Reunión de Zoom</button>
+    <div id="zmmtg-root"></div>
+    <script>
+        document.getElementById('startMeetingBtn').addEventListener('click', function() {
+            fetch('/generate-signature/')
+                .then(response => response.json())
+                .then(data => {
+                    const signature = data.signature;
+                    const apiKey = 'YOUR_API_KEY';
+                    const meetingNumber = 'YOUR_MEETING_NUMBER';
+                    const userName = 'YOUR_USER_NAME';
+                    const userEmail = 'YOUR_USER_EMAIL';
+                    const passWord = 'YOUR_MEETING_PASSWORD';
+                    
+                    startMeeting(signature, apiKey, meetingNumber, userName, userEmail, passWord);
+                });
+        });
+    </script>
+</body>
+</html>

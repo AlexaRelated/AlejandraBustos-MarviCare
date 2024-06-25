@@ -11,6 +11,11 @@ from django.db.models import Q
 from blog.models import BlogPost, Comment
 from .forms import CommentForm
 from .forms import ProfileForm
+from django.http import JsonResponse
+import time
+import base64
+import hmac
+import hashlib
 
 
 def index(request):
@@ -201,3 +206,24 @@ def category_contacto(request):
     return render(request, 'category_contacto.html', {'posts': posts})
 
 
+def zoom_view(request):
+    return render(request, 'zoom.html')
+
+def generate_signature(request):
+    api_key = 'YOUR_API_KEY'
+    api_secret = 'YOUR_API_SECRET'
+    meeting_number = 'YOUR_MEETING_NUMBER'
+    role = 0  # 0 para participante, 1 para anfitrión
+
+    timestamp = int(time.time() * 1000) - 30000
+    msg = f'{api_key}{meeting_number}{timestamp}{role}'
+    message = base64.b64encode(bytes(msg, 'utf-8'))
+    secret = bytes(api_secret, 'utf-8')
+    hash = hmac.new(secret, message, hashlib.sha256)
+    hash = base64.b64encode(hash.digest())
+    signature = f'{api_key}.{meeting_number}.{timestamp}.{role}.{hash.decode("utf-8")}'
+
+    return JsonResponse({'signature': signature})
+
+def cosmetica_view(request):
+    return render(request, 'inicio/cosmetica.html')
