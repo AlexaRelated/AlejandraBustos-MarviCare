@@ -3474,7 +3474,7 @@ textarea.form-control-lg {
   vertical-align: 0;
 }
 
-<menu usuarios!> 
+/*menu usuarios!*/ 
 
 <style>
     .dropdown {
@@ -11352,4 +11352,9 @@ body {
   background-color: #0056b3;
 }
 
+.project-image {
+  height: 300px; /* Ajusta esta altura según tus necesidades */
+  width: auto; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Cubre el área asignada sin distorsionar la imagen */
+}
 
