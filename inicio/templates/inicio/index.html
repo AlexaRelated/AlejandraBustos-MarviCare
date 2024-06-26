@@ -22,6 +22,34 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href={% static "assets/css/styles.css" %} rel="stylesheet" />
+        <style>
+            /* Estilos para centrar el formulario de búsqueda */
+            #blogSearchForm {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
+                background-color: black; /* Color de fondo del formulario */
+                padding: 10px; /* Espacio interno dentro del formulario */
+                border-radius: 5px; /* Bordes redondeados */
+            }
+        
+            #blogSearchForm input[type="text"] {
+                width: 500px; /* Ajusta el ancho del input según tus necesidades */
+                margin-right: 10px; /* Espacio entre el input y el botón */
+                border: none; /* Quita el borde del input */
+                background-color: white; /* Color de fondo del input */
+                color: black; /* Color del texto del input */
+            }
+        
+            /* Estilos para el botón de búsqueda */
+            #blogSearchForm button {
+                min-width: 100px; /* Ancho mínimo del botón */
+                border: none; /* Quita el borde del botón */
+                background-color: white; /* Color de fondo del botón */
+                color: black; /* Color del texto del botón */
+            }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -42,10 +70,6 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
-                            <form id="blogSearchForm" class="d-flex">
-                                <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>
                         </li>
                     </ul>
                 </div>
@@ -63,7 +87,10 @@
                 </div>
             </div>
         </header>
-        
+        <form id="blogSearchForm" class="d-flex">
+            <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
         <!-- About-->
         <section class="about-section text-center" id="about">
             <div class="container px-4 px-lg-5">
@@ -222,7 +249,7 @@
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Address</h4>
+                                <h4 class="text-uppercase m-0">About</h4>
                                 <hr class="my-4 mx-auto" />
                                 <div class="small text-black-50">4923 Market Street, Orlando FL</div>
                             </div>
