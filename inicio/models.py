@@ -5,9 +5,9 @@ from django.shortcuts import render
 from blog.models import BlogPost
 from django.utils.text import slugify
 
+
 class Category(models.Model):
-    name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

@@ -66,15 +66,16 @@
             </div>
         </header>
         
-       <!-- Post-->
-       {% for post in posts %}
-       {% if post.slug %}
-           <div class="col-lg-6">
-               <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
-               <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-           </div>
-       {% endif %}
-   {% endfor %}
+<!-- Post-->
+{% for post in posts %}
+    {% if post.slug %}
+        <div class="col-lg-6">
+            <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
+            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+        </div>
+    {% endif %}
+{% endfor %}
+
         <!-- Signup-->
         <section class="signup-section" id="contacto">
             <div class="container px-4 px-lg-5">

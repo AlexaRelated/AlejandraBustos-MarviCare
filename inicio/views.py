@@ -227,10 +227,10 @@ def generate_signature(request):
 
 def cosmetica_view(request):
     try:
-        category = get_object_or_404(Category, name='cosmetica')
+        category = Category.objects.get(name='cosmetica')
         posts = Post.objects.filter(categories=category)
     except Category.DoesNotExist:
-        posts = []
+        posts = []  
 
     return render(request, 'inicio/cosmetica.html', {'posts': posts})
 
