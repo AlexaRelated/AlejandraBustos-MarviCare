@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'proyecto',
     'inicio',
     'blog',
-    'django.contrib.humanize',    #filtros de plantilla para hacer que los datos sean más legibles
+    'django.contrib.humanize',
+    'usuarios',
 ]
 
 MIDDLEWARE = [

@@ -226,7 +226,13 @@ def generate_signature(request):
     return JsonResponse({'signature': signature})
 
 def cosmetica_view(request):
-    return render(request, 'inicio/cosmetica.html')
+    try:
+        category = get_object_or_404(Category, name='cosmetica')
+        posts = Post.objects.filter(categories=category)
+    except Category.DoesNotExist:
+        posts = []
+
+    return render(request, 'inicio/cosmetica.html', {'posts': posts})
 
 def maquillaje_view(request):
     return render(request, 'inicio/maquillaje.html')

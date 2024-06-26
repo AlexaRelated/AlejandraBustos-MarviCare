@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from usuarios.models import Author  # Importar el modelo Author de la app usuarios
 from django.utils.text import slugify
 
 class Category(models.Model):
@@ -29,24 +29,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='blog_profile')
-    city = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.user.username
-
-class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='blog_author')
-    bio = models.TextField()
-
-    def __str__(self):
-        return self.user.username
-
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_articles')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='articles')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -55,10 +41,9 @@ class Article(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_comments')  
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='blog_comments')
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text
-
