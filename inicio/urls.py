@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.views.generic import TemplateView
 from .views import zoom_view, generate_signature
+from .views import home_view, mantenimiento_view
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -26,4 +27,6 @@ urlpatterns = [
     path('formaciones/', views.formaciones_view, name='formaciones'),
     path('bienestar/', views.bienestar_view, name='bienestar'),
     path('contacto/', views.contacto_view, name='contacto'),
+    path('', home_view, name='home'),
+    path('mantenimiento/', mantenimiento_view, name='mantenimiento'),
 ]

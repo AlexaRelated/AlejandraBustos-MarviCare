@@ -29,7 +29,8 @@ En el menu encontramos 5 categorías, de las cuales 4 estan destinadas a los pos
 En el buscador podemos buscar entradas realizadas en Blogger.
 
 # Posts
-
+La información publicada se ha extraído de las webs oficiales. 
+Las imagenes se han obtenido de https://www.freepik.es/
 
 # Autor
 

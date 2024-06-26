@@ -22,6 +22,9 @@ def index(request):
     posts = [Post.objects.all()]  # Obteniendo todos los posts
     return render(request, 'inicio/index.html', {'posts': posts})
 
+def home_view(request):
+    return render(request, 'inicio/home.html')
+
 def signup_view_cuentas(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -234,8 +237,10 @@ def cosmetica_view(request):
 
     return render(request, 'inicio/cosmetica.html', {'posts': posts})
 
+
 def maquillaje_view(request):
-    return render(request, 'inicio/maquillaje.html')
+    posts = Post.objects.filter(tags__name='maquillaje')
+    return render(request, 'inicio/maquillaje.html', {'posts': posts})
 
 def dermocosmetica_view(request):
     return render(request, 'inicio/dermocosmetica.html')
@@ -262,3 +267,6 @@ def contacto_view(request):
 
 def comment_success_view(request):
     return render(request, 'comment_success.html')
+
+def mantenimiento_view(request):
+    return render(request, 'inicio/mantenimiento.html')
