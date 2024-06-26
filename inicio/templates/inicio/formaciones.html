@@ -22,6 +22,39 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href={% static "assets/css/styles.css" %} rel="stylesheet" />
+        <style>
+            .article {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+                margin-top: 50px;
+            }
+            .numbered-list {
+                list-style: none;
+                padding: 0;
+            }
+            .numbered-list li {
+                font-size: 18px;
+                margin: 10px 0;
+            }
+            .numbered-list li span {
+                font-size: 24px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .number-1, .number-3 {
+                color: coral;
+            }
+            .number-2, .number-4 {
+                color: gray;
+            }
+            .img-fluid {
+                max-width: 50%;
+                height: auto;
+              }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -75,6 +108,20 @@
            </div>
        {% endif %}
    {% endfor %}
+
+   <section id="contenido">
+    <article class="article">
+        <img class="img-fluid project-image" src="{% static "assets/img/hidrata.jpg" %}" alt="..."/> 
+        <h2>4 tips para mantener tu piel hidratada este verano</h2>
+        <ul class="numbered-list">
+            <li><span class="number-1">1.Bebe mucha agua.</span> Tu piel también necesita beber agua, ¡y mucha! No esperes a sentir sed para hidratarte. Bebe agua a lo largo del día (al menos 8 vasos), incluso si no tienes sed. De esta manera, mantendrás tu piel hidratada desde el interior y la notarás más fresca, tersa y luminosa.</li>
+            <li><span class="number-2">2.Evita estos errores:</span> Lavarte la cara con agua caliente, ya que el agua caliente puede eliminar los aceites naturales de la piel, dejándola seca e irritada. No cuidar de tu piel en vuelos, ya que cuando el avión llega a cierta altura, los niveles de humedad bajan y tu piel puede deshidratarse.</li>
+            <li><span class="number-3">3.Cuidado hidratante diario:</span> Aplica una crema hidratante facial y corporal a diario, especialmente después de ducharte o bañarte. Elige un cuidado ideal para tu piel y aplícalo con un suave masaje para que se absorba mejor. ¡Nos lo agradecerás!</li>
+            <li><span class="number-4">4.Convierte tu nevera en la mejor amiga de tu piel:</span> Guarda tu skincare & cremas hidratantes en la nevera para un efecto refrescante adicional que calmará y refrescará tu piel.</li>
+        </ul>
+    </article>
+
+
         <!-- Signup-->
         <section class="signup-section" id="contacto">
             <div class="container px-4 px-lg-5">
@@ -126,30 +173,27 @@
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Address</h4>
+                                <h4 class="text-uppercase m-0">About</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">4923 Market Street, Orlando FL</div>
+                                <div class="small text-black-50"><a class="nav-link" href="{% url 'about' %}">Sobre mí</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-envelope text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Email</h4>
+                                <h4 class="text-uppercase m-0">Contacto</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                                <div class="small text-black-50"><a class="nav-link" href="{% url 'contacto' %}">Escríbenos</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Phone</h4>
+                                <h4 class="text-uppercase m-0">Área Privada</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">+1 (555) 902-8832</div>
+                                <div class="small text-black-50"><a class="nav-link" href="{% url 'mantenimiento' %}">Darse de alta</a></div>
                             </div>
                         </div>
                     </div>

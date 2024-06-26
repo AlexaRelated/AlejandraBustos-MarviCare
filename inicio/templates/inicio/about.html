@@ -23,33 +23,30 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href={% static "assets/css/styles.css" %} rel="stylesheet" />
         <style>
-            /* Estilos para centrar el formulario de búsqueda */
-            #blogSearchForm {
+            .img-circle {
+                width: 150px; /* Ajusta el tamaño del círculo según tus necesidades */
+                height: 150px;
+                border-radius: 50%; /* Hace que el borde sea redondeado, creando un círculo */
+                object-fit: cover; /* Ajusta el tamaño de la imagen para que cubra completamente el círculo */
+            }
+            .article {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
-                background-color: black; /* Color de fondo del formulario */
-                padding: 10px; /* Espacio interno dentro del formulario */
-                border-radius: 5px; /* Bordes redondeados */
+                flex-direction: column;
+                text-align: center;
+                margin-top: 50px;
             }
-        
-            #blogSearchForm input[type="text"] {
-                width: 500px; /* Ajusta el ancho del input según tus necesidades */
-                margin-right: 10px; /* Espacio entre el input y el botón */
-                border: none; /* Quita el borde del input */
-                background-color: white; /* Color de fondo del input */
-                color: black; /* Color del texto del input */
+            .text-coral {
+                color: coral; /* Cambia el color del texto a coral */
+                font-size: 5rem; /* Ajusta el tamaño de fuente según tus preferencias */
             }
-        
-            /* Estilos para el botón de búsqueda */
-            #blogSearchForm button {
-                min-width: 100px; /* Ancho mínimo del botón */
-                border: none; /* Quita el borde del botón */
-                background-color: white; /* Color de fondo del botón */
-                color: black; /* Color del texto del botón */
+            .numbered-list li {
+                font-weight: bold; /* Hace que el contenido de la lista sea negrita */
             }
         </style>
+        
+        
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -70,6 +67,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
+                            
                         </li>
                     </ul>
                 </div>
@@ -81,113 +79,25 @@
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
+                        <h1 class="mx-auto my-0 text-uppercase">About</h1>
+                        <!-- Aplicar estilo coral al nombre y tamaño de fuente más grande -->
+                        <h2 class="text-coral text-lg mx-auto mt-2 mb-5">Alejandra Bustos</h2>
+                        <section id="contenido">
+                            <article class="article">
+                                <img class="img-fluid img-circle" src="{% static "assets/img/AMBK.jpg" %}" alt="Alejandra Bustos"/>
+                                <ul class="numbered-list">
+                                    <!-- Aplicar negrita al contenido de la lista -->
+                                    <li><strong>Soy de Villaguay, Entre Ríos, y soy auditora de farmacia.</strong> Actualmente trabajo en una perfumería. Empecé a programar a los 15 años como hobby, principalmente con HTML y JavaScript. Después de más de 15 años sin programar, he decidido volver a retomar esta profesión maravillosa, que es programar.</li>
+                                </ul>
+                            </article>
+                        </section>
                     </div>
                 </div>
             </div>
         </header>
-        <form id="blogSearchForm" class="d-flex">
-            <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
-        <!-- About-->
-        <section class="about-section text-center" id="about">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8">
-                        <p class="text-white-50">
-                            <img class="img-fluid" src="{% static "assets/img/fondoM.jpg" %}" alt="..." />Disfruta de un extenso número de módulos y contenidos interactivos. ¿Qué estás esperando? 
-                            <a href="{% url 'post_list' %}" target="_blank">¡Comienza tu aprendizaje!</a>
-                            
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-        <!-- Maquillaje-->
-        <section class="projects-section bg-light" id="maquillaje">
-            <div class="container px-4 px-lg-5">
-                <!-- Featured Project Row-->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-8 col-lg-7">
-                        <img class="img-fluid project-image" src="{% static 'assets/img/maquillaje.jpg' %}" alt="Maquillaje" />
-                    </div>
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="featured-text text-center text-lg-left">
-                            <h4>Maquillaje</h4>
-                            <p class="text-black-50 mb-0">¡Sumérgete en el glamuroso universo de los productos cosméticos! ¿Los mejores aliados de tu belleza? Productos de calidad superior para un maquillaje perfecto de ojos, rostro, labios y manos.</p>
-                            <a href="{% url 'category_posts' category_slug='maquillaje' %}" target="_blank">¡Comienza tu aprendizaje!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-                <!-- Projects Section -->
-<section class="projects-section bg-light" id="projects">
-    <div class="container px-4 px-lg-5">
-        <!-- Project One Row -->
-        <section class="projects-section bg-light" id="dermocosmetica">
-            <div class="container px-4 px-lg-5">
-                <!-- Project One Row -->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6">
-                        <img class="img-fluid" src="{% static 'assets/img/dermo.jpg' %}" alt="..." />
-                        <a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html" target="_blank">¡Bienvenido verano! Claves para cuidarnos del sol</a>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Dermocosmética</h4>
-                                    <p class="mb-0 text-white-50">Los dermocosméticos fueron productos creados científicamente para el cuidado de la piel, el cabello y las uñas, por lo que están clínicamente aprobados y avalados por dermatólogos, esto garantiza que su aplicación no es dañina para la salud.</p>
-                                    <a href="{% url 'post_detail' slug='tu-slug-aqui' %}">¡Aprendamos más sobre ellos!</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-       
-<!-- Bienestar-->
-<section class="projects-section bg-light" id="bienestar">
-    <div class="container px-4 px-lg-5">
-        <!-- Featured Project Row-->
-        <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-            <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/bienestar.jpg' %}" alt="..." /></div>
-            <div class="col-xl-4 col-lg-5">
-                <div class="featured-text text-center text-lg-left">
-                    <h4>Bienestar</h4>
-                    <p class="text-black-50 mb-0">La belleza empieza desde dentro. Una piel sana es una piel que refleja un equilibrio interior de salud tanto física, como mental. ¿Quieres saber cómo puedes potenciar la belleza de tu piel desde tu interior?</p>
-                    <a href="{% url 'mantenimiento' %}" target="_blank">¡Sigue leyendo!</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-        <!-- Other projects -->
-    </div>
-</section>
-<section class="projects-section bg-light" id="perfumeria">
-    <div class="container px-4 px-lg-5">
-                <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{% static "assets/img/perfu1.jpg" %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/06/la-osmotheque-el-archivo-mundial-del.html">«Archivo mundial del perfume»</a></div>
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Perfumes</h4>
-                                    <p class="mb-0 text-white-50">El perfume es tantas cosas… Hemos preguntado a los expertos, nuestros Académicos del Perfume, qué significa para ellos y en sus definiciones podemos ver que el perfume es arte, es evocación, es inspiración, es ciencia, es poesía, es sensorialidad… </p>
-                                    <a href="https://marvicare.blogspot.com/search/label/perfume">Te animamos a descubrir todo lo que representa el perfume.</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+               
+        
+        
        <!-- Post-->
        {% for post in posts %}
        {% if post.slug %}

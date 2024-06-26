@@ -270,3 +270,6 @@ def comment_success_view(request):
 
 def mantenimiento_view(request):
     return render(request, 'inicio/mantenimiento.html')
+
+def about_view(request):
+    return render(request, 'inicio/about.html')
