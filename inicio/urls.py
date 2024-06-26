@@ -30,4 +30,5 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('mantenimiento/', mantenimiento_view, name='mantenimiento'),
     path('about/', views.about_view, name='about'),
+    path('buscar/', views.buscar_view, name='buscar'),
 ]

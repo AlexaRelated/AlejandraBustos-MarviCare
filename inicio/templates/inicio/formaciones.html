@@ -89,8 +89,8 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Formaciones</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Calendario de formaciones</h2>
-                        <form id="blogSearchForm" class="d-flex">
-                            <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                        <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'buscar' %}">
+                            <input class="form-control me-2" type="text" name="q" id="searchQuery" placeholder="Buscar en MarviCare" aria-label="Buscar" required>
                             <button class="btn btn-outline-success" type="submit">Buscar</button>
                         </form>
         
@@ -111,15 +111,30 @@
 
    <section id="contenido">
     <article class="article">
-        <img class="img-fluid project-image" src="{% static "assets/img/hidrata.jpg" %}" alt="..."/> 
-        <h2>4 tips para mantener tu piel hidratada este verano</h2>
+        <img class="img-fluid project-image" src="{% static "assets/img/formaciones.jpg" %}" alt="..."/> 
+        <h2>Formaciones Julio 2024</h2>
         <ul class="numbered-list">
-            <li><span class="number-1">1.Bebe mucha agua.</span> Tu piel también necesita beber agua, ¡y mucha! No esperes a sentir sed para hidratarte. Bebe agua a lo largo del día (al menos 8 vasos), incluso si no tienes sed. De esta manera, mantendrás tu piel hidratada desde el interior y la notarás más fresca, tersa y luminosa.</li>
-            <li><span class="number-2">2.Evita estos errores:</span> Lavarte la cara con agua caliente, ya que el agua caliente puede eliminar los aceites naturales de la piel, dejándola seca e irritada. No cuidar de tu piel en vuelos, ya que cuando el avión llega a cierta altura, los niveles de humedad bajan y tu piel puede deshidratarse.</li>
-            <li><span class="number-3">3.Cuidado hidratante diario:</span> Aplica una crema hidratante facial y corporal a diario, especialmente después de ducharte o bañarte. Elige un cuidado ideal para tu piel y aplícalo con un suave masaje para que se absorba mejor. ¡Nos lo agradecerás!</li>
-            <li><span class="number-4">4.Convierte tu nevera en la mejor amiga de tu piel:</span> Guarda tu skincare & cremas hidratantes en la nevera para un efecto refrescante adicional que calmará y refrescará tu piel.</li>
+            <li>
+                <span class="number-1">21/07 Presencial</span> SHISEIDO: Maravilloso mundo del perfume
+                <a href="{% url 'mantenimiento' %}?evento=SHISEIDO" class="btn btn-primary">Inscribirse</a>
+            </li>
+            <li>
+                <span class="number-2">21/07 Presencial</span> Clarins: Masterclass makeup
+                <a href="{% url 'mantenimiento' %}?evento=Clarins_Masterclass" class="btn btn-primary">Inscribirse</a>
+            </li>
+            <li>
+                <span class="number-3">22/07 Presencial</span> Clarins: Masterclass makeup
+                <a href="{% url 'mantenimiento' %}?evento=Clarins_Masterclass" class="btn btn-primary">Inscribirse</a>
+            </li>
+            <li>
+                <span class="number-4">23/07 Presencial</span> LOEWE: Evento noche Party Paula's
+                <a href="{% url 'mantenimiento' %}?evento=LOEWE_Party" class="btn btn-primary">Inscribirse</a>
+            </li>
         </ul>
     </article>
+</section>
+
+
 
 
         <!-- Signup-->

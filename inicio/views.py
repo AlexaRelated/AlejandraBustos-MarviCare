@@ -1,22 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
-from .models import Post, Category
-from .forms import SignUpForm, PostForm
-from django.http import HttpResponseRedirect
-from django.contrib.auth.forms import AuthenticationForm
+from multiprocessing import context
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.urls import reverse
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post, Category
+from .forms import PostForm
+from django.http import HttpResponseRedirect
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from blog.models import BlogPost, Comment
 from .forms import CommentForm
-from .forms import ProfileForm
 from django.http import JsonResponse
 import time
 import base64
 import hmac
 import hashlib
-
+from .models import Category, Post, Author, Article
 
 def index(request):
     posts = [Post.objects.all()]  # Obteniendo todos los posts
@@ -25,63 +25,35 @@ def index(request):
 def home_view(request):
     return render(request, 'inicio/home.html')
 
-def signup_view_cuentas(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  # Cargar el perfil del usuario
-            user.profile.city = form.cleaned_data.get('city')
-            user.save()
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('index')  # Redirigir a la página de inicio después del registro
-    else:
-        form = SignUpForm()
-    return render(request, 'inicio/signup.html', {'form': form})
+def buscar_view(request):
+    query = request.GET.get('q')
+    resultados_tu_modelo1 = Category.objects.filter(Q(campo__icontains=query))
+    resultados_tu_modelo2 = Post.objects.filter(Q(campo__icontains=query))
+    resultados_tu_modelo2 = Author.objects.filter(Q(campo__icontains=query))
+    resultados_tu_modelo2 = Article.objects.filter(Q(campo__icontains=query))
+  
+    context = {
+        'query': query,
+        'resultados_tu_modelo1': resultados_tu_modelo1,
+        'resultados_tu_modelo2': resultados_tu_modelo2,
+        # Agrega más resultados según sea necesario
+    }
+
+    return render(request, 'resultado_busqueda.html', context)
 
 def login_view_cuentas(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Login successful')
-                return redirect('index')  # Redirigir a la página de inicio después del inicio de sesión
-            else:
-                messages.error(request, 'Invalid username or password')
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('nombre_de_la_vista_principal'))  # Redirige a una vista principal o de inicio
         else:
-            messages.error(request, 'Invalid form data')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'inicio/login.html', {'form': form})
+            messages.error(request, 'Usuario o contraseña incorrectos.')
 
-def logout_view(request):
-    logout(request)
-    return redirect('index')
-
-@login_required
-def my_view(request):
-    return render(request, 'my_template.html', {'user': request.user})
-
-@login_required
-def profile_view(request):
-    return render(request, 'inicio/profile.html', {'user': request.user})
-
-@login_required
-def update_profile(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-    else:
-        form = ProfileForm(instance=request.user)
-    return render(request, 'inicio/update_profile.html', {'form': form})
+    return render(request, 'inicio/login.html')
 
 def search_posts(request):
     query = request.GET.get('q')
