@@ -1,6 +1,8 @@
 from django.db import models
+from django import forms
 from usuarios.models import Author  # Importar el modelo Author de la app usuarios
-from django.utils.text import slugify
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -8,26 +10,30 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
+    categories = models.ManyToManyField(Category)  # Relación ManyToMany con Category
 
     def __str__(self):
         return self.title
+
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=100)
     content = models.TextField()
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+    categories = models.ManyToManyField(Category)
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)  # Ejemplo de un campo de imagen
 
     def __str__(self):
         return self.title
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'categories', 'slug', 'image']
 
 class Article(models.Model):
     title = models.CharField(max_length=200)

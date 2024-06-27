@@ -32,6 +32,18 @@ def category_view(request, category):
     posts = Post.objects.filter(categories=category_obj)
     return render(request, 'category.html', {'category': category_obj, 'posts': posts})
 
+def cosmetica_view(request):
+    # Intenta obtener la categoría 'Cosmetica'; si no existe, muestra un error 404
+    cosmetica_category = get_object_or_404(Category, name='Cosmetica')
+
+    posts = BlogPost.objects.filter(categories=cosmetica_category)
+
+    context = {
+        'posts': posts
+    }
+
+    return render(request, 'template.html', context)
+
 def crear_publicacion(request):
     return render(request, 'crear_publicacion.html')
 

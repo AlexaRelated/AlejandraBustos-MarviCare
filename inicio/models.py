@@ -7,10 +7,11 @@ from taggit.managers import TaggableManager #Biblioteca que facilita el uso de e
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200)

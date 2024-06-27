@@ -1,8 +1,9 @@
+from inspect import signature
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Category
+from .models import Category
 from .forms import PostForm
 from django.http import HttpResponseRedirect
 from django.utils.text import slugify
@@ -18,7 +19,8 @@ import hashlib
 from .models import Category, Post, Author, Article
 
 def index(request):
-    posts = [Post.objects.all()]  # Obteniendo todos los posts
+    posts = BlogPost.objects.all()  # Obtener todos los posts de BlogPost
+    posts = []
     return render(request, 'inicio/index.html', {'posts': posts})
 
 def home_view(request):
@@ -26,19 +28,7 @@ def home_view(request):
 
 def buscar_view(request):
     query = request.GET.get('q')
-    resultados_tu_modelo1 = Category.objects.filter(Q(campo__icontains=query))
-    resultados_tu_modelo2 = Post.objects.filter(Q(campo__icontains=query))
-    resultados_tu_modelo2 = Author.objects.filter(Q(campo__icontains=query))
-    resultados_tu_modelo2 = Article.objects.filter(Q(campo__icontains=query))
-  
-    context = {
-        'query': query,
-        'resultados_tu_modelo1': resultados_tu_modelo1,
-        'resultados_tu_modelo2': resultados_tu_modelo2,
-        # Agrega más resultados según sea necesario
-    }
-
-    return render(request, 'resultado_busqueda.html', context)
+    resultados_tu_modelo2 = BlogPost.objects.filter(Q(campo__icontains=query))
 
 def signup_view_cuentas(request):
     if request.method == 'POST':
@@ -139,7 +129,13 @@ def post_detail(request, pk):
 
 def post_list(request):
     posts = Post.objects.all()
+    posts = []
     return render(request, 'inicio/post_list.html', {'posts': posts})
+
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    return render(request, 'post_detail.html', {'post': post})
 
 def category_view(request, category_name):
     category = Category.objects.get(name__iexact=category_name)
@@ -156,7 +152,7 @@ def maquillaje_posts(request):
     return render(request, 'maquillaje.html', {'posts': posts})
 
 def category_cosmetica(request):
-    posts = Post.objects.filter(category='cosmetica')
+    posts = BlogPost.objects.filter(category='cosmetica')
     return render(request, 'category_cosmetica.html', {'posts': posts})
 
 def category_maquillaje(request):
@@ -184,34 +180,20 @@ def zoom_view(request):
     return render(request, 'zoom.html')
 
 def generate_signature(request):
-    api_key = 'YOUR_API_KEY'
-    api_secret = 'YOUR_API_SECRET'
-    meeting_number = 'YOUR_MEETING_NUMBER'
-    role = 0  # 0 para participante, 1 para anfitrión
-
-    timestamp = int(time.time() * 1000) - 30000
-    msg = f'{api_key}{meeting_number}{timestamp}{role}'
-    message = base64.b64encode(bytes(msg, 'utf-8'))
-    secret = bytes(api_secret, 'utf-8')
-    hash = hmac.new(secret, message, hashlib.sha256)
-    hash = base64.b64encode(hash.digest())
-    signature = f'{api_key}.{meeting_number}.{timestamp}.{role}.{hash.decode("utf-8")}'
-
+    # Lógica para generar la firma
     return JsonResponse({'signature': signature})
 
+
+def maquillaje_posts(request):
+    posts = BlogPost.objects.filter(category='maquillaje')
+    return render(request, 'maquillaje.html', {'posts': posts})
+
 def cosmetica_view(request):
-    try:
-        category = Category.objects.get(name='cosmetica')
-        posts = Post.objects.filter(categories=category)
-    except Category.DoesNotExist:
-        posts = []  
-
-    return render(request, 'inicio/cosmetica.html', {'posts': posts})
-
+    posts = Post.objects.filter(tags__name__in=["cosmética"])
+    return render(request, 'cosmetica.html', {'posts': posts})
 
 def maquillaje_view(request):
-    posts = Post.objects.filter(tags__name='maquillaje')
-    return render(request, 'inicio/maquillaje.html', {'posts': posts})
+    return render(request, 'inicio/maquillaje.html')
 
 def dermocosmetica_view(request):
     return render(request, 'inicio/dermocosmetica.html')
