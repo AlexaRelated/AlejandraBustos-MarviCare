@@ -190,7 +190,7 @@ def maquillaje_posts(request):
 
 def cosmetica_view(request):
     posts = Post.objects.filter(tags__name__in=["cosmética"])
-    return render(request, 'cosmetica.html', {'posts': posts})
+    return render(request, 'inicio/cosmetica.html', {'posts': posts})
 
 def maquillaje_view(request):
     return render(request, 'inicio/maquillaje.html')

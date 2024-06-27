@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from blog.models import BlogPost
 from taggit.managers import TaggableManager #Biblioteca que facilita el uso de etiquetas para concatenar
+from autoslug import AutoSlugField
 
 
 class Category(models.Model):
@@ -15,15 +16,16 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    slug = AutoSlugField(populate_from='title', unique=True)
     category = models.CharField(max_length=100, null=True, blank=True)  
-    slug = models.SlugField(unique=True, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager()
+    content = models.TextField()
+    published_date = models.DateField()
 
     def __str__(self):
-        return self.title
+        return self.title   
 
 class Comment(models.Model):
     name = models.CharField(max_length=100)
