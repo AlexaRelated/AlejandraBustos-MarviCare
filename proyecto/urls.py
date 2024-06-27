@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', inicio_views.index, name='index'),  # Página de inicio
     path('', inicio_views.create_post, name='create_post'),
+    path('usuarios/', include('usuarios.urls')), # URLs del módulo usuarios
     path('inicio/', include('inicio.urls')),
     path('login/', views.login_view, name='login'),  # URL para iniciar sesión
     path('registro/', views.registro_view, name='registro'),  # URL para registro  
