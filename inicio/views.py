@@ -1,4 +1,3 @@
-from multiprocessing import context
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse
@@ -41,7 +40,7 @@ def buscar_view(request):
 
     return render(request, 'resultado_busqueda.html', context)
 
-def login_view_cuentas(request):
+def signup_view_cuentas(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -49,7 +48,7 @@ def login_view_cuentas(request):
         
         if user is not None:
             login(request, user)
-            return redirect(reverse('nombre_de_la_vista_principal'))  # Redirige a una vista principal o de inicio
+            return redirect(reverse('inicio/index.html'))  # Redirige a una vista principal o de inicio
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
 
