@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'proyecto',
     'inicio',
-    'blog',
     'django.contrib.humanize',
     'usuarios',
     'taggit',
