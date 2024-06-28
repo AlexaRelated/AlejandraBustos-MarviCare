@@ -34,10 +34,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                     <li class="nav-item">
-                        <form id="blogSearchForm" class="d-flex">
-                            <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
+
                     </li>
                 </ul>
             </div>
@@ -51,78 +48,69 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Cosmética</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
+                    <form id="blogSearchForm" class="d-flex">
+                        <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main content -->
-    <div class="container mt-5">
-        <div class="row">
-            <!-- Main content area -->
-            <div class="col-md-8">
-                <h1>Artículos sobre Cosmética</h1>
-                <div class="row">
-                    {% for post in posts %}
-                    {% if post.slug %}
-                    <div class="col-lg-6">
-                        <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
-                        <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+<!-- Mostrar entradas de 'Post' -->
+<div class="row">
+    {% for post in posts %}
+        <div class="col-lg-6">
+            <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
+            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Mostrar entradas de 'BlogPost' -->
+<div class="row">
+    {% for blog_post in blog_posts %}
+        <div class="col-lg-6">
+            <img class="img-fluid" src="{% static 'assets/img/blog.jpg' %}" alt="..." />
+            <a href="{% url 'blog_post_detail' slug=blog_post.slug %}">{{ blog_post.title }}</a>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Contact-->
+<section class="contact-section bg-black">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <h4 class="text-uppercase m-0">About</h4>
+                        <hr class="my-4 mx-auto" />
+                        <div class="small text-black-50"><a class="nav-link" href="{% url 'about' %}">Sobre mí</a></div>
                     </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
             </div>
-
-            <!-- Sidebar area -->
-            <div class="col-md-4">
-                <div class="sidebar">
-                    <h2>Archivos de Cosmética</h2>
-                    <ul class="list-group">
-                        {% for post in posts %}
-                        <li class="list-group-item">
-                            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-                            <p class="post-meta">Publicado el {{ post.published_date }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <h4 class="text-uppercase m-0">Contacto</h4>
+                        <hr class="my-4 mx-auto" />
+                        <div class="small text-black-50"><a class="nav-link" href="{% url 'contacto' %}">Escríbenos</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <h4 class="text-uppercase m-0">Área Privada</h4>
+                        <hr class="my-4 mx-auto" />
+                        <div class="small text-black-50"><a class="nav-link" href="{% url 'mantenimiento' %}">Darse de alta</a></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section bg-black">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <h4 class="text-uppercase m-0">About</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50"><a class="nav-link" href="{% url 'about' %}">Sobre mí</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <h4 class="text-uppercase m-0">Address</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">Calle ejemplo</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <h4 class="text-uppercase m-0">Contact</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">123456789</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="social d-flex justify-content-center">
                 <a class="mx-2" href="#"><i class="fab fa-twitter"></i></a>
                 <a class="mx-2" href="#"><i class="fab fa-facebook-f"></i></a>

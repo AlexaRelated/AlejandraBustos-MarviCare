@@ -36,10 +36,6 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                     <li class="nav-item">
-                        <form id="blogSearchForm" class="d-flex" action="{% url 'search_posts' %}" method="GET">
-                            <input class="form-control me-2" type="text" name="q" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
@@ -68,7 +64,10 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
-
+                    <form id="blogSearchForm" class="d-flex" action="{% url 'search_posts' %}" method="GET">
+                        <input class="form-control me-2" type="text" name="q" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
                     {% block content %}{% endblock %}
                 </div>
             </div>
@@ -152,7 +151,7 @@
                 <div class="col-md-10 col-lg-8 mx-auto text-center">
                     <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
                     <h2 class="text-white mb-5">¡Subscríbete a nuestras novedades!</h2>
-                    <form class="form-signup" id="contactForm" action="{% url 'subscribe' %}" method="post">
+                    <form class="form-signup" id="contactForm" action="{% url 'registro' %}" method="post">
                         {% csrf_token %}
                         <div class="row input-group-newsletter">
                             <div class="col"><input class="form-control" id="email" name="email" type="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required /></div>

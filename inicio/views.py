@@ -12,11 +12,7 @@ from django.db.models import Q
 from blog.models import BlogPost, Comment
 from .forms import CommentForm
 from django.http import JsonResponse
-import time
-import base64
-import hmac
-import hashlib
-from .models import Category, Post, Author, Article
+from .models import Category, Post
 
 def index(request):
     posts = BlogPost.objects.all()  # Obtener todos los posts de BlogPost
@@ -137,6 +133,7 @@ def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     return render(request, 'post_detail.html', {'post': post})
 
+
 def category_view(request, category_name):
     category = Category.objects.get(name__iexact=category_name)
     posts = Post.objects.filter(categories=category)
@@ -189,7 +186,7 @@ def maquillaje_posts(request):
     return render(request, 'maquillaje.html', {'posts': posts})
 
 def cosmetica_view(request):
-    posts = Post.objects.filter(tags__name__in=["cosmética"])
+    posts = Post.objects.filter(published_date__isnull=False) 
     return render(request, 'inicio/cosmetica.html', {'posts': posts})
 
 def maquillaje_view(request):

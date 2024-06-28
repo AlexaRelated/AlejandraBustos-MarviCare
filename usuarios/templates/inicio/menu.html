@@ -1,0 +1,16 @@
+
+<ul>
+    <li><a href="{% url 'index' %}">Inicio</a></li>
+    <li><a href="{% url 'contact' %}">Contacto</a></li>
+    {% if user.is_authenticated %}
+        <li>
+            <a href="{% url 'profile' %}">
+                <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                {{ user.username }}
+            </a>
+        </li>
+        <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+    {% else %}
+        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+    {% endif %}
+</ul>

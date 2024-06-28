@@ -6,6 +6,9 @@ from inicio.models import Post as InicioPost
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from blog.models import BlogPost
+from .models import Post, Comment
+from .forms import CommentForm
 
 def blog_home(request):
     posts = Post.objects.all().order_by('-id')
@@ -33,16 +36,17 @@ def category_view(request, category):
     return render(request, 'category.html', {'category': category_obj, 'posts': posts})
 
 def cosmetica_view(request):
-    # Intenta obtener la categoría 'Cosmetica'; si no existe, muestra un error 404
-    cosmetica_category = get_object_or_404(Category, name='Cosmetica')
-
-    posts = BlogPost.objects.filter(categories=cosmetica_category)
+    posts = Post.objects.all()
+    blog_posts = BlogPost.objects.all()
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'blog_posts': blog_posts,
     }
 
-    return render(request, 'template.html', context)
+    return render(request, 'inicio/cosmetica.html', context)
+
+  
 
 def crear_publicacion(request):
     return render(request, 'crear_publicacion.html')
@@ -86,3 +90,17 @@ def add_post(request):
     else:
         form = PostForm()
     return render(request, 'add_post.html', {'form': form})
+
+
+def add_comment(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'post': post, 'comment_form': form})

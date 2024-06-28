@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render
 from blog.models import BlogPost
-from taggit.managers import TaggableManager #Biblioteca que facilita el uso de etiquetas para concatenar
-from autoslug import AutoSlugField
+from django.utils.text import slugify
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -13,19 +13,24 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    slug = AutoSlugField(populate_from='title', unique=True)
-    category = models.CharField(max_length=100, null=True, blank=True)  
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    tags = TaggableManager()
+    title = models.CharField(max_length=255)
     content = models.TextField()
-    published_date = models.DateField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
+    image = models.ImageField(upload_to='post_images/')
+    slug = models.SlugField(unique=True, blank=True)
+    published_date = models.DateTimeField(auto_now_add=True)  # Campo agregado
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[self.slug])
 
     def __str__(self):
-        return self.title   
+        return self.title
 
 class Comment(models.Model):
     name = models.CharField(max_length=100)

@@ -1,37 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <div class="post-content">
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.content }}</p>
-    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        
+        <div class="col-md-8">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.content }}</p>
 
-    <div id="comments-container">
-        <h2>Comments</h2>
+            <style>
+                .entry-content {
+                    text-align: justify; /* Alinear el texto justificado */
+                    margin-bottom: 20px; /* Espacio inferior */
+                }
+            
+                .comment-form {
+                    margin-top: 20px; /* Espacio superior */
+                }
+            
+                .comment-list {
+                    margin-top: 20px; /* Espacio superior */
+                }
+            </style>
+
+            <!-- Mostrar el formulario de comentario -->
+<h2>Deja un comentario</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Publicar comentario</button>
+</form>
+
+<!-- Mostrar los comentarios existentes -->
+<h2>Comentarios</h2>
+{% if comments %}
+    <ul>
         {% for comment in comments %}
-            <div class="comment">
-                <p><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</p>
-            </div>
+            <li>{{ comment.author }} dijo: {{ comment.content }}</li>
         {% endfor %}
-    </div>
-
-    {% if user.is_authenticated %}
-        <div class="comment-form">
-            <h2>Add a Comment</h2>
-            <form id="comment-form" method="post" action=".">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" id="submit-button">Submit</button>
-            </form>
+    </ul>
+{% else %}
+    <p>No hay comentarios aún.</p>
+{% endif %}
+                </div>
+            </div>
         </div>
-    {% else %}
-        <p>You must be logged in to post a comment.</p>
-    {% endif %}
-</body>
-</html>
+    </div>
+</div>
