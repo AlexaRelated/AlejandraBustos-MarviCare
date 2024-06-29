@@ -4,14 +4,9 @@ from django.contrib.auth.models import User
 from .models import Profile 
 
 class ProfileForm(forms.ModelForm):
-    ciudad = forms.CharField(max_length=100, label='Ciudad')
-
     class Meta:
         model = Profile
-        fields = ['ciudad']
-        labels = {
-            'ciudad': 'Ciudad',
-        }
+        fields = ['bio', 'avatar', 'numero_tienda', 'ciudad']
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label='Nombre')

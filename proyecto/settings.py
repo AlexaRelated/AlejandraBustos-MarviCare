@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'usuarios',
     'taggit',
+    'mensajes',
 ]
 
 MIDDLEWARE = [

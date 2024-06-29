@@ -34,7 +34,16 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                     <li class="nav-item">
-
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'profile' %}">
+                                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    {{ user.username }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -57,25 +66,33 @@
         </div>
     </header>
 
-<!-- Mostrar entradas de 'Post' -->
-<div class="row">
-    {% for post in posts %}
-        <div class="col-lg-6">
-            <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
-            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+    <!-- Main content -->
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Main content area -->
+            <div class="col-md-8">
+                <h1>Artículos sobre Cosmética</h1>
+                <div class="row">
+                    {% for post in posts %}
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p>{{ post.content | truncatechars:200 }}</p>
+                                <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-md-12">
+                        <p>No hay artículos en esta categoría.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    {% endfor %}
-</div>
-
-<!-- Mostrar entradas de 'BlogPost' -->
-<div class="row">
-    {% for blog_post in blog_posts %}
-        <div class="col-lg-6">
-            <img class="img-fluid" src="{% static 'assets/img/blog.jpg' %}" alt="..." />
-            <a href="{% url 'blog_post_detail' slug=blog_post.slug %}">{{ blog_post.title }}</a>
-        </div>
-    {% endfor %}
-</div>
+    </div>
 
 <!-- Contact-->
 <section class="contact-section bg-black">

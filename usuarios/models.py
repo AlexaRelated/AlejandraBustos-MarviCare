@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
-    city = models.CharField(max_length=100)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg')
+    bio = models.TextField(max_length=500, blank=True)
+    numero_tienda = models.CharField(max_length=50, blank=True)
+    ciudad = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} Profile'
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
@@ -17,3 +19,4 @@ class Author(models.Model):
 
     def __str__(self):
         return self.user.username
+

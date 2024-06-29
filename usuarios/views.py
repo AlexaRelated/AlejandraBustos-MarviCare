@@ -61,16 +61,13 @@ def profile_view(request):
 
 @login_required
 def update_profile(request):
-    from .models import Profile  
-    user = request.user
-    profile, created = Profile.objects.get_or_create(user=user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')  
+            return redirect('profile')
     else:
-        form = ProfileForm(instance=profile)
+        form = ProfileForm(instance=request.user.profile)
     return render(request, 'usuarios/update_profile.html', {'form': form})
 
 
