@@ -1,3 +1,4 @@
+from profile import Profile
 from django.shortcuts import render, redirect
 from .forms import SignUpForm, ProfileForm
 from django.contrib.auth import authenticate, login, logout
@@ -5,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import SubscriptionForm 
+
 
 
 @login_required
@@ -56,16 +58,20 @@ def logout_view(request):
 def profile_view(request):
     return render(request, 'inicio/profile.html', {'user': request.user})
 
+
 @login_required
 def update_profile(request):
+    from .models import Profile  
+    user = request.user
+    profile, created = Profile.objects.get_or_create(user=user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user.profile)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('profile')  
     else:
-        form = ProfileForm(instance=request.user.profile)
-    return render(request, 'inicio/update_profile.html', {'form': form})
+        form = ProfileForm(instance=profile)
+    return render(request, 'usuarios/update_profile.html', {'form': form})
 
 
 def registro(request):

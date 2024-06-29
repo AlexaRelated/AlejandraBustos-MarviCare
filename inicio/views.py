@@ -1,6 +1,6 @@
 from inspect import signature
 from pyexpat.errors import messages
-from tokenize import Comment
+from .models import Comment
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -46,9 +46,14 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
-def post_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+def post_detail(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
     comments = Comment.objects.filter(post=post)
+
+    context = {
+        'post': post,
+        'comments': comments,
+    }
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -194,11 +199,16 @@ def contacto_view(request):
         form = CommentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('comment_success')
+            # Redirigir a una página de éxito o a la misma página sin incluir los comentarios
+            return redirect('contacto_success')  
     else:
         form = CommentForm()
-    comments = Comment.objects.all().order_by('-created_date')  
-    return render(request, 'inicio/contacto.html', {'form': form, 'comments': comments})
+    
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'inicio/contacto.html', context)
 
 def comment_success_view(request):
     return render(request, 'inicio/comment_success.html')

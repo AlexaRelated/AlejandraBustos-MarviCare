@@ -10,12 +10,9 @@ class PostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name', 'email', 'message']  
+        fields = ('name', 'email', 'message')  # Agregamos 'name' y 'email' aquí
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tu nombre'})
-        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tu correo electrónico'})
-        self.fields['message'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Escribe tu comentario aquí'})
+    name = forms.CharField(label='Nombre', max_length=100)
+    email = forms.EmailField(label='Correo Electrónico')
 
         
