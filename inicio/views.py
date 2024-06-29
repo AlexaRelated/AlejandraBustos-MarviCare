@@ -13,9 +13,8 @@ from django.contrib.auth import authenticate, login
 
 
 def index(request):
-    blog_posts = Post.objects.all()
-    categorias = Category.objects.all()
-    return render(request, 'index.html', {'categorias': categorias})
+    posts = Post.objects.all()
+    return render(request, 'inicio/index.html')
 
 @login_required
 def create_post(request):

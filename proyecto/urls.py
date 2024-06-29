@@ -7,7 +7,7 @@ from usuarios import views as usuarios_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio_views.index, name='index'),  # Página de inicio
+    path('', include('inicio.urls')),  # Página de inicio
     path('usuarios/', include('usuarios.urls')),  # URLs del módulo usuarios
     path('inicio/', include('inicio.urls')),  # URLs del módulo inicio
     path('login/', usuarios_views.login_view_cuentas, name='login'),  # URL para iniciar sesión

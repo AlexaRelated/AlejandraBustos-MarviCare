@@ -29,7 +29,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(default=timezone.now)
     slug = models.SlugField(unique=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')  # Ejemplo de campo de imagen
+    image = models.ImageField(upload_to='images/')  
     category = models.ForeignKey(Category, on_delete=models.CASCADE)  # Relación con categoría
 
     def __str__(self):
