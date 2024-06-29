@@ -30,7 +30,6 @@ def create_post(request):
         form = PostForm()
     return render(request, 'inicio/create_post.html', {'form': form})
 
-
 @login_required
 def edit_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -46,6 +45,7 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
+@login_required
 def post_detail(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     comments = Comment.objects.filter(post=post)
@@ -53,6 +53,7 @@ def post_detail(request, post_slug):
     context = {
         'post': post,
         'comments': comments,
+        'user': request.user,  # Asegurando que el contexto del usuario esté disponible
     }
 
     if request.method == 'POST':
@@ -62,18 +63,16 @@ def post_detail(request, post_slug):
             comment.post = post
             comment.author = request.user
             comment.save()
-            return redirect('post_detail', slug=post.slug)
+            return redirect('post_detail', post_slug=post.slug)
     else:
         form = CommentForm()
 
-    return render(request, 'inicio/post_detail.html', {
-        'post': post,
-        'comments': comments,
-        'form': form,
-    })
+    context['form'] = form
+    return render(request, 'inicio/post_detail.html', context)
 
 def home_view(request):
     return render(request, 'inicio/home.html')
+
 
 def blog_home(request):
     blog_posts = Post.objects.all()

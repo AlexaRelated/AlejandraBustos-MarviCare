@@ -7,6 +7,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>MarviCare</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -16,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" />
+
 </head>
 <body id="page-top">
     <!-- Navigation-->
@@ -64,86 +66,14 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
-                    <form id="blogSearchForm" class="d-flex" action="{% url 'search_posts' %}" method="GET">
-                        <input class="form-control me-2" type="text" name="q" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
+
                     {% block content %}{% endblock %}
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- About-->
-    <section class="about-section text-center" id="about">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8">
-                    <h2 class="text-white mb-4">MarviCare</h2>
-                    <p class="text-white-50">
-                        Disfruta de un extenso número de módulos y contenidos interactivos. ¿A qué estás esperando? 
-                        <a href="{% url 'post_list' %}" target="_blank">¡Comienza tu aprendizaje!</a>
-                    </p>
-                </div>
-            </div>
-            <img class="img-fluid" src="{% static 'assets/img/fondoM.jpg' %}" alt="..." />
-        </div>
-    </section>
-
-    <!-- Projects-->
-    <section class="projects-section bg-light" id="projects">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/hm1.jpg' %}" alt="..." /></div>
-                <div class="col-xl-4 col-lg-5">
-                    <div class="featured-text text-center text-lg-left">
-                        <h4>Maquillaje</h4>
-                        <p class="text-black-50 mb-0">¡Sumérgete en el glamuroso universo de los productos cosméticos! ¿Los mejores aliados de tu belleza? Productos de calidad superior para un maquillaje perfecto de ojos, rostro, labios y manos. </p>
-                        <a href="https://marvicare.blogspot.com/search/label/maquillaje">¡Comienza tu aprendizaje!</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Project Rows -->
-            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                <div class="col-lg-6">
-                    <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
-                    <a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html" target="_blank">¡Bienvenido verano! Claves para cuidarnos del sol</a>
-                </div>
-                <div class="col-lg-6">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-left">
-                                <h4 class="text-white">Dermocosmética</h4>
-                                <p class="mb-0 text-white-50">Los dermocosméticos fueron productos creados científicamente para el cuidado de la piel, el cabello y las uñas, por lo que están clínicamente aprobados y avalados por dermatólogos, esto garantiza que su aplicación no es dañina para la salud.</p>
-                                <a href="{% url 'post_detail' slug='tu-slug-aqui' %}">¡Aprendamos más sobre ellos!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row gx-0 justify-content-center">
-                <div class="col-lg-6">
-                    <img class="img-fluid" src="{% static 'assets/img/perfume4.jpg' %}" alt="..." />
-                    <a href="https://marvicare.blogspot.com/search/label/perfumes" target="_blank">Perfumería</a>
-                </div>
-                <div class="col-lg-6">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-left">
-                                <h4 class="text-white">Cosmética</h4>
-                                <p class="mb-0 text-white-50">La cosmética es el arte y la ciencia de utilizar productos para realzar y embellecer el cuerpo, especialmente la piel. A lo largo de la historia, ha sido una parte integral de la cultura y la identidad personal.</p>
-                                <a href="{% url 'post_detail' slug='tu-slug-aqui' %}">¡Descubre más sobre la cosmética!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
+    
     <!-- Signup-->
     <section class="signup-section" id="signup">
         <div class="container px-4 px-lg-5">

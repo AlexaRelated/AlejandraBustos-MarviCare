@@ -11366,3 +11366,11 @@ body {
   margin-bottom: 50px; 
 }
 
+
+/* Color de texto gris claro para los campos del formulario de registro */
+form.form-signup input[type="text"],
+form.form-signup input[type="email"],
+form.form-signup input[type="password"],
+form.form-signup textarea {
+    color: #666; /* Color gris claro */
+}
