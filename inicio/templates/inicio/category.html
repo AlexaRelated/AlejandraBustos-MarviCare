@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category }} - MarviCare{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for entry in entries %}
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ entry.title }}</h5>
+                <p class="card-text">{{ entry.content }}</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Category: {{ entry.category }}</small>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-md-12">
+        <p>No entries for this category.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

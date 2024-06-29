@@ -66,15 +66,34 @@
             </div>
         </header>
         
-       <!-- Post-->
-       {% for post in posts %}
-       {% if post.slug %}
-           <div class="col-lg-6">
-               <img class="img-fluid" src="{% static 'assets/img/solar0.jpg' %}" alt="..." />
-               <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-           </div>
-       {% endif %}
-   {% endfor %}
+               <!-- Main content -->
+               <div class="container mt-5">
+                <div class="row">
+                    <!-- Main content area -->
+                    <div class="col-md-8">
+                        <h1>Artículos sobre Bienestar</h1>
+                        <div class="row">
+                            {% for post in posts %}
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ post.title }}</h5>
+                                        <p>{{ post.content | truncatechars:200 }}</p>
+                                        <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-primary">Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-md-12">
+                                <p>No hay artículos en esta categoría.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <!-- Signup-->
         <section class="signup-section" id="contacto">
             <div class="container px-4 px-lg-5">

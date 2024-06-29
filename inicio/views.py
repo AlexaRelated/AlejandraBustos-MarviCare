@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
-from .models import Post, Category
+from .models import Post, Category, Entry
 from .forms import PostForm, CommentForm
 from .models import Article, Author
 from django.contrib.auth import authenticate, login
@@ -14,7 +14,8 @@ from django.contrib.auth import authenticate, login
 
 def index(request):
     blog_posts = Post.objects.all()
-    return render(request, 'inicio/index.html', {'blog_posts': blog_posts})
+    categorias = Category.objects.all()
+    return render(request, 'index.html', {'categorias': categorias})
 
 @login_required
 def create_post(request):
@@ -48,7 +49,7 @@ def edit_post(request, slug):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.all()
+    comments = Comment.objects.filter(post=post)
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -120,7 +121,8 @@ def post_list(request):
 def category_view(request, category_name):
     category = get_object_or_404(Category, name__iexact=category_name)
     posts = Post.objects.filter(categories=category)
-    return render(request, 'inicio/category.html', {'posts': posts})
+    entries = Entry.objects.filter(category__name=category)
+    return render(request, 'category.html', {'category': category.capitalize(), 'entries': entries})
 
 def category_posts(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
@@ -159,17 +161,28 @@ def generate_signature(request):
     return JsonResponse({'signature': signature})
 
 def cosmetica_view(request):
-    posts = Post.objects.filter(published_date__isnull=False) 
-    return render(request, 'inicio/cosmetica.html', {'posts': posts})
+    category_cosmetica = get_object_or_404(Category, name__iexact='Cosmética')
+    entries = Post.objects.filter(category=category_cosmetica)
+    
+    return render(request, 'inicio/cosmetica.html', {'posts': entries})
 
 def maquillaje_view(request):
-    return render(request, 'inicio/maquillaje.html')
+    category_maquillaje = get_object_or_404(Category, name__iexact='Maquillaje')
+    entries = Post.objects.filter(category=category_maquillaje)
+    
+    return render(request, 'inicio/maquillaje.html', {'posts': entries})
 
 def dermocosmetica_view(request):
     return render(request, 'inicio/dermocosmetica.html')
 
 def perfumeria_view(request):
-    return render(request, 'inicio/perfumeria.html')
+    # Obtén el objeto Category correspondiente a 'Perfumería'
+    category_perfumeria = get_object_or_404(Category, name__iexact='Perfumería')
+    
+    # Filtra los posts que tienen esta categoría
+    entries = Post.objects.filter(category=category_perfumeria)
+    
+    return render(request, 'inicio/perfumeria.html', {'posts': entries})
 
 def formaciones_view(request):
     return render(request, 'inicio/formaciones.html')
@@ -185,7 +198,7 @@ def contacto_view(request):
             return redirect('comment_success')
     else:
         form = CommentForm()
-    comments = Comment.objects.all().order_by('-created_date')  # Asegúrate de obtener los comentarios del blog
+    comments = Comment.objects.all().order_by('-created_date')  
     return render(request, 'inicio/contacto.html', {'form': form, 'comments': comments})
 
 def comment_success_view(request):

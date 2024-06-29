@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -10,37 +11,43 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class Entry(models.Model):
+    # Define los campos de tu modelo Entry
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Entries'
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=200)
     content = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
-    image = models.ImageField(upload_to='post/')
-    slug = models.SlugField(unique=True, blank=True)
-    published_date = models.DateTimeField(auto_now_add=True)
-    
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('post_detail', args=[self.slug])
+    published_date = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(unique=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')  # Ejemplo de campo de imagen
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)  # Relación con categoría
 
     def __str__(self):
         return self.title
         
 
+
 class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.message[:50]}"
+        return f'Comment by {self.name}'
 
+    class Meta:
+        ordering = ['-created_date']
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='inicio_profile')  
