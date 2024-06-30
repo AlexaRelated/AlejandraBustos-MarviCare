@@ -73,6 +73,9 @@ def post_detail(request, slug):
 def home_view(request):
     return render(request, 'inicio/home.html')
 
+def all_posts(request):
+    posts = Post.objects.all()
+    return render(request, 'inicio/all_posts.html', {'posts': posts})
 
 def blog_home(request):
     blog_posts = Post.objects.all()
