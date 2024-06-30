@@ -46,14 +46,14 @@ def edit_post(request, slug):
     return render(request, 'inicio/edit_post.html', {'form': form})
 
 @login_required
-def post_detail(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     comments = Comment.objects.filter(post=post)
 
     context = {
         'post': post,
         'comments': comments,
-        'user': request.user,  # Asegurando que el contexto del usuario esté disponible
+        'user': request.user,  
     }
 
     if request.method == 'POST':
@@ -63,7 +63,7 @@ def post_detail(request, post_slug):
             comment.post = post
             comment.author = request.user
             comment.save()
-            return redirect('post_detail', post_slug=post.slug)
+            return redirect('post_detail', slug=post.slug)
     else:
         form = CommentForm()
 

@@ -27,22 +27,28 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     published_date = models.DateTimeField(default=timezone.now)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=200)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')  
     category = models.ForeignKey(Category, on_delete=models.CASCADE)  # Relación con categoría
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
-        
 
 
 class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
     content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'Comment by {self.name}'

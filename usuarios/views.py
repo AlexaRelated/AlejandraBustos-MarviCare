@@ -1,10 +1,14 @@
+from profile import Profile
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, SubscriptionForm
 from django.contrib.auth import authenticate, login, logout
-from .forms import ProfileForm
+from .forms import ProfileForm, User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 @login_required
 def index(request):
@@ -57,7 +61,8 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'inicio/profile.html', {'user': request.user})
+    user = request.user
+    return render(request, 'usuarios/profile.html', {'user': user})
 
 @login_required
 def update_profile(request):
@@ -84,3 +89,9 @@ def registro(request):
         form = SubscriptionForm()
     
     return render(request, 'inicio/registro.html', {'form': form})
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
