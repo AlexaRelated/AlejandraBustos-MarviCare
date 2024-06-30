@@ -30,7 +30,7 @@ En el buscador podemos buscar entradas realizadas en Blogger.
 
 # Posts
 La información publicada se ha extraído de las webs oficiales. 
-Las imagenes se han obtenido de https://www.freepik.es/
+Las imagenes se han obtenido de https://www.freepik.es/ y para la interfaz he utilizado codigo de https://getbootstrap.com/
 
 # Autor
 

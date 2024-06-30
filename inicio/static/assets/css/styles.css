@@ -11374,3 +11374,29 @@ form.form-signup input[type="password"],
 form.form-signup textarea {
     color: #666; /* Color gris claro */
 }
+
+/* archivo: static/assets/css/styles.css */
+
+/* Ajustar el tamaño de las imágenes de los 'cards' */
+.card-img-top {
+  width: 7cm;
+  height: 4cm;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Reducir el padding de las 'cards' */
+.card-body {
+  padding: 10px;
+}
+
+/* Ajustar el tamaño del texto del título */
+.card-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Ajustar el tamaño del texto del contenido */
+.card-text {
+  font-size: 0.875rem;
+}
