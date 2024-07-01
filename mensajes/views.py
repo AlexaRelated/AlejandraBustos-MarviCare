@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Mensaje
 from .forms import MensajeForm
+from django.contrib import messages
+
 
 @login_required
 def inbox(request):
@@ -35,7 +37,7 @@ def bandeja_entrada(request):
     for mensaje in mensajes_recibidos:
         print(f"Mensaje de {mensaje.remitente.username} a {mensaje.destinatario.username} - Asunto: {mensaje.asunto}")
     
-    return render(request, 'mensajes/bandeja_entrada.html', {'mensajes_recibidos': mensajes_recibidos})
+    return render(request, 'mensajes/bandeja_entrada.html', {})
 
 
 @login_required
@@ -52,7 +54,7 @@ def redactar_mensaje(request):
             mensaje.save()
 
             messages.success(request, 'Mensaje enviado correctamente.')
-            return redirect('inbox')  # Redirecciona a la bandeja de entrada
+            return redirect('bandeja_entrada')  # Utiliza el nombre de vista definido en urls.py
     else:
         form = MensajeForm()
     

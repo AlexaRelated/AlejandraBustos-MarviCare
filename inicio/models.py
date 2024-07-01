@@ -65,8 +65,10 @@ class Comment(models.Model):
         ordering = ['-created_date']
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='inicio_profile')  
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='inicio_profile')
     city = models.CharField(max_length=100)
+
+    objects = models.Manager() 
 
     def __str__(self):
         return self.user.username

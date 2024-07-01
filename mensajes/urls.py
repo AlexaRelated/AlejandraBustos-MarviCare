@@ -8,5 +8,6 @@ urlpatterns = [
     path('redactar/', views.redactar_mensaje, name='redactar_mensaje'),
     path('inbox/', views.inbox, name='inbox'),
     path('', views.inbox, name='inbox'),  # URL para la bandeja de entrada de mensajes
+    path('bandeja_entrada/', views.bandeja_entrada, name='bandeja_entrada'),
   
 ]

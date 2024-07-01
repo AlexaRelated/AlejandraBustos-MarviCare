@@ -1,4 +1,5 @@
 from inspect import signature
+from .models import Profile
 from pyexpat.errors import messages
 from .models import Comment
 from django.http import JsonResponse, HttpResponse
@@ -96,6 +97,7 @@ def signup_view_cuentas(request):
             return redirect('index')  # Corregir la redirección según tu configuración
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
+            
 
     return render(request, 'inicio/login.html')
 
