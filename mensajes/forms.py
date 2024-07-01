@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Mensaje  
+from .models import Mensaje
 
 class MensajeForm(forms.ModelForm):
     destinatario = forms.ModelChoiceField(queryset=User.objects.all(), label='Destinatario')
@@ -9,4 +9,4 @@ class MensajeForm(forms.ModelForm):
 
     class Meta:
         model = Mensaje
-        fields = ['remitente', 'asunto', 'contenido']
+        fields = ['destinatario', 'asunto', 'contenido']

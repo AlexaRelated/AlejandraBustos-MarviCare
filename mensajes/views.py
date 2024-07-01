@@ -28,22 +28,32 @@ def enviar_mensaje(request, username):
 
 @login_required
 def bandeja_entrada(request):
+    print(f"Usuario actual: {request.user.username}")
     mensajes_recibidos = Mensaje.objects.filter(destinatario=request.user)
+    print(f"Mensajes recibidos para {request.user.username}: {mensajes_recibidos.count()}")
+    
+    for mensaje in mensajes_recibidos:
+        print(f"Mensaje de {mensaje.remitente.username} a {mensaje.destinatario.username} - Asunto: {mensaje.asunto}")
+    
     return render(request, 'mensajes/bandeja_entrada.html', {'mensajes_recibidos': mensajes_recibidos})
 
 
+@login_required
 def redactar_mensaje(request):
     if request.method == 'POST':
         form = MensajeForm(request.POST)
         if form.is_valid():
-            destinatario_id = form.cleaned_data['destinatario']
-            destinatario = User.objects.get(id=destinatario_id)
+            destinatario = form.cleaned_data['destinatario']
             asunto = form.cleaned_data['asunto']
             contenido = form.cleaned_data['contenido']
-            mensaje = Mensaje(emisor=request.user, destinatario=destinatario, asunto=asunto, contenido=contenido)
+            
+            # Crear el objeto Mensaje y guardarlo en la base de datos
+            mensaje = Mensaje(destinatario=destinatario, asunto=asunto, contenido=contenido, remitente=request.user)
             mensaje.save()
+
             messages.success(request, 'Mensaje enviado correctamente.')
             return redirect('inbox')  # Redirecciona a la bandeja de entrada
     else:
         form = MensajeForm()
+    
     return render(request, 'mensajes/redactar.html', {'form': form})

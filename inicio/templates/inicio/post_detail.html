@@ -65,6 +65,32 @@
                     <h1>{{ post.title }}</h1>
                     <p>{{ post.content }}</p>
                 </div>
+
+                <!-- Comments Section -->
+                <div class="comments">
+                    <h2>Comentarios</h2>
+                    <ul class="list-group mb-3">
+                        {% for comentario in comentarios %}
+                            <li class="list-group-item">
+                                <p>{{ comentario.contenido }}</p>
+                                <p><small>Por {{ comentario.autor.username }} el {{ comentario.fecha_publicacion|date:"d M Y H:i" }}</small></p>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">No hay comentarios aún. Sé el primero en comentar!</li>
+                        {% endfor %}
+                    </ul>
+
+                    {% if user.is_authenticated %}
+                        <h2>Añadir un comentario</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ comentario_form.as_p }}
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    {% else %}
+                        <p><a href="{% url 'login' %}">Inicia sesión</a> para añadir un comentario.</p>
+                    {% endif %}
+                </div>
             </div>
 
             <!-- Sidebar area -->

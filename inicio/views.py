@@ -10,6 +10,8 @@ from .models import Post, Category, Entry
 from .forms import PostForm, CommentForm
 from .models import Article, Author
 from django.contrib.auth import authenticate, login
+from .models import Post, ComentarioPost
+from .forms import ComentarioPostForm
 
 
 def index(request):
@@ -45,30 +47,27 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
-@login_required
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments = Comment.objects.filter(post=post)
-
-    context = {
-        'post': post,
-        'comments': comments,
-        'user': request.user,  
-    }
+    comentarios = post.comentarios.all()
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
+        comentario_form = ComentarioPostForm(request.POST)
+        if comentario_form.is_valid():
+            nuevo_comentario = comentario_form.save(commit=False)
+            nuevo_comentario.post = post
+            nuevo_comentario.autor = request.user
+            nuevo_comentario.save()
             return redirect('post_detail', slug=post.slug)
     else:
-        form = CommentForm()
+        comentario_form = ComentarioPostForm()
 
-    context['form'] = form
-    return render(request, 'inicio/post_detail.html', context)
+    return render(request, 'inicio/post_detail.html', {
+        'post': post,
+        'comentarios': comentarios,
+        'comentario_form': comentario_form,
+    })
+
 
 def home_view(request):
     return render(request, 'inicio/home.html')
