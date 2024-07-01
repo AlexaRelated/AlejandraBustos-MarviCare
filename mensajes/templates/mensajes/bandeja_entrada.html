@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandeja de Entrada</title>
+</head>
+<body>
+    <h1>Bandeja de Entrada</h1>
+    
+    <div id="chat-messages">
+        <!-- Aquí se mostrarán los mensajes del chat -->
+    </div>
+    
+    <form id="chat-form">
+        <input type="text" id="chat-message-input">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/{{ request.user.username }}/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const message = data.message;
+            const chatMessages = document.getElementById('chat-messages');
+            const newMessage = document.createElement('p');
+            newMessage.textContent = message;
+            chatMessages.appendChild(newMessage);
+        };
+
+        document.querySelector('#chat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        });
+    </script>
+</body>
+</html>

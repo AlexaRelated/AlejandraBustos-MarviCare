@@ -45,7 +45,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a>
                                 <a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a>
-                                <a class="dropdown-item" href="{% url 'inbox' %}">Mensajes</a> 
+                                <a class="dropdown-item" href="{% url 'bandeja_entrada' %}">Mensajes</a> 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
                             </div>
@@ -69,6 +69,51 @@
             </div>
         </div>
     </header>
+
+    <!-- Ventana de chat -->
+    <div id="chat-window">
+        <!-- Selección de salas -->
+        <div>
+            <label for="room-name">Select chat room:</label>
+            <select id="room-name">
+                <option value="public">Public</option>
+            </select>
+        </div>
+
+        <!-- Selección de usuario para chat privado -->
+        <div>
+            <label for="user-select">Select user for private chat:</label>
+            <select id="user-select">
+                <option value="">Select a user</option>
+            </select>
+        </div>
+
+        <div id="chat-log"></div>
+        <input id="chat-message-input" type="text" size="100">
+        <input id="chat-message-submit" type="button" value="Send">
+    </div>
+
+    <!-- Estilos para el chat -->
+    <style>
+        #chat-window {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+        #chat-log {
+            flex: 1;
+            overflow-y: scroll;
+        }
+        #chat-message-input {
+            flex: 0;
+        }
+    </style>
 
     <!-- Signup-->
     <section class="signup-section" id="signup">

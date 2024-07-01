@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Mensaje</title>
+</head>
+<body>
+    <h1>Ver Mensaje</h1>
+    
+    <p><strong>Remitente:</strong> {{ mensaje.remitente.username }}</p>
+    <p><strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d M Y H:i" }}</p>
+    <p><strong>Asunto:</strong> {{ mensaje.asunto }}</p>
+    <p><strong>Contenido:</strong> {{ mensaje.contenido }}</p>
+    
+    <a href="{% url 'bandeja_entrada' %}">Volver a Bandeja de Entrada</a>
+</body>
+</html>

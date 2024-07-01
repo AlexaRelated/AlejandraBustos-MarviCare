@@ -1,0 +1,21 @@
+
+
+<h1>Detalles del mensaje</h1>
+
+<p>De: {{ mensaje.remitente.username }}</p>
+<p>Asunto: {{ mensaje.asunto }}</p>
+<p>{{ mensaje.contenido }}</p>
+
+<hr>
+
+<h2>Responder al mensaje</h2>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Responder</button>
+</form>
+
+<hr>
+
+<a href="{% url 'eliminar_mensaje' mensaje.id %}">Eliminar mensaje</a>

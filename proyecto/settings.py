@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'usuarios',
     'taggit',
+    'channels',
     'mensajes',
 ]
 
@@ -66,8 +67,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',  
-            BASE_DIR / 'inicio' / 'templates'  
+            os.path.join(BASE_DIR, 'templates'),  # Carpeta principal de plantillas
+            os.path.join(BASE_DIR, 'inicio', 'templates'),  # Carpeta de plantillas de inicio
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -82,7 +83,14 @@ TEMPLATES = [
 ]
 
 
+ASGI_APPLICATION = 'proyecto.asgi.application'
 WSGI_APPLICATION = 'proyecto.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 
 # Database
