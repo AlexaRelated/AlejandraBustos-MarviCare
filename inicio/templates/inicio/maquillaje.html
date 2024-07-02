@@ -65,10 +65,12 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Maquillaje</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Sumérgete en el glamuroso universo de los productos cosméticos! ¿Los mejores aliados de tu belleza? Productos de calidad superior para un maquillaje perfecto de ojos, rostro, labios y manos.</h2>
-                    <form id="blogSearchForm" class="d-flex">
-                        <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                    <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
+                        <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
                     </form>
+                    
+                    
                 </div>
                 
             </div>

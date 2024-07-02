@@ -1,11 +1,9 @@
-{% load static %} 
+<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarviCare</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
@@ -49,7 +47,6 @@
                                 <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
                             </div>
                         </li>
-                    {% else %}
                     {% endif %}
                 </ul>
             </div>
@@ -63,14 +60,19 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Marvicare</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
-                    {% block content %}{% endblock %}
+                    <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
+                        <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </header>
 
-     <!-- Ventana de chat -->
-     <div id="chat-window">
+    {% block content %}{% endblock %}
+
+    <!-- Ventana de chat -->
+    <div id="chat-window">
         <!-- Selección de salas -->
         <div>
             <label for="room-name">Select chat room:</label>

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import search_view
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -13,7 +14,7 @@ urlpatterns = [
     path('add_post/', views.add_post, name='add_post'),
     path('add_comment/', views.add_comment, name='add_comment'),
     path('add_comment/<str:slug>/', views.add_comment, name='add_comment_slug'),
-    path('search/', views.search_posts, name='search_posts'),
+    path('search/', search_view, name='search_view'),
     path('zoom/', views.zoom_view, name='zoom'),
     path('generate-signature/', views.generate_signature, name='generate_signature'),
     path('post/<int:post_id>/edit/', views.create_or_update_post, name='edit_post'),

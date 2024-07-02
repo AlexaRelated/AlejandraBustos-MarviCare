@@ -97,10 +97,12 @@
                 </div>
             </div>
         </header>
-        <form id="blogSearchForm" class="d-flex">
-            <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+        <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
+            <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
+        
+        
         <!-- About-->
         <section class="about-section text-center" id="about">
             <div class="container px-4 px-lg-5">

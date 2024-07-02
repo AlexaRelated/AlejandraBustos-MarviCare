@@ -28,5 +28,5 @@ class CommentForm(forms.ModelForm):
 
         
 class SearchForm(forms.Form):
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
     query = forms.CharField(max_length=255, required=False)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)

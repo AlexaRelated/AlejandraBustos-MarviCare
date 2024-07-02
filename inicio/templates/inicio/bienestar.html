@@ -42,10 +42,11 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
-                            <form id="blogSearchForm" class="d-flex">
-                                <input class="form-control me-2" type="text" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
+                            <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
+                                <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
                                 <button class="btn btn-outline-success" type="submit">Buscar</button>
                             </form>
+                            
                         </li>
                     </ul>
                 </div>

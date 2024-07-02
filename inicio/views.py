@@ -8,11 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
 from .models import Post, Category, Entry
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, ComentarioPost
 from .models import Article, Author
 from django.contrib.auth import authenticate, login
-from .models import Post, ComentarioPost
 from .forms import ComentarioPostForm
+from .forms import SearchForm
 
 
 def index(request):
@@ -81,10 +81,7 @@ def blog_home(request):
     blog_posts = Post.objects.all()
     return render(request, 'inicio/blog_home.html', {'blog_posts': blog_posts})
 
-def buscar_view(request):
-    query = request.GET.get('q')
-    resultados_tu_modelo2 = Post.objects.filter(Q(campo__icontains=query))  
-    return render(request, 'buscar_resultados.html', {'resultados': resultados_tu_modelo2})
+
 
 def signup_view_cuentas(request):
     if request.method == 'POST':
@@ -101,18 +98,18 @@ def signup_view_cuentas(request):
 
     return render(request, 'inicio/login.html')
 
-def search_posts(request):
+def buscar_view(request):
     query = request.GET.get('q')
+    resultados_tu_modelo2 = Post.objects.filter(Q(campo__icontains=query))  
+    return render(request, 'buscar_resultados.html', {'resultados': resultados_tu_modelo2})
+
+def search_view(request):
+    query = request.GET.get('query', '')
     if query:
-        inicio_posts = Post.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
-        )
-        blog_posts = Post.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
-        )
-        posts = list(inicio_posts) + list(blog_posts)
+        posts = Post.objects.filter(title__icontains=query)  # Busca en el título de los posts
     else:
-        posts = []
+        posts = Post.objects.all()  # Si no hay consulta, devuelve todos los posts
+    
     return render(request, 'search_results.html', {'posts': posts, 'query': query})
 
 
