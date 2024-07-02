@@ -45,7 +45,6 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a>
                                 <a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a>
-                                <a class="dropdown-item" href="{% url 'bandeja_entrada' %}">Mensajes</a> 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
                             </div>
@@ -70,8 +69,8 @@
         </div>
     </header>
 
-    <!-- Ventana de chat -->
-    <div id="chat-window">
+     <!-- Ventana de chat -->
+     <div id="chat-window">
         <!-- Selección de salas -->
         <div>
             <label for="room-name">Select chat room:</label>
@@ -114,7 +113,7 @@
             flex: 0;
         }
     </style>
-
+    
     <!-- Signup-->
     <section class="signup-section" id="signup">
         <div class="container px-4 px-lg-5">

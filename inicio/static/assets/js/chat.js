@@ -1,5 +1,3 @@
-// static/js/chat.js
-
 document.addEventListener("DOMContentLoaded", function() {
     const chatLog = document.querySelector('#chat-log');
     const chatMessageInput = document.querySelector('#chat-message-input');
@@ -52,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function loadUsers() {
-        fetch('/get_users/')
+        fetch('/mensajes/get_users/')
             .then(response => response.json())
             .then(users => {
                 users.forEach(user => {

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+</head>
+<body>
+    <div>
+        <label for="room-select">Seleccioanr sala de chat:</label>
+        <select id="room-select">
+            <option value="public">Publico</option>
+            <!-- Add more rooms as needed -->
+        </select>
+    </div>
+    <div>
+        <label for="user-select">Selecionar usuario:</label>
+        <select id="user-select">
+            <!-- This will be populated dynamically with JavaScript -->
+        </select>
+    </div>
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text" size="100">
+    <input id="chat-message-submit" type="button" value="Send">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Fetch users and populate the user select
+            fetch('/get_users/')
+                .then(response => response.json())
+                .then(data => {
+                    const userSelect = document.getElementById('user-select');
+                    data.users.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.username;
+                        option.textContent = user.username;
+                        userSelect.appendChild(option);
+                    });
+                });
+
+            const roomSelect = document.getElementById('room-select');
+            const userSelect = document.getElementById('user-select');
+            let roomName = 'public';
+
+            roomSelect.addEventListener('change', (event) => {
+                roomName = event.target.value;
+                if (roomName === 'private') {
+                    roomName = userSelect.value;
+                }
+                connectToRoom(roomName);
+            });
+
+            userSelect.addEventListener('change', (event) => {
+                if (roomSelect.value === 'private') {
+                    roomName = event.target.value;
+                    connectToRoom(roomName);
+                }
+            });
+
+            function connectToRoom(roomName) {
+                const chatSocket = new WebSocket(
+                    'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+
+                chatSocket.onmessage = function(e) {
+                    const data = JSON.parse(e.data);
+                    document.querySelector('#chat-log').value += (data.username + ': ' + data.message + '\n');
+                };
+
+                chatSocket.onclose = function(e) {
+                    console.error('Chat socket closed unexpectedly');
+                };
+
+                document.querySelector('#chat-message-input').focus();
+                document.querySelector('#chat-message-input').onkeyup = function(e) {
+                    if (e.keyCode === 13) {  // Enter key
+                        document.querySelector('#chat-message-submit').click();
+                    }
+                };
+
+                document.querySelector('#chat-message-submit').onclick = function(e) {
+                    const messageInputDom = document.querySelector('#chat-message-input');
+                    const message = messageInputDom.value;
+                    chatSocket.send(JSON.stringify({
+                        'message': message
+                    }));
+                    messageInputDom.value = '';
+                };
+            }
+
+            // Connect to the default room
+            connectToRoom(roomName);
+        });
+    </script>
+</body>
+</html>
