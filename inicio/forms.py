@@ -2,7 +2,7 @@ from django import forms
 from inicio.models import Post
 from .models import Comment
 from .models import ComentarioPost
-
+from .models import Category
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -27,3 +27,6 @@ class CommentForm(forms.ModelForm):
     message = forms.CharField(label='Mensaje', widget=forms.Textarea)
 
         
+class SearchForm(forms.Form):
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    query = forms.CharField(max_length=255, required=False)

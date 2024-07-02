@@ -20,3 +20,10 @@ def private_chat(request, username):
 def get_users(request):
     users = User.objects.values('username')
     return JsonResponse({'users': list(users)})
+
+from django.shortcuts import render
+
+def room(request, room_name):
+    return render(request, 'mensajes/room.html', {
+        'room_name': room_name
+    })

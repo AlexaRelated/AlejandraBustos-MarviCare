@@ -197,21 +197,18 @@ def formaciones_view(request):
 def bienestar_view(request):
     return render(request, 'inicio/bienestar.html')
 
+@login_required
 def contacto_view(request):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Redirigir a una página de éxito o a la misma página sin incluir los comentarios
-            return redirect('contacto_success')  
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.save()
+            return redirect('inicio:contacto')
     else:
         form = CommentForm()
-    
-    context = {
-        'form': form,
-    }
-    
-    return render(request, 'inicio/contacto.html', context)
+    return render(request, 'inicio/contacto.html', {'form': form})
 
 def comment_success_view(request):
     return render(request, 'inicio/comment_success.html')

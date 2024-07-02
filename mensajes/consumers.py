@@ -42,3 +42,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'message': message,
             'username': username,
         }))
+
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
