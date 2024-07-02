@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'taggit',
     'channels',
     'mensajes',
+    
 ]
 
 MIDDLEWARE = [

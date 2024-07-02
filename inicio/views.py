@@ -13,11 +13,17 @@ from .models import Article, Author
 from django.contrib.auth import authenticate, login
 from .forms import ComentarioPostForm
 from .forms import SearchForm
+from .forms import ContactForm
+from django.contrib.admin.views.decorators import staff_member_required
 
 
+
+@login_required
 def index(request):
-    posts = Post.objects.all()
-    return render(request, 'inicio/index.html')
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'inicio/index.html', context)
 
 @login_required
 def create_post(request):
@@ -209,18 +215,23 @@ def formaciones_view(request):
 def bienestar_view(request):
     return render(request, 'inicio/bienestar.html')
 
-@login_required
 def contacto_view(request):
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.save()
-            return redirect('inicio:contacto')
+            form.save()
+            messages.success(request, '¡Gracias por tu mensaje! Nos pondremos en contacto pronto.')
+            return redirect('contacto')
     else:
-        form = CommentForm()
+        form = ContactForm()
+
     return render(request, 'inicio/contacto.html', {'form': form})
+
+@staff_member_required
+def lista_mensajes_contacto(request):
+    messages = ContactMessage.objects.all()
+    return render(request, 'inicio/lista_mensajes.html', {'messages': messages})
+
 
 def comment_success_view(request):
     return render(request, 'inicio/comment_success.html')

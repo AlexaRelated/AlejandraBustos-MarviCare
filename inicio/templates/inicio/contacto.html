@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto</title>
+{% extends "base.html" %}
+
+{% block title %}
+Contacto
+{% endblock %}
+
+{% block content %}
     <style>
         .text-dark-gray {
             color: #333333; /* Gris oscuro */
         }
     </style>
-</head>
-<body>
     <h2 class="text-dark-gray mb-5">Deja tus comentarios y sugerencias</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enviar</button>
     </form>
-</body>
-</html>
+{% endblock %}

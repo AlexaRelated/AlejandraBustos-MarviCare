@@ -3,6 +3,7 @@ from inicio.models import Post
 from .models import Comment
 from .models import ComentarioPost
 from .models import Category
+from .models import ContactMessage
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -30,3 +31,8 @@ class CommentForm(forms.ModelForm):
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=255, required=False)
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'message']
