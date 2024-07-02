@@ -57,9 +57,9 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">Cosmética</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Blog dedicado a la formación del cuidado de la piel</h2>
-                    <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
-                        <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    <form method="GET" action="{% url 'buscar_view' %}">
+                        <input type="text" name="q" placeholder="Buscar..." required>
+                        <button type="submit">Buscar</button>
                     </form>
                     
                 </div>

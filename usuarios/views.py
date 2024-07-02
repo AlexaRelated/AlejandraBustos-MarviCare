@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import ProfileForm, User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .models import Profile
 
 
 @login_required
@@ -60,9 +61,13 @@ def logout_view(request):
     return redirect('login')
 
 @login_required
-def profile_view(request):
-    user = request.user
-    return render(request, 'usuarios/profile.html', {'user': user})
+def profile_views(request):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    return render(request, 'profile.html', {'profile': profile})
 
 @login_required
 def update_profile(request):

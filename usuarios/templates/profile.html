@@ -1,5 +1,5 @@
-<!-- templates/usuarios/profile.html -->
-{% load static %} <!-- Asegúrate de que esta línea está al principio del archivo -->
+
+{% load static %} 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,15 +65,26 @@
         </div>
     </header>
 
+    {% block content %}
     <div class="container">
-        <h2>Perfil de {{ user.username }}</h2>
-        <ul>
-            <li>Nombre de usuario: {{ user.username }}</li>
-            <li>Email: {{ user.email }}</li>
-            <!-- Puedes agregar más detalles del perfil aquí -->
-        </ul>
-        <a href="{% url 'update_profile' %}" class="btn btn-primary">Actualizar Perfil</a>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>Perfil de Usuario</h2>
+                <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+                <p><strong>Bio:</strong> {{ profile.bio }}</p>
+                <p><strong>Número de tienda:</strong> {{ profile.numero_tienda }}</p>
+                <p><strong>Ciudad:</strong> {{ profile.ciudad }}</p>
+            </ul>
+            <a href="{% url 'update_profile' %}" class="btn btn-primary">Actualizar Perfil</a>
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
+                {% endif %}
+            </div>
+        </div>
     </div>
+    {% endblock %}
+        
 
     <!-- Footer -->
     <footer class="footer bg-black small text-center text-white-50">
