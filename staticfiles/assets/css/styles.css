@@ -8227,7 +8227,7 @@ textarea.form-control-lg {
 
 .text-white {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+  color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
 }
 
 .text-body {
@@ -11200,4 +11200,47 @@ body {
 
 .footer {
   padding: 5rem 0;
+}
+
+
+.content-wrapper {
+  margin-top: 80px; /* Ajusta según el tamaño del menú */
+  padding-top: 20px; /* Espaciado superior para separarlo del menú */
+}
+
+.content-wrapper h1 {
+  font-size: 3.5rem; /* Ajusta el tamaño de la fuente según tus necesidades */
+  /* Otros estilos si son necesarios */
+}
+
+.content-wrapper h2 {
+  font-size: 1.5rem; /* Ajusta el tamaño de la fuente según tus necesidades */
+  /* Otros estilos si son necesarios */
+}
+/* Estilo para eliminar espacio debajo del pie de página */
+footer.footer {
+  margin-top: 0; /* Asegura que no haya margen superior */
+  padding-top: 10px; /* Ajusta según necesidades, para separación opcional desde arriba */
+  padding-bottom: 10px; /* Ajusta según necesidades, para separación opcional desde abajo */
+}
+
+/* Si hay algún espacio dentro del footer que quieres eliminar */
+footer.footer .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/*Propiedades pie de pagina*/
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: calc(100% - 4rem);
+}
+.footer {
+  height: 4rem;
+  background-color: #e2e2e2
 }

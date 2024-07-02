@@ -59,7 +59,7 @@ def post_detail(request, slug):
             nuevo_comentario.post = post
             nuevo_comentario.autor = request.user
             nuevo_comentario.save()
-            return redirect('post_detail', slug=post.slug)
+            return redirect('post_detail', slug=post.slug)  
     else:
         comentario_form = ComentarioPostForm()
 
@@ -68,7 +68,6 @@ def post_detail(request, slug):
         'comentarios': comentarios,
         'comentario_form': comentario_form,
     })
-
 
 def home_view(request):
     return render(request, 'inicio/home.html')
@@ -100,8 +99,17 @@ def signup_view_cuentas(request):
 
 def buscar_view(request):
     query = request.GET.get('q')
-    resultados_tu_modelo2 = Post.objects.filter(Q(campo__icontains=query))  
-    return render(request, 'buscar_resultados.html', {'resultados': resultados_tu_modelo2})
+    if query:
+        resultados = Post.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+    else:
+        resultados = Post.objects.none()  # Si no hay consulta, devolver ningún resultado
+
+    context = {
+        'resultados': resultados,
+        'query': query,
+    }
+    return render(request, 'inicio/buscar.html', context)
+
 
 def search_view(request):
     query = request.GET.get('query', '')
@@ -123,10 +131,17 @@ def post_list(request):
     return render(request, 'inicio/post_list.html', {'posts': posts})
 
 def category_view(request, category_name):
+    # Obtener la categoría por su nombre (ignorando mayúsculas y minúsculas)
     category = get_object_or_404(Category, name__iexact=category_name)
-    posts = Post.objects.filter(categories=category)
-    entries = Entry.objects.filter(category__name=category)
-    return render(request, 'category.html', {'category': category.capitalize(), 'entries': entries})
+
+    # Filtrar las entradas por la categoría obtenida
+    entries = Entry.objects.filter(category=category)
+
+    context = {
+        'category': category,
+        'entries': entries,
+    }
+    return render(request, 'inicio/category.html', context)
 
 def category_posts(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
