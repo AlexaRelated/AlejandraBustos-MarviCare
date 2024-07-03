@@ -1,67 +1,32 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const chatLog = document.querySelector('#chat-log');
-    const chatMessageInput = document.querySelector('#chat-message-input');
-    const chatMessageSubmit = document.querySelector('#chat-message-submit');
-    const roomNameSelect = document.querySelector('#room-name');
-    const userSelect = document.querySelector('#user-select');
+document.addEventListener('DOMContentLoaded', (event) => {
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/'
+    );
 
-    let roomName = roomNameSelect.value;
-    let chatSocket = null;
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const messageElement = document.createElement('div');
+        messageElement.innerText = `${data.username}: ${data.message}`;
+        document.getElementById('chat-log').appendChild(messageElement);
+    };
 
-    function connectToRoom(roomName) {
-        if (chatSocket) {
-            chatSocket.close();
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.getElementById('chat-message-input').focus();
+    document.getElementById('chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // Presiona Enter para enviar
+            document.getElementById('chat-message-submit').click();
         }
+    };
 
-        chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const message = data['message'];
-            chatLog.value += (message + '\n');
-        };
-
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        chatMessageSubmit.onclick = function(e) {
-            const message = chatMessageInput.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            chatMessageInput.value = '';
-        };
-    }
-
-    roomNameSelect.addEventListener('change', function(e) {
-        roomName = roomNameSelect.value;
-        connectToRoom(roomName);
-    });
-
-    userSelect.addEventListener('change', function(e) {
-        const selectedUser = userSelect.value;
-        if (selectedUser) {
-            roomName = `private-${selectedUser}`;
-            connectToRoom(roomName);
-        }
-    });
-
-    function loadUsers() {
-        fetch('/mensajes/get_users/')
-            .then(response => response.json())
-            .then(users => {
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.username;
-                    option.textContent = user.username;
-                    userSelect.appendChild(option);
-                });
-            });
-    }
-
-    loadUsers();
-    connectToRoom(roomName);
+    document.getElementById('chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.getElementById('chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
 });

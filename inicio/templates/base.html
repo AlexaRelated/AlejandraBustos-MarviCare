@@ -58,6 +58,9 @@
                         </li>
                     {% endif %}
                 </ul>
+                <div id="chatbox">
+                    <!-- Aquí se cargarán los mensajes del chat -->
+                </div>
             </div>
         </div>
     </nav>
@@ -138,5 +141,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="{% static 'assets/js/scripts.js' %}"></script>
+    <script>
+        // Código JavaScript para conectarse al chat usando WebSocket
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/'
+        );
+    
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            // Manejar los mensajes recibidos del servidor y mostrar en el chatbox
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${data.username}: ${data.message}`;
+            document.getElementById('chatbox').appendChild(messageElement);
+        };
+    
+        // Otro código JavaScript necesario para el chat
+    </script>
 </body>
 </html>

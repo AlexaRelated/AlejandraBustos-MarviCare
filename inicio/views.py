@@ -1,5 +1,5 @@
 from inspect import signature
-from .models import Profile
+from .models import ContactMessage, Profile
 from pyexpat.errors import messages
 from .models import Comment
 from django.http import JsonResponse, HttpResponse
@@ -15,6 +15,8 @@ from .forms import ComentarioPostForm
 from .forms import SearchForm
 from .forms import ContactForm
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
+
 
 
 

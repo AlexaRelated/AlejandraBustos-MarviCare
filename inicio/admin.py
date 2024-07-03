@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Post, Profile, Category, Entry
+from .models import ContactMessage
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'published_date')
@@ -14,3 +15,4 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Profile)
 admin.site.register(Category)
 admin.site.register(Entry)
+admin.site.register(ContactMessage)
