@@ -1,67 +1,67 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const chatLog = document.querySelector('#chat-log');
-    const chatMessageInput = document.querySelector('#chat-message-input');
-    const chatMessageSubmit = document.querySelector('#chat-message-submit');
-    const roomNameSelect = document.querySelector('#room-name');
-    const userSelect = document.querySelector('#user-select');
+document.addEventListener('DOMContentLoaded', () => {
+    // Establecer conexión WebSocket
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.hostname + ':8001/ws/chat/'
+    );
 
-    let roomName = roomNameSelect.value;
-    let chatSocket = null;
-
-    function connectToRoom(roomName) {
-        if (chatSocket) {
-            chatSocket.close();
+    // Función para procesar mensajes recibidos desde el servidor
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.command === 'new_message') {
+            // Mostrar nuevo mensaje en el chat-log
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${data.username}: ${data.message}`;
+            document.getElementById('chat-log').appendChild(messageElement);
+        } else if (data.command === 'user_list') {
+            // Actualizar la lista de usuarios conectados
+            const userListElement = document.getElementById('user-list');
+            userListElement.innerHTML = '';
+            data.users.forEach(user => {
+                const userElement = document.createElement('div');
+                userElement.innerText = user.username;
+                userListElement.appendChild(userElement);
+            });
         }
+    };
 
-        chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
+    // Manejar cierre inesperado de la conexión WebSocket
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const message = data['message'];
-            chatLog.value += (message + '\n');
-        };
+    // Enfocar el input de mensaje cuando se carga la página
+    document.getElementById('chat-message-input').focus();
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+    // Enviar mensaje cuando se presiona Enter
+    document.getElementById('chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // Código 13 es la tecla Enter
+            document.getElementById('chat-message-submit').click();
+        }
+    };
 
-        chatMessageSubmit.onclick = function(e) {
-            const message = chatMessageInput.value;
+    // Enviar mensaje cuando se hace clic en el botón de enviar
+    document.getElementById('chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.getElementById('chat-message-input');
+        const message = messageInputDom.value.trim();  // Eliminar espacios en blanco al inicio y final
+        if (message !== '') {
+            // Enviar mensaje al servidor a través de WebSocket
             chatSocket.send(JSON.stringify({
+                'command': 'new_message',
                 'message': message
             }));
-            chatMessageInput.value = '';
-        };
-    }
-
-    roomNameSelect.addEventListener('change', function(e) {
-        roomName = roomNameSelect.value;
-        connectToRoom(roomName);
-    });
-
-    userSelect.addEventListener('change', function(e) {
-        const selectedUser = userSelect.value;
-        if (selectedUser) {
-            roomName = `private-${selectedUser}`;
-            connectToRoom(roomName);
         }
-    });
+        // Limpiar el input de mensaje después de enviar
+        messageInputDom.value = '';
+    };
 
-    function loadUsers() {
-        fetch('/mensajes/get_users/')
-            .then(response => response.json())
-            .then(users => {
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.username;
-                    option.textContent = user.username;
-                    userSelect.appendChild(option);
-                });
-            });
+    // Función para actualizar la lista de usuarios conectados
+    function updateUserList(users) {
+        const userListElement = document.getElementById('user-list');
+        userListElement.innerHTML = '';
+        users.forEach(user => {
+            const userElement = document.createElement('div');
+            userElement.innerText = user.username;
+            userListElement.appendChild(userElement);
+        });
     }
-
-    loadUsers();
-    connectToRoom(roomName);
 });

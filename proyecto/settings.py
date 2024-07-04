@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import sys
+import base64
+import hashlib
+import redis
+from channels.layers import get_channel_layer
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,14 +93,36 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 ASGI_APPLICATION = 'proyecto.asgi.application'
 
+# Configura tus claves de cifrado simétrico
+DJANGO_SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'TVSb3HUCuhXvFwo3v4ekUFbcJWesmb5J')
+
+# Configuración de Redis Cloud
+REDIS_HOST = 'redis-15137.c304.europe-west1-2.gce.redns.redis-cloud.com'
+REDIS_PORT = 15137
+REDIS_PASSWORD = 'TVSb3HUCuhXvFwo3v4ekUFbcJWesmb5J'
+
+# Configuración de CHANNEL_LAYERS
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)], 
+            'hosts': [{
+                'address': f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}',
+            }],
+            'capacity': 100,  # Ajusta según tus necesidades
+            'expiry': 60 * 5,  # Ajusta según tus necesidades
+            'group_expiry': 60 * 60 * 24,
+            'channel_capacity': {
+                'http.request': 100,
+                'websocket.receive': 100,
+            },
+            'symmetric_encryption_keys': [
+                base64.urlsafe_b64encode(hashlib.sha256(DJANGO_SECRET_KEY.encode()).digest()).decode()
+            ],
         },
     },
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -146,11 +172,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'inicio', 'static'),
 ]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 MEDIA_URL = '/media/'

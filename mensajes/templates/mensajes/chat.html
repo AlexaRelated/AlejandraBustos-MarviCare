@@ -5,14 +5,14 @@
 </head>
 <body>
     <div>
-        <label for="room-select">Seleccioanr sala de chat:</label>
+        <label for="room-select">Seleccionar sala de chat:</label>
         <select id="room-select">
             <option value="public">Publico</option>
             <!-- Add more rooms as needed -->
         </select>
     </div>
     <div>
-        <label for="user-select">Selecionar usuario:</label>
+        <label for="user-select">Seleccionar usuario:</label>
         <select id="user-select">
             <!-- This will be populated dynamically with JavaScript -->
         </select>
@@ -57,11 +57,12 @@
 
             function connectToRoom(roomName) {
                 const chatSocket = new WebSocket(
-                    'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+                    'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+                );
 
                 chatSocket.onmessage = function(e) {
                     const data = JSON.parse(e.data);
-                    document.querySelector('#chat-log').value += (data.username + ': ' + data.message + '\n');
+                    document.querySelector('#chat-log').innerHTML += (data.username + ': ' + data.message + '<br>');
                 };
 
                 chatSocket.onclose = function(e) {
@@ -70,7 +71,7 @@
 
                 document.querySelector('#chat-message-input').focus();
                 document.querySelector('#chat-message-input').onkeyup = function(e) {
-                    if (e.keyCode === 13) {  // Enter key
+                    if (e.keyCode === 13) {
                         document.querySelector('#chat-message-submit').click();
                     }
                 };

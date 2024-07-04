@@ -58,9 +58,6 @@
                         </li>
                     {% endif %}
                 </ul>
-                <div id="chatbox">
-                    <!-- Aquí se cargarán los mensajes del chat -->
-                </div>
             </div>
         </div>
     </nav>
@@ -87,28 +84,59 @@
         {% endblock %}
     </div>
 
-    <!-- Chat Window -->
+    <!-- Contenedor del Chat -->
     <div id="chat-window">
-        <!-- Chat Room Selection -->
+        <!-- Selección de Sala de Chat -->
         <div>
-            <label for="room-name">Select chat room:</label>
+            <label for="room-name">Selecciona sala de chat:</label>
             <select id="room-name">
-                <option value="public">Public</option>
+                <option value="public">Público</option>
+                <!-- Otras opciones de sala de chat si las hay -->
             </select>
         </div>
 
-        <!-- User Selection for Private Chat -->
+        <!-- Selección de Usuario para Chat Privado -->
         <div>
-            <label for="user-select">Select user for private chat:</label>
+            <label for="user-select">Selecciona usuario para chat privado:</label>
             <select id="user-select">
-                <option value="">Select a user</option>
+                <option value="">Selecciona un usuario</option>
+                <!-- Opciones de usuarios disponibles si es aplicable -->
             </select>
         </div>
 
+        <!-- Área para mostrar el historial del chat -->
         <div id="chat-log"></div>
+
+        <!-- Entrada de mensaje y botón de enviar -->
         <input id="chat-message-input" type="text" size="100">
-        <input id="chat-message-submit" type="button" value="Send">
+        <input id="chat-message-submit" type="button" value="Enviar">
     </div>
+
+    <!-- Código JavaScript para WebSocket y manejo de chat -->
+    <script>
+        // Código JavaScript para conectarse al chat usando WebSocket
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            // Manejar los mensajes recibidos del servidor y mostrar en el chat-log
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${data.username}: ${data.message}`;
+            document.getElementById('chat-log').appendChild(messageElement);
+        };
+
+        document.getElementById('chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.getElementById('chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+
+    </script>
 
     <!-- Signup Section -->
     <section class="signup-section" id="signup">
@@ -136,26 +164,10 @@
         </div>
     </footer>
 
-    <!-- Bootstrap core JS -->
+<!-- Bootstrap core JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="{% static 'assets/js/scripts.js' %}"></script>
-    <script>
-        // Código JavaScript para conectarse al chat usando WebSocket
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/'
-        );
-    
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            // Manejar los mensajes recibidos del servidor y mostrar en el chatbox
-            const messageElement = document.createElement('div');
-            messageElement.innerText = `${data.username}: ${data.message}`;
-            document.getElementById('chatbox').appendChild(messageElement);
-        };
-    
-        // Otro código JavaScript necesario para el chat
-    </script>
 </body>
 </html>

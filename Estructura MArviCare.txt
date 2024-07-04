@@ -1,20 +1,4 @@
 MarviCare
-  |--blog
-     |--__pycache__
-     |--management
-     |--migrations
-     |--templates
-		|--add_post.html
-		|--category.html
-		|--post_detail.html
-     |--__init__.py
-     |--admin.py
-     |--apps.py
-     |--forms.py
-     |--models.py
-     |--tests.py
-     |--urls.py
-     |--views.py
   |--inicio
      |--migrations
      |--template
@@ -24,23 +8,44 @@ MarviCare
               		|--category_formaciones.html
               		|--category_maquillaje.html
               		|--category_perfumeria.html
+              		|--category_bienestar.html
 		|--inicio
+              		|--about.html
+              		|--all_post.html
+              		|--author.html
+              		|--bienestar.html
+              		|--buscar.html
               		|--category_post.html
+              		|--category.html
+              		|--contacto.html
+              		|--cosmetica.html
               		|--create_or_update_post.html
               		|--create_post.html
+              		|--dermocosmetica.html
+              		|--formaciones.html
+              		|--home.html
               		|--index.html
-              		|--login.html
+              		|--mantenimiento.html
+              		|--maquillaje.html
+              		|--perfumeria.html
               		|--post_detail.html
               		|--post_list.html
               		|--post.html
               		|--registro.html
               		|--search_result.html
-
+		|--usuarios
+              		|--update_profile.html
 		|--base.html
+		|--index_zoom.html
      |--statics
 		|--assets
-		|--css
-		|--js
+			|--img
+			|--css
+			|--js
+              			|--chats.js
+              			|--scripts.js
+              			|--server.js
+              			|--zoom-meetings.js
      |--__pycache__
      |--__init__.py
      |--admin.py
@@ -50,9 +55,26 @@ MarviCare
      |--tests.py
      |--urls.py
      |--views.py
+  |--mensajes
+     |--__pycache__
+     |--migrations
+     |--templates
+		|--mensajes
+			|--chat.html
+			|--room.html
+     |--__init__.py
+     |--admin.py
+     |--apps.py
+     |--consumers.py
+     |--forms.py
+     |--models.py
+     |--routing.py
+     |--tests.py
+     |--urls.py
+     |--views.py
+  |--node_modules
   |--proyecto
      |--__pycache__
-     |--__init__.py
      |--asgi.py
      |--forms.py
      |--models.py
@@ -72,11 +94,18 @@ MarviCare
      |--author.html
      |--category.html
      |--index.html
-     |--maquillaje.html
      |--plantilla_base.html
      |--post.html
+     |--zoom.html
   |--usuarios
      |--migrations
+     |--templates
+		|--inicio
+			|--login.html
+			|--menu.html
+			|--registro.html
+			|--signup.html
+		|--profile.html
      |--__init__.py
      |--admin.py
      |--apps.py
@@ -90,5 +119,7 @@ MarviCare
   |--db.sqlite3
   |--requierements.txt
   |--manage.py
+  |--package-lock.json
+  |--package.json
   |--README.md
  
