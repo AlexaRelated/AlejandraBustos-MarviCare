@@ -20,34 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <!-- Estilos personalizados -->
     <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" />
-    <style>
-        /* Estilos para el chat */
-        #chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-        #chat-log {
-            height: 200px;
-            overflow-y: scroll;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-        #chat-message {
-            width: calc(100% - 70px);
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            padding: 5px;
-        }
-        #chat-send {
-            width: 60px;
-        }
-    </style>
+
 </head>
 
     <body id="page-top">
@@ -214,16 +187,6 @@
         </div>
     {% endif %}
 {% endfor %}
-    <!-- Chat -->
-    <div id="chat-container">
-        <div id="chat-log"></div>
-        <input type="text" id="chat-message" placeholder="Escribe un mensaje...">
-        <button type="button" id="chat-send">Enviar</button>
-    </div>
-
-    <!-- Scripts necesarios -->
-    <script src="{% static 'assets/js/chat.js' %}"></script>
-
     
         <!-- Signup-->
         <footer class="footer">
@@ -328,19 +291,7 @@
                 window.location.href = blogUrl;
             });
         </script>
-        <script>
-            // Código JavaScript para conectarse al chat usando WebSocket
-            const chatSocket = new WebSocket(
-                'ws://' + window.location.host + '/ws/chat/'
-            );
-        
-            chatSocket.onmessage = function(e) {
-                const data = JSON.parse(e.data);
-                // Manejar los mensajes recibidos del servidor
-            };
-        
-            // Otro código JavaScript necesario para el chat
-        </script>
+
     </footer>
     </body>
 </html>

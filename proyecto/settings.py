@@ -73,7 +73,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),  # Carpeta principal de plantillas
-            os.path.join(BASE_DIR, 'inicio', 'templates'),  # Carpeta de plantillas de inicio
+            os.path.join(BASE_DIR, 'inicio', 'mensajes', 'templates'),  # Carpeta de plantillas de inicio
         ],
         'APP_DIRS': True,
         'OPTIONS': {

@@ -1,6 +1,7 @@
 from profile import Profile
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, SubscriptionForm
@@ -10,6 +11,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Profile
 
+class ChatView(TemplateView):
+    template_name = 'usuarios/chat.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['connected_users'] = User.objects.all()
+        return context
+
+@login_required
+def private_chat(request, username):
+    return render(request, 'usuarios/private_chat.html', {
+        'other_user': username,
+    })
 
 @login_required
 def index(request):
