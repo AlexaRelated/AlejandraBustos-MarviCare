@@ -3,6 +3,7 @@ from . import views
 from .views import search_view
 from .views import category_view
 
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('inicio/category/<str:category>/', category_view, name='category_view'),
@@ -33,4 +34,5 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('buscar/', views.buscar_view, name='buscar_view'),
     path('usuarios/chat/', views.index, name='chat'),
+    
     ]

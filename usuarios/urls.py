@@ -14,4 +14,5 @@ urlpatterns = [
     path('modificar/', views.update_profile, name='modificar_perfil'),
     path('chat/', views.ChatView.as_view(), name='chat'), 
     path('chat/<str:room_name>/', ChatView.as_view(), name='chat_room'),
+    
 ]

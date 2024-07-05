@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const crypto = require('crypto');
 const WebSocket = require('ws');
 const http = require('http');
 
@@ -39,7 +38,7 @@ app.post('/login', (req, res) => {
 let publicClients = [];
 let privateClients = {};
 
-wss.on('connection', (ws, req) => {
+wss.on('connection', (ws) => {
     let room = null;
     let username = null;
 
@@ -62,14 +61,14 @@ wss.on('connection', (ws, req) => {
             if (room === 'public') {
                 publicClients.forEach(client => {
                     if (client.ws !== ws && client.ws.readyState === WebSocket.OPEN) {
-                        client.ws.send(JSON.stringify({ type: 'message', message: `${username}: ${data.message}` }));
+                        client.ws.send(JSON.stringify({ type: 'message', username: username, content: data.content }));
                     }
                 });
             } else {
                 if (privateClients[room]) {
                     privateClients[room].forEach(client => {
                         if (client.ws !== ws && client.ws.readyState === WebSocket.OPEN) {
-                            client.ws.send(JSON.stringify({ type: 'message', message: `${username}: ${data.message}` }));
+                            client.ws.send(JSON.stringify({ type: 'message', username: username, content: data.content }));
                         }
                     });
                 }

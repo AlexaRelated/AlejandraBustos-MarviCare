@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>MarviCare</title>
@@ -21,11 +21,45 @@
     <!-- Estilos personalizados -->
     <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" />
     
-    <!-- WebSocket Chat Scripts -->
-    <script>
-        const username = '{{ user.username }}'; // Asegúrate de que 'username' esté disponible en el contexto
-    </script>
-    <script src="{% static 'assets/js/chat_script.js' %}"></script>
+    <style>
+        /* Estilos básicos para el chat (puedes personalizar según tus necesidades) */
+        #chat-container {
+            display: none;
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Inicialmente oculto */
+            z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+            width: 300px; /* Ancho del contenedor del chat */
+        }
+        #chat-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #chat-body {
+            margin-bottom: 10px;
+        }
+        #chat-log {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #chat-message-input {
+            width: calc(100% - 80px); /* Ancho menos el ancho del botón de enviar */
+            margin-right: 5px;
+        }
+        #join-room {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body id="page-top">
         <!-- Navigation-->
@@ -56,22 +90,23 @@
                                     <li><a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a></li>
                                     <li><a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ url_externo }}">Chat</a></li></li>
+                                    <li>
+                                        <button id="open-chat" class="dropdown-item" style="border: none; background-color: transparent; cursor: pointer;">
+                                            Chat
+                                        </button>
+                                    </li>
                                     <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                 </ul>
                             </li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
                         {% endif %}
-                        
-        
                     </ul>
                     </ul>
                     <div id="chatbox"> <!--Chat-->
                 </div>
             </div>
         </nav>
-        
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
@@ -88,9 +123,6 @@
                     <button type="submit">Buscar</button>
                 </form>
         </header>
-
-        
-        
         <!-- About-->
         <section class="about-section text-center" id="about">
             <div class="container px-4 px-lg-5">
@@ -99,13 +131,11 @@
                         <p class="text-white-50">
                             <img class="img-fluid" src="{% static "assets/img/fondoM.jpg" %}" alt="..." />Disfruta de un extenso número de módulos y contenidos interactivos. ¿Qué estás esperando? 
                             <a href="{% url 'all_posts' %}" class="btn btn-primary">¡Comienza tu aprendizaje!</a>
-                            
                         </p>
                     </div>
                 </div>
 
             </div>
-
         <!-- Maquillaje-->
         <section class="projects-section bg-light" id="maquillaje">
             <div class="container px-4 px-lg-5">
@@ -118,7 +148,7 @@
                         <div class="featured-text text-center text-lg-left">
                             <h4>Maquillaje</h4>
                             <p class="text-black-50 mb-0">¡Sumérgete en el glamuroso universo de los productos cosméticos! ¿Los mejores aliados de tu belleza? Productos de calidad superior para un maquillaje perfecto de ojos, rostro, labios y manos.</p>
-                            <a href="{% url 'category_posts' category_slug='maquillaje' %}" target="_blank">¡Comienza tu aprendizaje!</a>
+                            <a href="{% url 'maquillaje' %}" target="_blank">¡Comienza tu aprendizaje!</a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +164,7 @@
                 <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
                     <div class="col-lg-6">
                         <img class="img-fluid" src="{% static 'assets/img/dermo.jpg' %}" alt="..." />
-                        <a href="https://marvicare.blogspot.com/2024/05/llega-el-verano-3-claves-para-preparar.html" target="_blank">¡Bienvenido verano! Claves para cuidarnos del sol</a>
+                        <a href="dermocosmetica" target="_blank">¡Bienvenido verano! Claves para cuidarnos del sol</a>
                     </div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
@@ -142,14 +172,13 @@
                                 <div class="project-text w-100 my-auto text-center text-lg-left">
                                     <h4 class="text-white">Dermocosmética</h4>
                                     <p class="mb-0 text-white-50">Los dermocosméticos fueron productos creados científicamente para el cuidado de la piel, el cabello y las uñas, por lo que están clínicamente aprobados y avalados por dermatólogos, esto garantiza que su aplicación no es dañina para la salud.</p>
-                                    <a href="{% url 'post_detail' slug='tu-slug-aqui' %}">¡Aprendamos más sobre ellos!</a>
+                                    <a href="{% url 'dermocosmetica' %}">¡Aprendamos más sobre ellos!</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-       
 <!-- Bienestar-->
 <section class="projects-section bg-light" id="bienestar">
     <div class="container px-4 px-lg-5">
@@ -173,14 +202,14 @@
 <section class="projects-section bg-light" id="perfumeria">
     <div class="container px-4 px-lg-5">
                 <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{% static "assets/img/perfu1.jpg" %}" alt="..." /><a href="https://marvicare.blogspot.com/2024/06/la-osmotheque-el-archivo-mundial-del.html">«Archivo mundial del perfume»</a></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="{% static "assets/img/perfu1.jpg" %}" alt="..." /><a href="perfumeria">«Archivo mundial del perfume»</a></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-right">
                                     <h4 class="text-white">Perfumes</h4>
                                     <p class="mb-0 text-white-50">El perfume es tantas cosas… Hemos preguntado a los expertos, nuestros Académicos del Perfume, qué significa para ellos y en sus definiciones podemos ver que el perfume es arte, es evocación, es inspiración, es ciencia, es poesía, es sensorialidad… </p>
-                                    <a href="https://marvicare.blogspot.com/search/label/perfume">Te animamos a descubrir todo lo que representa el perfume.</a>
+                                    <a href="perfumeria">Te animamos a descubrir todo lo que representa el perfume.</a>
                                 </div>
                             </div>
                         </div>
@@ -189,6 +218,30 @@
             </div>
         </section>
         <div id="main-content">
+
+            <!-- Contenedor de chat -->
+    <div id="chat-container">
+        <div id="chat-header">
+            <h1>MarviChat</h1>
+        </div>
+        <div id="chat-body">
+            <div>
+                <label for="room">Seleccionar sala:</label>
+                <select id="room">
+                    <option value="public">Público</option>
+                    <option value="private">Privado</option>
+                </select>
+            </div>
+            <div>
+                <label for="private-room">Sala privada ID:</label>
+                <input id="private-room" type="text" placeholder="Enter Private Room ID">
+            </div>
+            <button id="join-room">Conectar</button>
+            <div id="chat-log"></div>
+            <input id="chat-message-input" type="text">
+            <button id="chat-message-submit">Enviar</button>
+        </div>
+    </div>
        <!-- Post-->
        {% for post in posts %}
     {% if post.slug %}
@@ -201,51 +254,50 @@
 {% endfor %}
         </div>
                         
-        <!-- Signup-->
-        <footer class="footer">
-        <section class="signup-section" id="contacto">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-md-10 col-lg-8 mx-auto text-center">
-                        <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                        <h2 class="text-white mb-5">SUSCRÍBETE A NUESTRA NEWSLETTER!</h2>
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
-                        <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Email address input-->
-                            <div class="row input-group-newsletter">
-                                <div class="col"><input class="form-control" id="emailAddress" type="email" placeholder="Enter email address..." aria-label="Enter email address..." data-sb-validations="required,email" /></div>
-                                <div class="col-auto"><button class="btn btn-primary disabled" id="submitButton" type="submit">Notificarme!</button></div>
+       <!-- Signup-->
+       <section class="signup-section" id="contacto">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5">SUSCRÍBETE A NUESTRA NEWSLETTER!</h2>
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <!-- * * SB Forms Contact Form * *-->
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <!-- This form is pre-integrated with SB Forms.-->
+                    <!-- To make this form functional, sign up at-->
+                    <!-- https://startbootstrap.com/solution/contact-forms-->
+                    <!-- to get an API token!-->
+                    <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <!-- Email address input-->
+                        <div class="row input-group-newsletter">
+                            <div class="col"><input class="form-control" id="emailAddress" type="email" placeholder="Enter email address..." aria-label="Enter email address..." data-sb-validations="required,email" /></div>
+                            <div class="col-auto"><button class="btn btn-primary disabled" id="submitButton" type="submit">Notificarme!</button></div>
+                        </div>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">El email es requerido</div>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email inválido</div>
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3 mt-2 text-white">
+                                <div class="fw-bolder">Form submission successful!</div>
+                                To activate this form, sign up at
+                                <br />
+                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                             </div>
-                            <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">El email es requerido</div>
-                            <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email inválido</div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3 mt-2 text-white">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3 mt-2">Error al enviar el mensaje!</div></div>
-                        </form>
-                    </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3 mt-2">Error al enviar el mensaje!</div></div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
         <!-- Contact-->
         <section class="contact-section bg-black">
             <div class="container px-4 px-lg-5">
@@ -308,28 +360,62 @@
         <script src="{% static 'js/script.js' %}"></script>
 
     </footer>
-            <!-- Contenedor de chat flotante -->
-        <div id="chat-container" style="display:none;">
-            <div id="chat-header">
-                <h1>MarviChat</h1>
-            </div>
-            <div id="chat-body">
-                <div>
-                    <label for="room">Seleccionar sala:</label>
-                    <select id="room">
-                        <option value="public">Publico</option>
-                        <option value="private">Privado</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="private-room">Sala privada ID:</label>
-                    <input id="private-room" type="text" placeholder="Enter Private Room ID">
-                </div>
-                <button id="join-room">Conectar</button>
-                <div id="chat-log"></div>
-                <input id="chat-message-input" type="text">
-                <button id="chat-message-submit">Enviar</button>
-            </div>
-        </div>
+    <!-- JavaScript para manejar la lógica del chat -->
+    <!-- Scripts al final del cuerpo del documento -->
+    <script>
+        $(document).ready(function () {
+            // Obtener el nombre de usuario desde Django
+            var username = "{{ request.user.username }}"; // Django template tag
+
+            // Establecer conexión WebSocket con el servidor de Node.js
+            var socket = new WebSocket("ws://localhost:3000");
+
+            // Manejar la apertura del socket
+            socket.onopen = function () {
+                console.log("Conexión establecida con el servidor WebSocket.");
+            };
+
+            // Manejar los mensajes recibidos desde el servidor
+            socket.onmessage = function (event) {
+                var message = JSON.parse(event.data);
+                console.log("Mensaje recibido:", message);
+
+                if (message.type === 'message') {
+                    $('#chat-log').append('<div><strong>' + message.username + '</strong>: ' + message.content + '</div>');
+                    $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight); // Hacer scroll hasta el final del chat
+                }
+            };
+
+            // Enviar mensaje al hacer clic en el botón "Enviar"
+            $('#chat-message-submit').click(function () {
+                var messageContent = $('#chat-message-input').val();
+                var message = {
+                    type: 'message',  // Tipo de mensaje
+                    username: username,  // Nombre de usuario del remitente
+                    content: messageContent  // Contenido del mensaje
+                };
+                socket.send(JSON.stringify(message));
+                $('#chat-message-input').val(''); // Limpiar el campo de entrada después de enviar el mensaje
+            });
+
+            // Conectar a la sala al hacer clic en el botón "Conectar"
+            $('#join-room').click(function () {
+                var roomType = $('#room').val();
+                var roomID = $('#private-room').val();
+                var joinMessage = {
+                    type: 'join',
+                    room: roomType === 'private' ? roomID : 'public',
+                    username: username
+                };
+                socket.send(JSON.stringify(joinMessage));
+            });
+
+            // Mostrar el chat al hacer clic en el botón de apertura (ejemplo)
+            $('#open-chat').click(function () {
+                $('#chat-container').show();
+            });
+        });
+    </script>
+    
     </body>
 </html>
