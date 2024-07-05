@@ -42,21 +42,26 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
-                    {% if user.is_authenticated %}
-                        <li>
-                    <a href="{% url 'profile' %}">
-                    {% if user.profile.avatar %}
-                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                            {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">
+                                    Bienvenido, {{ user.username }}!
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'chat' %}">Chat</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                                </ul>
+                            </li>
                         {% else %}
-                            <img src="/path/to/default/avatar.png" alt="Default Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
                         {% endif %}
-                    {{ user.username }}
-                        </a>
-                        </li>
-                    {% else %}
-                            <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                        {% endif %}
-                        </li>
+                        
+        
+                    </ul>
                     </ul>
                     <div id="chatbox"> <!--Chat-->
                 </div>
@@ -73,11 +78,13 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center">
+                <form method="GET" action="{% url 'buscar_view' %}">
+                    <input type="text" name="q" placeholder="Buscar..." required>
+                    <button type="submit">Buscar</button>
+                </form>
         </header>
-        <form method="GET" action="{% url 'buscar_view' %}">
-            <input type="text" name="q" placeholder="Buscar..." required>
-            <button type="submit">Buscar</button>
-        </form>
+
         
         
         <!-- About-->
@@ -187,6 +194,50 @@
         </div>
     {% endif %}
 {% endfor %}
+
+<title>WebSocket Chat</title>
+</head>
+<body>
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text">
+    <button id="chat-message-submit">Send</button>
+
+    <script>
+        const chatLog = document.querySelector('#chat-log');
+        const messageInput = document.querySelector('#chat-message-input');
+        const messageSubmit = document.querySelector('#chat-message-submit');
+
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        ws.onmessage = function(event) {
+            const message = event.data;
+            chatLog.innerHTML += '<p>' + message + '</p>';
+        };
+
+        ws.onerror = function(error) {
+            console.error('WebSocket error ', error);
+        };
+
+        ws.onclose = function(event) {
+            console.log('WebSocket connection closed', event);
+        };
+
+        messageSubmit.addEventListener('click', function() {
+            const message = messageInput.value;
+            ws.send(message);
+            messageInput.value = '';
+        });
+
+        messageInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                messageSubmit.click();
+            }
+        });
+    </script>
     
         <!-- Signup-->
         <footer class="footer">

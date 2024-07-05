@@ -1,47 +1,38 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/'
-    );
 
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        console.log("Data received from WebSocket:", data); // Log para verificar los datos recibidos
-        if (data.message && data.username) {
-            const chatLog = document.getElementById('chat-log');
-            chatLog.innerHTML += `<div><strong>${data.username}:</strong> ${data.message}</div>`;
-        } else if (data.users) {
-            updateUserList(data.users);
-        }
-    };
+// Esta función agrega un mensaje al chat
+function addMessage(message) {
+    var chatLog = document.getElementById('chat-log');
+    var messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    chatLog.appendChild(messageElement);
+}
 
-    chatSocket.onopen = function(e) {
-        console.log("WebSocket connection opened:", e);
-    };
+// Esta función agrega un usuario a la lista de usuarios
+function addUser(username) {
+    var userList = document.getElementById('user-list');
+    var userElement = document.createElement('li');
+    userElement.textContent = username;
+    userList.appendChild(userElement);
+}
 
-    chatSocket.onclose = function(e) {
-        console.log("WebSocket connection closed:", e);
-    };
-
-    chatSocket.onerror = function(e) {
-        console.log("WebSocket error:", e);
-    };
-
-    function updateUserList(users) {
-        const userList = document.getElementById('user-list');
-        userList.innerHTML = ''; // Clear the current list
-        users.forEach(function(user) {
-            const userItem = document.createElement('li');
-            userItem.textContent = user.username;
-            userList.appendChild(userItem);
-        });
-    }
-
-    document.getElementById('chat-send').onclick = function() {
-        const messageInput = document.getElementById('chat-message');
-        const message = messageInput.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
+// Ejemplo de manejo del formulario de chat
+document.getElementById('chat-send').addEventListener('click', function() {
+    var messageInput = document.getElementById('chat-message');
+    var message = messageInput.value.trim();
+    if (message !== '') {
+        // Aquí puedes enviar el mensaje a través de WebSocket u otro método
+        addMessage('Yo: ' + message);
         messageInput.value = '';
-    };
+    }
 });
+
+// Ejemplo de actualización de usuarios (puedes adaptarlo a tu lógica)
+function updateUsers(users) {
+    var userList = document.getElementById('user-list');
+    userList.innerHTML = ''; // Limpiar la lista actual
+    users.forEach(function(user) {
+        addUser(user.username);
+    });
+}
+
+// Aquí puedes agregar más funciones para manejar WebSocket y otras funcionalidades

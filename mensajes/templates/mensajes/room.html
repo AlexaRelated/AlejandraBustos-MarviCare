@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,23 +14,24 @@
         const chatSocket = new WebSocket(
             'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
         );
-
+    
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             document.querySelector('#chat-log').innerHTML += (data.username + ': ' + data.message + '<br>');
         };
-
+    
         chatSocket.onclose = function(e) {
             console.error('Chat socket closed unexpectedly');
         };
-
+    
+        // Funcionalidad para enviar mensajes
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
             if (e.keyCode === 13) {
                 document.querySelector('#chat-message-submit').click();
             }
         };
-
+    
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;

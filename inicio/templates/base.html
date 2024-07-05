@@ -19,11 +19,14 @@
     <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" />
     <!-- Favicon -->
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <!-- Scripts personalizados -->
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body id="page-top">
     <!-- Navigation -->
@@ -35,31 +38,29 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento' %}">Bienestar</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
-                    <li class="nav-item"></li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Bienvenido, {{ user.username }}!
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a>
-                            <a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'chat' %}">Chat</a> <!-- Aquí está el enlace al chat -->
-                            <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
-                        </div>
-                    </li>
-                {% endif %}
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento' %}">Bienestar</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                 
-                </ul>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'profile' %}">
+                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                            {{ user.username }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                {% endif %}
+                </li>
+
             </div>
         </div>
     </nav>
@@ -86,59 +87,6 @@
         {% endblock %}
     </div>
 
-    <!-- Contenedor del Chat -->
-    <div id="chat-window">
-        <!-- Selección de Sala de Chat -->
-        <div>
-            <label for="room-name">Selecciona sala de chat:</label>
-            <select id="room-name">
-                <option value="public">Público</option>
-                <!-- Otras opciones de sala de chat si las hay -->
-            </select>
-        </div>
-
-        <!-- Selección de Usuario para Chat Privado -->
-        <div>
-            <label for="user-select">Selecciona usuario para chat privado:</label>
-            <select id="user-select">
-                <option value="">Selecciona un usuario</option>
-                <!-- Opciones de usuarios disponibles si es aplicable -->
-            </select>
-        </div>
-
-        <!-- Área para mostrar el historial del chat -->
-        <div id="chat-log"></div>
-
-        <!-- Entrada de mensaje y botón de enviar -->
-        <input id="chat-message-input" type="text" size="100">
-        <input id="chat-message-submit" type="button" value="Enviar">
-    </div>
-
-    <!-- Código JavaScript para WebSocket y manejo de chat -->
-    <script>
-        // Código JavaScript para conectarse al chat usando WebSocket
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/'
-        );
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            // Manejar los mensajes recibidos del servidor y mostrar en el chat-log
-            const messageElement = document.createElement('div');
-            messageElement.innerText = `${data.username}: ${data.message}`;
-            document.getElementById('chat-log').appendChild(messageElement);
-        };
-
-        document.getElementById('chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.getElementById('chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
-
-    </script>
 
     <!-- Signup Section -->
     <section class="signup-section" id="signup">

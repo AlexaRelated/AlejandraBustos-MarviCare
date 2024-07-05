@@ -11244,3 +11244,47 @@ html, body {
   height: 4rem;
   background-color: #e2e2e2
 }
+
+
+#chat-container {
+  width: 80%; /* Ancho del contenedor del chat */
+  max-width: 600px; /* Ancho máximo */
+  border: 1px solid #ccc; /* Borde alrededor del chat */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  background-color: #f9f9f9; /* Color de fondo */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+#user-container {
+  width: 80%; /* Ancho del contenedor de usuarios */
+  max-width: 600px; /* Ancho máximo */
+  margin-top: 20px; /* Espacio superior */
+}
+
+#user-list {
+  list-style-type: none; /* Lista sin estilos de viñetas */
+  padding: 0; /* Elimina el relleno por defecto */
+}
+
+#user-list li {
+  margin-bottom: 5px; /* Espaciado entre usuarios */
+}
+
+/* Estilos para el formulario de mensaje */
+#chat-message {
+  width: calc(100% - 80px); /* Ancho del input menos el ancho del botón */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 4px; /* Bordes redondeados */
+  margin-right: 10px; /* Espacio a la derecha del input */
+}
+
+#chat-send {
+  padding: 10px 20px; /* Espaciado dentro del botón */
+  background-color: #007bff; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor de tipo puntero al pasar por encima */
+}

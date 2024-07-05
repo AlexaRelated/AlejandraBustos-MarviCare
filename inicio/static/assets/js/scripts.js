@@ -63,4 +63,5 @@ submitButton.addEventListener("click", function() {
   commentElement.innerHTML = comment;
   commentsContainer.appendChild(commentElement);
   commentInput.value = "";
+    
 });

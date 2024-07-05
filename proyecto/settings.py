@@ -18,6 +18,9 @@ import hashlib
 import redis
 from channels.layers import get_channel_layer
 
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'proyecto.urls'
@@ -101,16 +105,16 @@ REDIS_HOST = 'redis-15137.c304.europe-west1-2.gce.redns.redis-cloud.com'
 REDIS_PORT = 15137
 REDIS_PASSWORD = 'TVSb3HUCuhXvFwo3v4ekUFbcJWesmb5J'
 
-# Configuración de CHANNEL_LAYERS
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [{
-                'address': f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}',
+                'address': f'redis://{REDIS_HOST}:{REDIS_PORT}',
+                'password': REDIS_PASSWORD,
             }],
-            'capacity': 100,  # Ajusta según tus necesidades
-            'expiry': 60 * 5,  # Ajusta según tus necesidades
+            'capacity': 100,
+            'expiry': 60 * 15,
             'group_expiry': 60 * 60 * 24,
             'channel_capacity': {
                 'http.request': 100,
@@ -122,7 +126,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

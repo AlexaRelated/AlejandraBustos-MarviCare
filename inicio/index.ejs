@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text">
+    <button id="chat-message-submit">Send</button>
+
+    <script>
+        const chatLog = document.querySelector('#chat-log');
+        const messageInput = document.querySelector('#chat-message-input');
+        const messageSubmit = document.querySelector('#chat-message-submit');
+
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        ws.onmessage = function(event) {
+            const message = event.data;
+            chatLog.innerHTML += '<p>' + message + '</p>';
+        };
+
+        ws.onerror = function(error) {
+            console.error('WebSocket error ', error);
+        };
+
+        ws.onclose = function(event) {
+            console.log('WebSocket connection closed', event);
+        };
+
+        messageSubmit.addEventListener('click', function() {
+            const message = messageInput.value;
+            ws.send(message);
+            messageInput.value = '';
+        });
+
+        messageInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                messageSubmit.click();
+            }
+        });
+    </script>
+</body>
+</html>

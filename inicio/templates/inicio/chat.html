@@ -1,4 +1,6 @@
 {% load static %}
+
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +21,7 @@
     <div id="user-container">
         <h3>Usuarios Conectados</h3>
         <ul id="user-list">
-            {% for user in connected_users %}
-                <li>{{ user.username }}</li>
-            {% endfor %}
+            <!-- Aquí aparecerán los usuarios conectados -->
         </ul>
     </div>
 
