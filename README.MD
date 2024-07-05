@@ -18,6 +18,7 @@ He utilizado codigo brindado en repositorios publicados en la web.
 >Menu
 >Buscador
 >Posts
+>Chat
 
 # Inicio
 Se accede al blog con usuario y contraseña, al estar dedicado al trabajador del sector. 
@@ -31,6 +32,9 @@ En el buscador podemos buscar entradas realizadas en Blogger.
 # Posts
 La información publicada se ha extraído de las webs oficiales. 
 Las imagenes se han obtenido de https://www.freepik.es/ y para la interfaz he utilizado codigo de https://getbootstrap.com/
+
+# Chat
+El chat, creado con Node.js y WebSockets, para que los usuarios puedan intercambiar mensajes en tiempo real.
 
 # Autor
 

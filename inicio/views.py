@@ -222,7 +222,7 @@ def contacto_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, '¡Gracias por tu mensaje! Nos pondremos en contacto pronto.')
+            messages.success(request, '.')
             return redirect('contacto')
     else:
         form = ContactForm()
