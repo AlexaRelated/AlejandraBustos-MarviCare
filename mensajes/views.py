@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 
 
 class ChatView(TemplateView):
-    template_name = 'usuarios/templates'
-    
+    template_name = 'usuarios/chat.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Obtener todos los usuarios conectados
         context['connected_users'] = User.objects.all()
+        context['room_name'] = self.kwargs['room_name']
         return context
 
 @login_required

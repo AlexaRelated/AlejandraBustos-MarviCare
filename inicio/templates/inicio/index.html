@@ -46,8 +46,8 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
-                            {% if user.is_authenticated %}
-                            <li class="nav-item dropdown">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">
                                     Bienvenido, {{ user.username }}!
@@ -188,6 +188,7 @@
                 </div>
             </div>
         </section>
+        <div id="main-content">
        <!-- Post-->
        {% for post in posts %}
     {% if post.slug %}
@@ -198,27 +199,8 @@
         </div>
     {% endif %}
 {% endfor %}
-
-                <div id="chat-container">
-                    <h1>WebSocket Chat</h1>
-                    <div>
-                        <label for="room">Select Room:</label>
-                        <select id="room">
-                            <option value="public">Public</option>
-                            <option value="private">Private</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="private-room">Private Room ID:</label>
-                        <input id="private-room" type="text" placeholder="Enter Private Room ID">
-                    </div>
-                    <button id="join-room">Join Room</button>
-                    <div id="chat-log"></div>
-                    <input id="chat-message-input" type="text">
-                    <button id="chat-message-submit">Send</button>
-                </div>
-
-    
+        </div>
+                        
         <!-- Signup-->
         <footer class="footer">
         <section class="signup-section" id="contacto">
@@ -326,5 +308,28 @@
         <script src="{% static 'js/script.js' %}"></script>
 
     </footer>
+            <!-- Contenedor de chat flotante -->
+        <div id="chat-container" style="display:none;">
+            <div id="chat-header">
+                <h1>MarviChat</h1>
+            </div>
+            <div id="chat-body">
+                <div>
+                    <label for="room">Seleccionar sala:</label>
+                    <select id="room">
+                        <option value="public">Publico</option>
+                        <option value="private">Privado</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="private-room">Sala privada ID:</label>
+                    <input id="private-room" type="text" placeholder="Enter Private Room ID">
+                </div>
+                <button id="join-room">Conectar</button>
+                <div id="chat-log"></div>
+                <input id="chat-message-input" type="text">
+                <button id="chat-message-submit">Enviar</button>
+            </div>
+        </div>
     </body>
 </html>

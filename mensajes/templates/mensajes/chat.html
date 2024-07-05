@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Chat Room</title>
 </head>
 <body>
-    <h1>Chat</h1>
-    <div id="chat-window">
-        {% for message in messages %}
-            <p><strong>{{ message.user.username }}:</strong> {{ message.content }}</p>
-        {% endfor %}
-    </div>
-    <textarea id="message-input" rows="3" cols="50"></textarea>
-    <button id="send-button">Send</button>
+    <h1>Chat Room</h1>
+    <select id="room">
+        <option value="public">Public Room</option>
+        <option value="private">Private Room</option>
+    </select>
+    <input type="text" id="private-room" placeholder="Enter private room ID">
+    <button id="join-room">Join Room</button>
+    <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
+    <input id="chat-message-input" type="text" size="100"><button id="chat-message-submit">Send</button>
 
     <script>
-        const roomName = "{{ room_name }}";
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomName = '{{ room_name }}';
+            const roomSelect = document.getElementById('room');
+            const privateRoomInput = document.getElementById('private-room');
+            const joinRoomButton = document.getElementById('join-room');
+            const chatLog = document.getElementById('chat-log');
+            const chatMessageInput = document.getElementById('chat-message-input');
+            const chatMessageSubmitButton = document.getElementById('chat-message-submit');
+            const username = '{{ user.username }}';
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const chatWindow = document.getElementById('chat-window');
-            chatWindow.innerHTML += '<p>' + data.message + '</p>';
-        };
+            const chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                chatLog.value += (data.username + ': ' + data.message + '\n');
+            };
 
-        document.getElementById('send-button').onclick = function() {
-            const messageInput = document.getElementById('message-input');
-            const message = messageInput.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInput.value = '';
-        };
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+
+            chatMessageInput.focus();
+            chatMessageInput.onkeyup = function(e) {
+                if (e.keyCode === 13) {
+                    chatMessageSubmitButton.click();
+                }
+            };
+
+            chatMessageSubmitButton.onclick = function(e) {
+                const messageInputDom = chatMessageInput.value;
+                chatSocket.send(JSON.stringify({
+                    'username': username,
+                    'message': messageInputDom
+                }));
+                chatMessageInput.value = '';
+            };
+
+            joinRoomButton.onclick = function() {
+                const selectedRoom = roomSelect.value;
+                if (selectedRoom === 'private') {
+                    const privateRoomId = privateRoomInput.value;
+                    if (privateRoomId) {
+                        chatSocket.send(JSON.stringify({
+                            'command': 'join',
+                            'room': privateRoomId
+                        }));
+                    }
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'command': 'join',
+                        'room': 'public'
+                    }));
+                }
+            };
+        });
     </script>
 </body>
 </html>

@@ -16,3 +16,6 @@ urlpatterns = [
     path('logout/', usuarios_views.logout_view, name='logout'),  # URL para cerrar sesión
     
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

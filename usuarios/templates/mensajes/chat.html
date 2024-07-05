@@ -1,58 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat en Tiempo Real</title>
-    <link rel="stylesheet" href="/path/to/your/styles.css">
-    <style>
-        /* Estilos adicionales para el chat */
-        .message-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .message-container .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .message-container .message {
-            background-color: #f1f1f1;
-            padding: 10px;
-            border-radius: 8px;
-            max-width: 70%;
-        }
-        .message-container.sender .message {
-            background-color: #007bff;
-            color: white;
-        }
-        /* Otros estilos específicos según necesidades */
-    </style>
+    <title>Chat Room</title>
 </head>
 <body>
-    <div id="chat-container">
-        <!-- Contenedor para los mensajes -->
-        <div id="chat-messages">
-            <!-- Ejemplo de mensaje recibido -->
-            <div class="message-container">
-                <img src="/path/to/avatar.png" alt="Avatar" class="avatar">
-                <div class="message">Hola, ¿cómo estás?</div>
-            </div>
-            <!-- Ejemplo de mensaje enviado -->
-            <div class="message-container sender">
-                <div class="message">¡Hola! Todo bien, gracias.</div>
-                <img src="/path/to/your-avatar.png" alt="Avatar" class="avatar">
-            </div>
-        </div>
-        <!-- Formulario para enviar mensajes -->
-        <form id="chat-form">
-            <input type="text" id="message-input" placeholder="Escribe un mensaje...">
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
-    <!-- JavaScript para interactuar con el chat -->
-    <script src="/path/to/your/chat.js"></script>
+    <h1>Chat Room</h1>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <select id="room">
+        <option value="public">Public Room</option>
+        <option value="private">Private Room</option>
+    </select>
+    <input type="text" id="private-room" placeholder="Enter private room ID">
+    <button id="join-room">Join Room</button>
+    <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
+    <input id="chat-message-input" type="text" size="100"><button id="chat-message-submit">Send</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomName = '{{ room_name }}';
+            const roomSelect = document.getElementById('room');
+            const privateRoomInput = document.getElementById('private-room');
+            const joinRoomButton = document.getElementById('join-room');
+            const chatLog = document.getElementById('chat-log');
+            const chatMessageInput = document.getElementById('chat-message-input');
+            const chatMessageSubmitButton = document.getElementById('chat-message-submit');
+            const username = '{{ user.username }}';
+
+            const chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
+
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                chatLog.value += (data.username + ': ' + data.message + '\n');
+            };
+
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+
+            chatMessageInput.focus();
+            chatMessageInput.onkeyup = function(e) {
+                if (e.keyCode === 13) {
+                    chatMessageSubmitButton.click();
+                }
+            };
+
+            chatMessageSubmitButton.onclick = function(e) {
+                const messageInputDom = chatMessageInput.value;
+                chatSocket.send(JSON.stringify({
+                    'username': username,
+                    'message': messageInputDom
+                }));
+                chatMessageInput.value = '';
+            };
+
+            joinRoomButton.onclick = function() {
+                const selectedRoom = roomSelect.value;
+                if (selectedRoom === 'private') {
+                    const privateRoomId = privateRoomInput.value;
+                    if (privateRoomId) {
+                        chatSocket.send(JSON.stringify({
+                            'command': 'join',
+                            'room': privateRoomId
+                        }));
+                    }
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'command': 'join',
+                        'room': 'public'
+                    }));
+                }
+            };
+        });
+    </script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

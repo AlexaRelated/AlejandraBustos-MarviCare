@@ -1,39 +1,37 @@
-// chat.js
+const chatLog = document.querySelector('#chat-log');
+const messageInput = document.querySelector('#chat-message');
+const messageSubmit = document.querySelector('#chat-send');
 
-// Esta función agrega un mensaje al chat
-function addMessage(message) {
-    var chatLog = document.getElementById('chat-log');
-    var messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    chatLog.appendChild(messageElement);
-}
+const ws = new WebSocket('ws://localhost:3000');
 
-// Esta función agrega un usuario a la lista de usuarios
-function addUser(username) {
-    var userList = document.getElementById('user-list');
-    var userElement = document.createElement('li');
-    userElement.textContent = username;
-    userList.appendChild(userElement);
-}
+ws.onopen = function() {
+    console.log('WebSocket connection established');
+};
 
-// Ejemplo de manejo del formulario de chat
-document.getElementById('chat-send').addEventListener('click', function() {
-    var messageInput = document.getElementById('chat-message');
-    var message = messageInput.value.trim();
-    if (message !== '') {
-        // Aquí puedes enviar el mensaje a través de WebSocket u otro método
-        addMessage('Yo: ' + message);
-        messageInput.value = '';
-    }
+ws.onmessage = function(event) {
+    const messageData = JSON.parse(event.data);
+    const username = messageData.username;
+    const message = messageData.message;
+    chatLog.innerHTML += `<p><strong>${username}</strong>: ${message}</p>`;
+};
+
+ws.onerror = function(error) {
+    console.error('WebSocket error ', error);
+};
+
+ws.onclose = function(event) {
+    console.log('WebSocket connection closed', event);
+};
+
+messageSubmit.addEventListener('click', function() {
+    const message = messageInput.value;
+    // Simplemente envía el mensaje como JSON con 'username' y 'message'
+    ws.send(JSON.stringify({ username: 'NombreUsuario', message: message }));
+    messageInput.value = '';
 });
 
-// Ejemplo de actualización de usuarios (puedes adaptarlo a tu lógica)
-function updateUsers(users) {
-    var userList = document.getElementById('user-list');
-    userList.innerHTML = ''; // Limpiar la lista actual
-    users.forEach(function(user) {
-        addUser(user.username);
-    });
-}
-
-// Aquí puedes agregar más funciones para manejar WebSocket y otras funcionalidades
+messageInput.addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+        messageSubmit.click();
+    }
+});

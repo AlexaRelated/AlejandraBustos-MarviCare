@@ -1,30 +1,77 @@
-{% load static %}
-
-{% extends "base.html" %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
-    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <title>Chat Room</title>
 </head>
 <body>
-    <div id="chat-container">
-        <div id="chat-log" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;">
-            <!-- Aquí aparecerán los mensajes -->
-        </div>
-        <input type="text" id="chat-message" placeholder="Escribe un mensaje...">
-        <button type="button" id="chat-send">Enviar</button>
-    </div>
+    <h1>Chat Room</h1>
+    <select id="room">
+        <option value="public">Public Room</option>
+        <option value="private">Private Room</option>
+    </select>
+    <input type="text" id="private-room" placeholder="Enter private room ID">
+    <button id="join-room">Join Room</button>
+    <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
+    <input id="chat-message-input" type="text" size="100"><button id="chat-message-submit">Send</button>
 
-    <div id="user-container">
-        <h3>Usuarios Conectados</h3>
-        <ul id="user-list">
-            <!-- Aquí aparecerán los usuarios conectados -->
-        </ul>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomName = '{{ room_name }}';
+            const roomSelect = document.getElementById('room');
+            const privateRoomInput = document.getElementById('private-room');
+            const joinRoomButton = document.getElementById('join-room');
+            const chatLog = document.getElementById('chat-log');
+            const chatMessageInput = document.getElementById('chat-message-input');
+            const chatMessageSubmitButton = document.getElementById('chat-message-submit');
+            const username = '{{ user.username }}';
 
-    <script src="{% static 'assets/js/chat.js' %}"></script>
+            const chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
+
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                chatLog.value += (data.username + ': ' + data.message + '\n');
+            };
+
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+
+            chatMessageInput.focus();
+            chatMessageInput.onkeyup = function(e) {
+                if (e.keyCode === 13) {
+                    chatMessageSubmitButton.click();
+                }
+            };
+
+            chatMessageSubmitButton.onclick = function(e) {
+                const messageInputDom = chatMessageInput.value;
+                chatSocket.send(JSON.stringify({
+                    'username': username,
+                    'message': messageInputDom
+                }));
+                chatMessageInput.value = '';
+            };
+
+            joinRoomButton.onclick = function() {
+                const selectedRoom = roomSelect.value;
+                if (selectedRoom === 'private') {
+                    const privateRoomId = privateRoomInput.value;
+                    if (privateRoomId) {
+                        chatSocket.send(JSON.stringify({
+                            'command': 'join',
+                            'room': privateRoomId
+                        }));
+                    }
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'command': 'join',
+                        'room': 'public'
+                    }));
+                }
+            };
+        });
+    </script>
 </body>
 </html>

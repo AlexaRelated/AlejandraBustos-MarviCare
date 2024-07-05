@@ -6,22 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarviCare Chat</title>
-    <link rel="stylesheet" href="{% static 'assets/css/chat_styles.css' %}">
+    <link rel="stylesheet" href="/assets/css/chat_styles.css">
 </head>
 <body>
 
     <div id="chat-container">
         <h1>Chat MarviCare</h1>
         <div>
-            <label for="room">Selecionar sala:</label>
+            <label for="room">Seleccionar sala:</label>
             <select id="room">
-                <option value="public">Publico</option>
+                <option value="public">Público</option>
                 <option value="private">Privado</option>
             </select>
         </div>
         <div>
-            <label for="private-room">Sala Privada ID:</label>
-            <input id="private-room" type="text" placeholder="Enter Private Room ID">
+            <label for="private-room">ID de Sala Privada:</label>
+            <input id="private-room" type="text" placeholder="Ingresa ID de Sala Privada">
         </div>
         <button id="join-room">Unirse</button>
         <div id="chat-log"></div>
@@ -83,6 +83,6 @@
         });
     </script>
     <!-- Scripts al final del cuerpo -->
-    <script src="{% static 'assets/js/chat.js' %}"></script>
+    <script src="/assets/js/chat.js"></script>
 </body>
 </html>
