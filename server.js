@@ -1,48 +1,90 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 const crypto = require('crypto');
 const WebSocket = require('ws');
 const http = require('http');
-const path = require('path');
+
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'inicio'));  // Ajusta la ruta a la carpeta "inicio"
+app.set('views', './inicio');
 
-function generateSignature(apiKey, apiSecret, meetingNumber, role) {
-    const timestamp = new Date().getTime() - 30000;
-    const msg = Buffer.from(apiKey + meetingNumber + timestamp + role).toString('base64');
-    const hash = crypto.createHmac('sha256', apiSecret).update(msg).digest('base64');
-    const signature = Buffer.from(`${apiKey}.${meetingNumber}.${timestamp}.${role}.${hash}`).toString('base64');
-    return signature;
-}
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 app.get('/', (req, res) => {
-    const apiKey = 'YOUR_API_KEY';
-    const apiSecret = 'YOUR_API_SECRET';
-    const meetingNumber = 'YOUR_MEETING_NUMBER';
-    const role = 0; // 0 para participante, 1 para anfitrión
-
-    const signature = generateSignature(apiKey, apiSecret, meetingNumber, role);
-    res.render('index', { signature: signature });
+    if (!req.session.username) {
+        return res.redirect('/login');
+    }
+    res.render('index', { username: req.session.username });
 });
 
-wss.on('connection', (ws) => {
-    console.log('New WebSocket connection');
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/login', (req, res) => {
+    req.session.username = req.body.username;
+    res.redirect('/');
+});
+
+let publicClients = [];
+let privateClients = {};
+
+wss.on('connection', (ws, req) => {
+    let room = null;
+    let username = null;
+
     ws.on('message', (message) => {
-        console.log('Received:', message);
-        // Broadcasting the message to all connected clients
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(message);
+        const data = JSON.parse(message);
+
+        if (data.type === 'join') {
+            room = data.room;
+            username = data.username;
+
+            if (room === 'public') {
+                publicClients.push({ ws, username });
+            } else {
+                if (!privateClients[room]) {
+                    privateClients[room] = [];
+                }
+                privateClients[room].push({ ws, username });
             }
-        });
+        } else if (data.type === 'message') {
+            if (room === 'public') {
+                publicClients.forEach(client => {
+                    if (client.ws !== ws && client.ws.readyState === WebSocket.OPEN) {
+                        client.ws.send(JSON.stringify({ type: 'message', message: `${username}: ${data.message}` }));
+                    }
+                });
+            } else {
+                if (privateClients[room]) {
+                    privateClients[room].forEach(client => {
+                        if (client.ws !== ws && client.ws.readyState === WebSocket.OPEN) {
+                            client.ws.send(JSON.stringify({ type: 'message', message: `${username}: ${data.message}` }));
+                        }
+                    });
+                }
+            }
+        }
     });
 
     ws.on('close', () => {
-        console.log('WebSocket connection closed');
+        if (room === 'public') {
+            publicClients = publicClients.filter(client => client.ws !== ws);
+        } else {
+            if (privateClients[room]) {
+                privateClients[room] = privateClients[room].filter(client => client.ws !== ws);
+            }
+        }
     });
 });
 

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 class ChatView(TemplateView):
-    template_name = 'mensajes/chat.html'
+    template_name = 'usuarios/templates'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,7 +17,7 @@ class ChatView(TemplateView):
 
 @login_required
 def private_chat(request, username):
-    return render(request, 'mensajes/private_chat.html', {
+    return render(request, 'usuarios/templates', {
         'other_user': username,
     })
 

@@ -11288,3 +11288,49 @@ html, body {
   border-radius: 4px; /* Bordes redondeados */
   cursor: pointer; /* Cursor de tipo puntero al pasar por encima */
 }
+
+
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+#chat-container {
+  width: 300px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  overflow-y: auto; /* Para hacer scroll si es necesario */
+}
+
+#chat-messages {
+  max-height: 300px; /* Limita la altura para scroll */
+  overflow-y: auto; /* Hace scroll si hay más mensajes */
+}
+
+#chat-form {
+  margin-top: 10px;
+}
+
+#chat-form input[type="text"],
+#chat-form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+#chat-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Otros estilos según necesidades */

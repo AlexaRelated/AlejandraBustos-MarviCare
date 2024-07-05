@@ -23,7 +23,7 @@ from django.contrib import messages
 @login_required
 def index(request):
     context = {
-        'user': request.user,
+        'url_externo': 'http://localhost:3000',
     }
     return render(request, 'inicio/index.html', context)
 

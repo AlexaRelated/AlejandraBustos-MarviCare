@@ -1,61 +1,58 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
-    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <title>Chat en Tiempo Real</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
     <style>
-        /* Estilos adicionales */
-        #chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            padding: 10px;
+        /* Estilos adicionales para el chat */
+        .message-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
         }
-
-        /* Estilos para el formulario de mensaje */
-        #chat-message {
-            width: calc(100% - 80px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .message-container .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             margin-right: 10px;
         }
-
-        #chat-send {
-            padding: 10px 20px;
+        .message-container .message {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+        .message-container.sender .message {
             background-color: #007bff;
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
         }
+        /* Otros estilos específicos según necesidades */
     </style>
 </head>
 <body>
-
-    <!-- Contenido principal de tu página -->
-
     <div id="chat-container">
-        <div id="chat-log">
-            <!-- Aquí aparecerán los mensajes -->
+        <!-- Contenedor para los mensajes -->
+        <div id="chat-messages">
+            <!-- Ejemplo de mensaje recibido -->
+            <div class="message-container">
+                <img src="/path/to/avatar.png" alt="Avatar" class="avatar">
+                <div class="message">Hola, ¿cómo estás?</div>
+            </div>
+            <!-- Ejemplo de mensaje enviado -->
+            <div class="message-container sender">
+                <div class="message">¡Hola! Todo bien, gracias.</div>
+                <img src="/path/to/your-avatar.png" alt="Avatar" class="avatar">
+            </div>
         </div>
-        <input type="text" id="chat-message" placeholder="Escribe un mensaje...">
-        <button type="button" id="chat-send">Enviar</button>
+        <!-- Formulario para enviar mensajes -->
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+            <button type="submit">Enviar</button>
+        </form>
     </div>
-
-    <script src="{% static 'assets/js/chat.js' %}"></script>
+    <!-- JavaScript para interactuar con el chat -->
+    <script src="/path/to/your/chat.js"></script>
 </body>
 </html>
-{% endblock %}

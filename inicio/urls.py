@@ -32,5 +32,5 @@ urlpatterns = [
     path('mantenimiento/', views.mantenimiento_view, name='mantenimiento'),
     path('about/', views.about_view, name='about'),
     path('buscar/', views.buscar_view, name='buscar_view'),
-    
+    path('usuarios/chat/', views.index, name='chat'),
     ]

@@ -12,10 +12,11 @@ from django.dispatch import receiver
 from .models import Profile
 
 class ChatView(TemplateView):
-    template_name = 'usuarios/chat.html'
+    template_name = 'mensajes/chat.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Obtener todos los usuarios conectados
         context['connected_users'] = User.objects.all()
         return context
 
@@ -24,10 +25,14 @@ def private_chat(request, username):
     return render(request, 'usuarios/private_chat.html', {
         'other_user': username,
     })
+    
 
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'url_externo': 'http://localhost:3000',
+    }
+    return render(request, 'inicio/index.html', context)
 
 def signup_view_cuentas(request):
     if request.method == 'POST':

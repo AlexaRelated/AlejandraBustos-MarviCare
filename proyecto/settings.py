@@ -12,11 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-import sys
-import base64
-import hashlib
-import redis
-from channels.layers import get_channel_layer
+
 
 
 
@@ -52,8 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'usuarios',
     'taggit',
-    'channels',
-    'mensajes',
     
 ]
 
@@ -76,8 +70,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),  # Carpeta principal de plantillas
-            os.path.join(BASE_DIR, 'inicio', 'mensajes', 'templates'),  # Carpeta de plantillas de inicio
+            os.path.join(BASE_DIR, 'templates'),  
+            os.path.join(BASE_DIR, 'inicio', 'mensajes', 'templates', 'usuarios'),  
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -95,37 +89,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'proyecto.wsgi.application'
 
-ASGI_APPLICATION = 'proyecto.asgi.application'
 
-# Configura tus claves de cifrado simétrico
-DJANGO_SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'TVSb3HUCuhXvFwo3v4ekUFbcJWesmb5J')
 
-# Configuración de Redis Cloud
-REDIS_HOST = 'redis-15137.c304.europe-west1-2.gce.redns.redis-cloud.com'
-REDIS_PORT = 15137
-REDIS_PASSWORD = 'TVSb3HUCuhXvFwo3v4ekUFbcJWesmb5J'
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [{
-                'address': f'redis://{REDIS_HOST}:{REDIS_PORT}',
-                'password': REDIS_PASSWORD,
-            }],
-            'capacity': 100,
-            'expiry': 60 * 15,
-            'group_expiry': 60 * 60 * 24,
-            'channel_capacity': {
-                'http.request': 100,
-                'websocket.receive': 100,
-            },
-            'symmetric_encryption_keys': [
-                base64.urlsafe_b64encode(hashlib.sha256(DJANGO_SECRET_KEY.encode()).digest()).decode()
-            ],
-        },
-    },
-}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -182,6 +147,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+EXTERNAL_URL = 'http://localhost:3000'
 
 
 MEDIA_URL = '/media/'

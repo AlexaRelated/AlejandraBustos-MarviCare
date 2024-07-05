@@ -11,6 +11,6 @@ urlpatterns = [
     path('registro/', views.registro, name='registro'),
     path('perfil/', views.profile_views, name='ver_perfil'),
     path('modificar/', views.update_profile, name='modificar_perfil'),
-    path('chat/', views.ChatView.as_view(), name='chat'),  # Vista del chat público
+    path('chat/', views.ChatView.as_view(), name='chat'), 
     
 ]

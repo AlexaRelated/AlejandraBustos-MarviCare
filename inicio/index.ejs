@@ -1,42 +1,78 @@
+<!-- index.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Chat</title>
+    <title>MarviCare Chat</title>
+    <link rel="stylesheet" href="{% static 'assets/css/chat_styles.css' %}">
 </head>
 <body>
-    <div id="chat-log"></div>
-    <input id="chat-message-input" type="text">
-    <button id="chat-message-submit">Send</button>
+
+    <div id="chat-container">
+        <h1>Chat MarviCare</h1>
+        <div>
+            <label for="room">Selecionar sala:</label>
+            <select id="room">
+                <option value="public">Publico</option>
+                <option value="private">Privado</option>
+            </select>
+        </div>
+        <div>
+            <label for="private-room">Sala Privada ID:</label>
+            <input id="private-room" type="text" placeholder="Enter Private Room ID">
+        </div>
+        <button id="join-room">Unirse</button>
+        <div id="chat-log"></div>
+        <input id="chat-message-input" type="text">
+        <button id="chat-message-submit">Enviar</button>
+    </div>
 
     <script>
+        let ws;
         const chatLog = document.querySelector('#chat-log');
         const messageInput = document.querySelector('#chat-message-input');
         const messageSubmit = document.querySelector('#chat-message-submit');
+        const roomSelect = document.querySelector('#room');
+        const privateRoomInput = document.querySelector('#private-room');
+        const joinRoomButton = document.querySelector('#join-room');
+        const username = '<%= username %>';
 
-        const ws = new WebSocket('ws://localhost:3000');
+        joinRoomButton.addEventListener('click', () => {
+            if (ws) {
+                ws.close();
+            }
+            const selectedRoom = roomSelect.value;
+            const privateRoom = privateRoomInput.value;
 
-        ws.onopen = function() {
-            console.log('WebSocket connection established');
-        };
+            const room = selectedRoom === 'public' ? 'public' : privateRoom;
+            ws = new WebSocket('ws://localhost:3000');
 
-        ws.onmessage = function(event) {
-            const message = event.data;
-            chatLog.innerHTML += '<p>' + message + '</p>';
-        };
+            ws.onopen = function() {
+                console.log('WebSocket connection established');
+                ws.send(JSON.stringify({ type: 'join', room: room, username: username }));
+            };
 
-        ws.onerror = function(error) {
-            console.error('WebSocket error ', error);
-        };
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.type === 'message') {
+                    chatLog.innerHTML += '<p>' + data.message + '</p>';
+                }
+            };
 
-        ws.onclose = function(event) {
-            console.log('WebSocket connection closed', event);
-        };
+            ws.onerror = function(error) {
+                console.error('WebSocket error ', error);
+            };
+
+            ws.onclose = function(event) {
+                console.log('WebSocket connection closed', event);
+            };
+        });
 
         messageSubmit.addEventListener('click', function() {
             const message = messageInput.value;
-            ws.send(message);
+            ws.send(JSON.stringify({ type: 'message', message: message }));
             messageInput.value = '';
         });
 
@@ -46,5 +82,7 @@
             }
         });
     </script>
+    <!-- Scripts al final del cuerpo -->
+    <script src="{% static 'assets/js/chat.js' %}"></script>
 </body>
 </html>
