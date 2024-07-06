@@ -18,7 +18,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 
 
-
+def index(request):
+    return render(request, 'inicio/index.html')
 
 @login_required
 def index(request):
@@ -56,8 +57,7 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
-def index(request):
-    return render(request, 'inicio/index.html')
+
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
