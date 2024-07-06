@@ -88,7 +88,29 @@
     </div>
 
 
-    
+    <!-- Contenedor de chat -->
+    <div id="chat-container">
+        <div id="chat-header">
+            <h1>MarviChat</h1>
+        </div>
+        <div id="chat-body">
+            <div>
+                <label for="room">Seleccionar sala:</label>
+                <select id="room">
+                    <option value="public">Público</option>
+                    <option value="private">Privado</option>
+                </select>
+            </div>
+            <div>
+                <label for="private-room">Sala privada ID:</label>
+                <input id="private-room" type="text" placeholder="Enter Private Room ID">
+            </div>
+            <button id="join-room">Conectar</button>
+            <div id="chat-log"></div>
+            <input id="chat-message-input" type="text">
+            <button id="chat-message-submit">Enviar</button>
+        </div>
+    </div>
     <!-- Signup Section -->
     <section class="signup-section" id="signup">
         <div class="container px-4 px-lg-5">
@@ -120,5 +142,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="{% static 'js/chat_scripts.js' %}"></script>
+    <!-- Scripts del chat -->
+    <script>
+        $(document).ready(function () {
+            // Obtener el nombre de usuario desde Django
+            var username = "{{ request.user.username }}"; // Django template tag
+
+            // Establecer conexión WebSocket con el servidor de Node.js
+            var socket = new WebSocket("ws://localhost:3000");
+
+            // Manejar la apertura del socket
+            socket.onopen = function () {
+                console.log("Conexión establecida con el servidor WebSocket.");
+            };
+
+            // Manejar los mensajes recibidos desde el servidor
+            socket.onmessage = function (event) {
+                var message = JSON.parse(event.data);
+                console.log("Mensaje recibido:", message);
+
+                if (message.type === 'message') {
+                    $('#chat-log').append('<div><strong>' + message.username + '</strong>: ' + message.content + '</div>');
+                    $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight); // Hacer scroll hasta el final del chat
+                }
+            };
+
+            // Enviar mensaje al hacer clic en el botón "Enviar"
+            $('#chat-message-submit').click(function () {
+                var messageContent = $('#chat-message-input').val();
+                var message = {
+                    type: 'message',  // Tipo de mensaje
+                    username: username,  // Nombre de usuario del remitente
+                    content: messageContent  // Contenido del mensaje
+                };
+                socket.send(JSON.stringify(message));
+                $('#chat-message-input').val(''); // Limpiar el campo de entrada después de enviar el mensaje
+            });
+
+            // Conectar a la sala al hacer clic en el botón "Conectar"
+            $('#join-room').click(function () {
+                var roomType = $('#room').val();
+                var roomID = $('#private-room').val();
+                var joinMessage = {
+                    type: 'join',
+                    room: roomType === 'private' ? roomID : 'public',
+                    username: username
+                };
+                socket.send(JSON.stringify(joinMessage));
+            });
+
+            // Mostrar el chat al hacer clic en el botón de apertura (ejemplo)
+            $('#open-chat').click(function () {
+                $('#chat-container').show();
+            });
+        });
+    </script>
 </body>
 </html>
