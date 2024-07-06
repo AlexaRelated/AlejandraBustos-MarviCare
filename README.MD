@@ -36,6 +36,9 @@ Las imagenes se han obtenido de https://www.freepik.es/ y para la interfaz he ut
 # Chat
 El chat, creado con Node.js y WebSockets, para que los usuarios puedan intercambiar mensajes en tiempo real.
 
+# Video funcionamiento
+https://youtu.be/bnL6mYLQc7I
+
 # Autor
 
 Creado por Alejandra Bustos
