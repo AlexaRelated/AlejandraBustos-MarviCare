@@ -70,7 +70,7 @@ def post_detail(request, slug):
             nuevo_comentario.post = post
             nuevo_comentario.autor = request.user
             nuevo_comentario.save()
-            return render(request, 'post_detail.html', {'post': post})  
+            return render(request, 'inicio/post_detail.html', {'post': post})  
     else:
         comentario_form = ComentarioPostForm()
 
