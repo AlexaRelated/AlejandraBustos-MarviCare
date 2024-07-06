@@ -56,6 +56,9 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
+def index(request):
+    return render(request, 'inicio/index.html')
+
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comentarios = post.comentarios.all()
@@ -67,7 +70,7 @@ def post_detail(request, slug):
             nuevo_comentario.post = post
             nuevo_comentario.autor = request.user
             nuevo_comentario.save()
-            return redirect('post_detail', slug=post.slug)  
+            return render(request, 'post_detail.html', {'post': post})  
     else:
         comentario_form = ComentarioPostForm()
 
@@ -76,6 +79,12 @@ def post_detail(request, slug):
         'comentarios': comentarios,
         'comentario_form': comentario_form,
     })
+
+def home_view(request):
+    return render(request, 'inicio/home.html')
+
+def home_view(request):
+    return render(request, 'inicio/home.html')
 
 def home_view(request):
     return render(request, 'inicio/home.html')

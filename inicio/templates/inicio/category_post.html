@@ -46,7 +46,7 @@
                         <p class="text-black-50 mb-0">Entradas relacionadas con {{ category.name }}:</p>
                         <ul>
                             {% for post in posts %}
-                                <li><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></li>
+                                <li><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>                                </li>
                             {% endfor %}
                         </ul>
                     </div>

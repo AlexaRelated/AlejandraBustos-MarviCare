@@ -45,7 +45,7 @@
 <h1>Posts</h1>
 <ul>
     {% for post in posts %}
-        <li><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></li>
+        <li><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>        </li>
     {% endfor %}
 </ul>
 {% endblock %}

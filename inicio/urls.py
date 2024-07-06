@@ -1,12 +1,9 @@
 from django.urls import path
 from . import views
-from .views import search_view
-from .views import category_view
-
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('inicio/category/<str:category>/', category_view, name='category_view'),
+    path('', views.index, name='index'),  # Página de inicio
+    path('inicio/category/<str:category>/', views.category_view, name='category_view'),
     path('posts/', views.post_list, name='post_list'),
     path('blog/', views.blog_home, name='blog_home'),
     path('article/<int:pk>/', views.article, name='article'),
@@ -17,7 +14,7 @@ urlpatterns = [
     path('add_post/', views.add_post, name='add_post'),
     path('add_comment/', views.add_comment, name='add_comment'),
     path('add_comment/<str:slug>/', views.add_comment, name='add_comment_slug'),
-    path('search/', search_view, name='search_view'),
+    path('search/', views.search_view, name='search_view'),
     path('zoom/', views.zoom_view, name='zoom'),
     path('generate-signature/', views.generate_signature, name='generate_signature'),
     path('post/<int:post_id>/edit/', views.create_or_update_post, name='edit_post'),
@@ -34,5 +31,4 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('buscar/', views.buscar_view, name='buscar_view'),
     path('usuarios/chat/', views.index, name='chat'),
-    
-    ]
+]

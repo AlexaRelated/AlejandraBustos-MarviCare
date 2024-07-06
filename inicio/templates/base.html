@@ -1,68 +1,111 @@
-<!-- templates/base.html -->
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="author" content="" />
     <title>MarviCare</title>
-    
-    {% load static %}
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    <!-- Bootstrap CSS y otros enlaces -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-    <!-- Custom Styles -->
+    <!-- Estilos personalizados -->
     <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" />
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <!-- Scripts personalizados -->
-    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    
+    <style>
+        /* Estilos básicos para el chat (puedes personalizar según tus necesidades) */
+        #chat-container {
+            display: none;
+        }
 
-        <!-- Bootstrap core JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Inicialmente oculto */
+            z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+            width: 300px; /* Ancho del contenedor del chat */
+        }
+        #chat-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #chat-body {
+            margin-bottom: 10px;
+        }
+        #chat-log {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #chat-message-input {
+            width: calc(100% - 80px); /* Ancho menos el ancho del botón de enviar */
+            margin-right: 5px;
+        }
+        #join-room {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body id="page-top">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="{% url 'index' %}">MarviCare</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento' %}">Bienestar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
-                
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'profile' %}">
-                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
-                            {{ user.username }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                {% endif %}
-                </li>
-
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{% url 'index' %}">MarviCare</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cosmetica' %}">Cosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento' %}">Bienestar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
+                        <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">
+                                    Bienvenido, {{ user.username }}!
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'update_profile' %}">Modificar Perfil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button id="open-chat" class="dropdown-item" style="border: none; background-color: transparent; cursor: pointer;">
+                                            Chat
+                                        </button>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
+                        {% endif %}
+                    </ul>
+                    </ul>
+                    <div id="chatbox"> <!--Chat-->
+                </div>
             </div>
-        </div>
     </nav>
 
     <!-- Masthead -->
@@ -130,6 +173,45 @@
         </div>
     </section>
 
+    <!-- Contact-->
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <h4 class="text-uppercase m-0">About</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50"><a class="nav-link" href="{% url 'about' %}">Sobre mí</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <h4 class="text-uppercase m-0">Contacto</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50"><a class="nav-link" href="{% url 'contacto' %}">Escríbenos</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <h4 class="text-uppercase m-0">Área Privada</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50"><a class="nav-link" href="{% url 'mantenimiento' %}">Darse de alta</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social d-flex justify-content-center">
+                <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </section>
     <!-- Footer -->
     <footer class="footer bg-black small text-center text-white-50">
         <div class="container px-4 px-lg-5">
