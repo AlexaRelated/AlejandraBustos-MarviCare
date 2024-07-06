@@ -111,7 +111,7 @@ def registro(request):
             messages.error(request, 'Por favor, proporciona un correo electrónico válido.')
     else:
         form = SubscriptionForm()
-    
+        
     return render(request, 'inicio/registro.html', {'form': form})
 
 

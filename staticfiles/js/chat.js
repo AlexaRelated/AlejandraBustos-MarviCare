@@ -35,3 +35,4 @@ messageInput.addEventListener('keyup', function(event) {
         messageSubmit.click();
     }
 });
+

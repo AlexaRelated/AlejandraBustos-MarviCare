@@ -16,11 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     );
 
     // Maneja la conexión WebSocket
-    socket.onmessage = function (event) {
-        console.log("Mensaje recibido:", event.data); 
-        var message = JSON.parse(event.data);
-        $('#chat-log').append('<div><strong>' + message.username + '</strong>: ' + message.content + '</div>');
-        $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight); // Hacer scroll hasta el final del chat
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        chatLog.value += (data.username + ': ' + data.message + '\n');
     };
 
     chatSocket.onclose = function(e) {

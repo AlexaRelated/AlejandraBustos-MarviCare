@@ -15,6 +15,7 @@ urlpatterns = [
     path('registro/', usuarios_views.signup_view_cuentas, name='registro'),  # URL para registro
     path('logout/', usuarios_views.logout_view, name='logout'),  # URL para cerrar sesión
     
+    
 ]
 
 if settings.DEBUG:

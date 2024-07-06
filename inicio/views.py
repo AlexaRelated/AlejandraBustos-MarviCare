@@ -57,8 +57,6 @@ def edit_post(request, slug):
         form = PostForm(instance=post)
     return render(request, 'inicio/edit_post.html', {'form': form})
 
-
-
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comentarios = post.comentarios.all()
@@ -68,12 +66,44 @@ def post_detail(request, slug):
         if comentario_form.is_valid():
             nuevo_comentario = comentario_form.save(commit=False)
             nuevo_comentario.post = post
-            nuevo_comentario.autor = request.user
+            nuevo_comentario.autor = request.user  # Asigna el autor si estás usando un campo de autor en tu modelo de comentario
             nuevo_comentario.save()
-            return render(request, 'inicio/post_detail.html', {'post': post})  
+            # Redirige o vuelve a renderizar según lo que desees hacer después de enviar el formulario
+            return redirect('post_detail', slug=post.slug)
     else:
         comentario_form = ComentarioPostForm()
 
+    return render(request, 'inicio/post_detail.html', {
+        'post': post,
+        'comentarios': comentarios,
+        'comentario_form': comentario_form,
+    })
+
+def add_comment(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.method == 'POST':
+        comentario_form = ComentarioPostForm(request.POST)
+        if comentario_form.is_valid():
+            nuevo_comentario = comentario_form.save(commit=False)
+            nuevo_comentario.post = post
+            nuevo_comentario.autor = request.user
+            nuevo_comentario.save()
+            
+            # Actualiza la lista de comentarios después de guardar el nuevo comentario
+            comentarios = post.comentarios.all()
+            
+            # Pasa los comentarios actualizados de vuelta a la plantilla
+            return render(request, 'inicio/post_detail.html', {
+                'post': post,
+                'comentarios': comentarios,
+                'comentario_form': ComentarioPostForm(),  # Para limpiar el formulario después de enviar
+            })
+    else:
+        comentario_form = ComentarioPostForm()
+
+    # Siempre renderiza el detalle del post junto con los comentarios
+    comentarios = post.comentarios.all()
     return render(request, 'inicio/post_detail.html', {
         'post': post,
         'comentarios': comentarios,
@@ -96,8 +126,6 @@ def all_posts(request):
 def blog_home(request):
     blog_posts = Post.objects.all()
     return render(request, 'inicio/blog_home.html', {'blog_posts': blog_posts})
-
-
 
 def signup_view_cuentas(request):
     if request.method == 'POST':
@@ -261,9 +289,6 @@ def author_view(request, id):
     author = Author.objects.get(id=id)  # Ejemplo de obtención de un autor por su ID
     return render(request, 'inicio/author_detail.html', {'author': author})
 
-def add_comment(request):
-    # Aquí iría la lógica para procesar la solicitud de agregar un nuevo comentario
-    return HttpResponse("Placeholder para agregar un nuevo comentario")
 
 def create_or_update_post(request):
     # Aquí iría la lógica para procesar la solicitud de agregar un nuevo comentario
