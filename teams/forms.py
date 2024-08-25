@@ -4,7 +4,7 @@ from .models import AccesoFormacion
 class AccesoFormacionForm(forms.ModelForm):
     class Meta:
         model = AccesoFormacion
-        fields = ['nombre', 'descripcion', 'fecha_inicio'] 
+        fields = ['nombre','email'] 
         
         
 class YourForm(forms.Form):  # Puedes usar forms.ModelForm si está basado en un modelo

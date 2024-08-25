@@ -3,15 +3,18 @@ from usuarios.models import User
 
 
 class AccesoFormacion(models.Model):
+    email = models.EmailField(unique=True)
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
-    fecha_inicio = models.DateField()
+    
+    def __str__(self):
+        return self.email
+    
     
 class TeamsMeeting(models.Model):
-    meeting_url = models.URLField(verbose_name="URL de la Reunión de Teams")
+    meeting_url = models.URLField(max_length=200)
 
     def __str__(self):
-        return "Reunión de Teams"
+        return self.meeting_url
 
 
 class TrainingSession(models.Model):
