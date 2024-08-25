@@ -23,10 +23,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
-            <p class="mt-2">¿No tienes cuenta? <a href="{% url 'registro' %}" class="btn btn-secondary btn-block">Registrarse</a></p>
-            {% if error_message %}
-                <p class="text-danger mt-3">{{ error_message }}</p>
-            {% endif %}
+          
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
