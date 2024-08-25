@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso a Formación</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Estilos para centrar el formulario */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Altura mínima de la ventana */
+            flex-direction: column; /* Alinea los elementos en columna */
+            text-align: center; /* Centra el texto */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input, button {
+            margin: 5px 0; /* Espacio entre los elementos del formulario */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Acceso a Formación</h1>
+        <form method="POST" action="{% url 'vista_teams' %}">
+            {% csrf_token %}
+            <input type="email" name="email" required>
+            <button type="submit" class="btn btn-primary">Acceder</button>
+        </form>
+    </div>
+</body>
+</html>

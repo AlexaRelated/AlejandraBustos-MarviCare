@@ -1,0 +1,19 @@
+<!-- teams/acceder.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceder a Teams</title>
+</head>
+<body>
+    <h2>Acceder a la Formación</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Ingrese su correo electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <button type="submit">Acceder</button>
+    </form>
+</body>
+</html>

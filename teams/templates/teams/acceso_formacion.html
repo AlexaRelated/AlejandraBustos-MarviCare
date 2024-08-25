@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        /* Estilo para el contenedor principal */
+        .formcontent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh; /* Altura mínima de la ventana */
+            flex-direction: column; /* Alinea los elementos en columna */
+            text-align: center; /* Centra el texto */
+        }
+        .text-dark-gray {
+            color: #333333; /* Gris oscuro */
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Acceso a Formación</title>
+</head>
+<body>
+    <div class="formcontent">
+        <h1>Acceso a Formación</h1>
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+        <form method="post" action="{% url 'teams' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
