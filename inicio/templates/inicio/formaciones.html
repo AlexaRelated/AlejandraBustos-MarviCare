@@ -54,6 +54,15 @@
                 max-width: 50%;
                 height: auto;
               }
+              .btn-acceso-formacion {
+                font-size: 18px; /* Aumenta el tamaño del texto */
+                padding: 15px 30px; /* Aumenta el relleno del botón */
+                background-color: #007bff; /* Color de fondo (puedes cambiarlo según tu preferencia) */
+                color: white; /* Color del texto */
+                border: none; /* Quita el borde predeterminado */
+                border-radius: 5px; /* Añade esquinas redondeadas */
+                transition: background-color 0.3s ease; /* Añade una transición suave */
+            }
         </style>
     </head>
     <body id="page-top">
@@ -103,6 +112,7 @@
                             <button type="submit">Buscar</button>
                         </form>
                         
+                         
         
                     </div>
                 </div>
@@ -119,13 +129,13 @@
        {% endif %}
    {% endfor %}
 
-           <!-- Botón de acceso a formación -->
-    <a href="{% url 'acceso_formacion' %}">
-        <button type="button">Acceso a Formación</button>
-    </a>
 
    <section id="contenido">
     <article class="article">
+        <!-- Botón de acceso a formación -->
+        <a href="{% url 'acceso_formacion' %}">
+            <button type="button" class="btn-acceso-formacion">Acceso a Formación</button>
+        </a>
         <img class="img-fluid project-image" src="{% static "assets/img/formaciones.jpg" %}" alt="..."/> 
         <h2>Formaciones Julio 2024</h2>
         <ul class="numbered-list">

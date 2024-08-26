@@ -9,11 +9,28 @@ Contacto
         .text-dark-gray {
             color: #333333; /* Gris oscuro */
         }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Ajusta según el diseño */
+            flex-direction: column;
+        }
+        form {
+            width: 100%;
+            max-width: 500px; /* Ancho máximo del formulario */
+        }
+        button {
+            margin-top: 20px;
+        }
     </style>
-    <h2 class="text-dark-gray mb-5">Deja tus comentarios y sugerencias</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar</button>
-    </form>
+
+    <div class="form-container">
+        <h2 class="text-dark-gray mb-5">Deja tus comentarios y sugerencias</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
 {% endblock %}
