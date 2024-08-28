@@ -38,15 +38,21 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'maquillaje' %}">Maquillaje</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'dermocosmetica' %}">Dermocosmética</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'perfumeria' %}">Perfumería</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento' %}">Bienestar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'bienestar' %}">Bienestar</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'formaciones' %}">Formaciones</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                         <li class="nav-item">
-                            <form id="blogSearchForm" class="d-flex" method="GET" action="{% url 'search_view' %}">
-                                <input class="form-control me-2" type="text" name="query" id="searchQuery" placeholder="Buscar en el blog" aria-label="Buscar" required>
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>
-                            
+                            {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'profile' %}">
+                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                            {{ user.username }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                {% endif %}
+                                                     
                         </li>
                     </ul>
                 </div>
@@ -60,7 +66,10 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Bienestar</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">La belleza empieza desde dentro. Una piel sana es una piel que refleja un equilibrio interior de salud tanto física, como mental. ¿Quieres saber cómo puedes potenciar la belleza de tu piel desde tu interior? </h2>
-
+                        <form method="GET" action="{% url 'buscar_view' %}">
+                            <input type="text" name="q" placeholder="Buscar..." required>
+                            <button type="submit">Buscar</button>
+                        </form>
         
                     </div>
                 </div>
