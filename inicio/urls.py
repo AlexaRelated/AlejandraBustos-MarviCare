@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import area_privada_view
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('buscar/', views.buscar_view, name='buscar_view'),
     path('usuarios/chat/', views.index, name='chat'),  # Revisar si esto debería apuntar a una vista diferente
+    path('area_privada/', area_privada_view, name='area_privada'),
 ]

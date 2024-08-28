@@ -251,6 +251,9 @@ def perfumeria_view(request):
 def formaciones_view(request):
     return render(request, 'inicio/formaciones.html')
 
+def area_privada_view(request):
+    return render(request, 'inicio/area_privada.html') 
+
 def bienestar_view(request):
     return render(request, 'inicio/bienestar.html')
 
