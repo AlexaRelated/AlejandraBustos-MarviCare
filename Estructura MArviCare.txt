@@ -85,6 +85,26 @@ MarviCare
   |--staticfiles
      |--admin
      |--assets
+  |--teams
+     |--__pycache__
+     |--migrations
+     |--templates
+	|--teams
+		|--acceder_formacion.html
+		|--acceder.html
+		|--acceso_formacion.html
+		|--acceso_denegado.html
+		|--gracias.html
+		|--reunion.html
+		|--teams.html
+     |--admin.py
+     |--apps.py
+     |--forms.py
+     |--models.py
+     |--models.py
+     |--tests.py
+     |--urls.py
+     |--views.py
   |--templates
      |--inicio
              |--login.html
@@ -122,4 +142,8 @@ MarviCare
   |--package-lock.json
   |--package.json
   |--README.md
+  |--cert.pem
+  |--key.pem
+  |--server.js
+
  

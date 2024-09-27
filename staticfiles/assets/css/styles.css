@@ -11334,3 +11334,22 @@ body {
 }
 
 /* Otros estilos según necesidades */
+
+
+/* Estilo para centrar el formulario */
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh; /* Ajusta esto según la altura que quieras darle */
+  margin-top: 50px; /* O ajusta la distancia desde la parte superior */
+}
+
+.form-container {
+  background-color: #f8f9fa; /* Color de fondo para el formulario */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Ancho máximo del formulario */
+  width: 100%; /* Hace que el formulario ocupe el 100% del contenedor */
+}
