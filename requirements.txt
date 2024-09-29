@@ -3,6 +3,7 @@ cachetools==5.5.0
 certifi==2024.8.30
 channels==4.1.0
 charset-normalizer==3.3.2
+dj-database-url==2.2.0
 Django==5.1.1
 django-taggit==6.0.0
 google-api-core==2.19.2
@@ -26,7 +27,7 @@ requests==2.32.3
 requests-oauthlib==2.0.0
 rsa==4.9
 sqlparse==0.5.1
+typing_extensions==4.12.2
 tzdata==2024.1
 uritemplate==4.1.1
 urllib3==2.2.2
-gunicorn
