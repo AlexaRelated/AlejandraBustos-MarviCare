@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-
-
+import dj_database_url
+import urllib.parse
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-%mr0+6-7m&)eo5p-=n83bs3g260hsf60p81@h!qt64j_i00)b7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['marvicare-e08b426bf3de.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['marvicare-e08b426bf3de.herokuapp.com']
 
 # Application definition
 
@@ -103,15 +103,26 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DB_USER = os.environ.get('DB_USER', 'alexa')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'Sisibonita1')
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_PORT = os.environ.get('DB_PORT', '5432')
+DB_NAME = os.environ.get('DB_NAME', 'db_name')
+
+# Codificar la contraseña
+password = urllib.parse.quote(DB_PASSWORD)
+
+# Configurar la URL de la base de datos
+DATABASE_URL = f'postgres://{DB_USER}:{password}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+
+# Imprimir la URL de la base de datos para depuración
+print("DATABASE_URL:", DATABASE_URL)
+
+# Configuración de la base de datos de Django
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Cambia esto si usas otra base de datos
-        'NAME': os.environ.get('DB_NAME', 'db.sqlite3'),  # Nombre de tu base de datos
-        'USER': os.environ.get('DB_USER', 'alexa'),  # Usuario de la base de datos
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'Sisibonita1'),  # Contraseña de la base de datos
-        'HOST': os.environ.get('DB_HOST', 'localhost'),  # Host de la base de datos
-        'PORT': os.environ.get('DB_PORT', '5432'),  # Puerto de la base de datos
-    }
+    'default': dj_database_url.config(
+        default=DATABASE_URL
+    )
 }
 
 # Password validation
