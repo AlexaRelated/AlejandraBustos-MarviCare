@@ -108,7 +108,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',  # Cambia esto si usas otra base de datos
         'NAME': os.environ.get('DB_NAME', 'db.sqlite3'),  # Nombre de tu base de datos
         'USER': os.environ.get('DB_USER', 'alexa'),  # Usuario de la base de datos
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'Sisibonita1git'),  # Contraseña de la base de datos
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'Sisibonita1'),  # Contraseña de la base de datos
         'HOST': os.environ.get('DB_HOST', 'localhost'),  # Host de la base de datos
         'PORT': os.environ.get('DB_PORT', '5432'),  # Puerto de la base de datos
     }
