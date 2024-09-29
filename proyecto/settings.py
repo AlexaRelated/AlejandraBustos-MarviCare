@@ -104,7 +104,14 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # Cambia esto si usas otra base de datos
+        'NAME': os.environ.get('DB_NAME', 'nombre_de_tu_base_de_datos'),  # Nombre de tu base de datos
+        'USER': os.environ.get('DB_USER', 'tu_usuario'),  # Usuario de la base de datos
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'tu_contraseña'),  # Contraseña de la base de datos
+        'HOST': os.environ.get('DB_HOST', 'localhost'),  # Host de la base de datos
+        'PORT': os.environ.get('DB_PORT', '5432'),  # Puerto de la base de datos
+    }
 }
 
 # Password validation
