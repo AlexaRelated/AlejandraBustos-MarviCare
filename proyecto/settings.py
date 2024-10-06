@@ -107,27 +107,42 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Variables de entorno para la base de datos
 DB_USER = os.environ.get('DB_USER', 'alexa')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', 'Sisibonita1')
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 DB_NAME = os.environ.get('DB_NAME', 'db_name')
 
-# Codificar la contraseña
-password = urllib.parse.quote(DB_PASSWORD)
+# Codificar la contraseña para la URL
+password = urllib.parse.quote_plus(DB_PASSWORD)
 
-# Configurar la URL de la base de datos
-DATABASE_URL = f'postgres://{DB_USER}:{password}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-
-# Imprimir la URL de la base de datos para depuración
-print("DATABASE_URL:", DATABASE_URL)
+# Imprimir valores para depuración
+print("Usuario:", DB_USER)
+print("Contraseña:", DB_PASSWORD)
+print("Host:", DB_HOST)
+print("Puerto:", DB_PORT)
+print("Nombre de la BD:", DB_NAME)
 
 # Configuración de la base de datos de Django
 DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': '127.0.0.1',  # Cambia localhost por 127.0.0.1
+        'PORT': DB_PORT,
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        },
+    }
 }
+
+# Imprimir la URL de la base de datos para depuración
+DATABASE_URL = f'postgresql://{DB_USER}:{password}@{DB_HOST}:{DB_PORT}/{DB_NAME}?client_encoding=utf8'
+print("URL Completa:", DATABASE_URL)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
