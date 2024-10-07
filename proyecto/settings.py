@@ -128,16 +128,8 @@ print("Nombre de la BD:", DB_NAME)
 # Configuración de la base de datos de Django
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,  # Usa la variable DB_HOST
-        'PORT': DB_PORT,
-        'OPTIONS': {
-            'client_encoding': 'UTF8',  # Asegurar la codificación UTF8
-            'options': '-c search_path=public',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',  # Indica que se está usando SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',         # Ruta a la base de datos
     }
 }
 
