@@ -18,9 +18,6 @@ import urllib.parse
 import django_heroku
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -29,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-%mr0+6-7m&)eo5p-=n83bs3g260hsf60p81@h!qt64j_i00)b7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['marvicare-e08b426bf3de.herokuapp.com']
 
@@ -127,11 +124,10 @@ print("Nombre de la BD:", DB_NAME)
 
 # Configuración de la base de datos de Django
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Indica que se está usando SQLite
-        'NAME': BASE_DIR / 'db.sqlite3',         # Ruta a la base de datos
+            # Ruta a la base de datos
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
-}
+
 
 # Imprimir la URL de la base de datos para depuración
 DATABASE_URL = f'postgresql://{DB_USER}:{password}@{DB_HOST}:{DB_PORT}/{DB_NAME}?client_encoding=utf8'
