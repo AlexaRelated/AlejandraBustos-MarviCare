@@ -132,10 +132,11 @@ DATABASES = {
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
-        'HOST': '127.0.0.1',  # Cambia localhost por 127.0.0.1
+        'HOST': DB_HOST,  # Usa la variable DB_HOST
         'PORT': DB_PORT,
         'OPTIONS': {
-            'client_encoding': 'UTF8',
+            'client_encoding': 'UTF8',  # Asegurar la codificación UTF8
+            'options': '-c search_path=public',
         },
     }
 }
