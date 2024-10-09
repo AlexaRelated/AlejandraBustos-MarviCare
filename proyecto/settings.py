@@ -28,7 +28,16 @@ SECRET_KEY = 'django-insecure-%mr0+6-7m&)eo5p-=n83bs3g260hsf60p81@h!qt64j_i00)b7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['marvicare-e08b426bf3de.herokuapp.com']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'marvicare-e08b426bf3de.herokuapp.com'  
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://marvicare-e08b426bf3de.herokuapp.com'  # Agrega tu dominio completo con https
+]
+
 
 # Application definition
 
