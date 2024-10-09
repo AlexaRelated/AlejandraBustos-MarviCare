@@ -83,11 +83,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),  # Plantillas globales
-            os.path.join(BASE_DIR, 'inicio', 'template'),  # Agregar la ruta 'template' de la app inicio
-            os.path.join(BASE_DIR, 'mensajes', 'templates'),
-            os.path.join(BASE_DIR, 'usuarios', 'templates'),
-            os.path.join(BASE_DIR, 'teams', 'templates'),
+            os.path.join(BASE_DIR, 'inicio', 'template'),  # Carpeta que contiene las plantillas de 'inicio'
+            os.path.join(BASE_DIR, 'templates'),  # Plantillas globales en 'templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -100,7 +97,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 
 
