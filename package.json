@@ -2,12 +2,15 @@
   "name": "marvicare",
   "version": "1.0.0",
   "description": "Web application for MarviCare",
-  "main": "index.js",
-  "devDependencies": {},
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Alejandra Buestos Koelbl",
-  "license": "ISC"
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.0.0",
+    "ws": "^8.18.0"
+  }
 }
