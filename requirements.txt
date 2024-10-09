@@ -3,6 +3,7 @@ cachetools==5.5.0
 certifi==2024.8.30
 channels==4.1.0
 charset-normalizer==3.3.2
+daphne
 dj-database-url==2.2.0
 Django==5.1.1
 django-heroku==0.3.1
